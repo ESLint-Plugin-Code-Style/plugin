@@ -983,26 +983,19 @@ Developer writes code
 Create `.editorconfig` at the project root. This ensures all team members' IDEs use the same base settings regardless of their personal editor preferences.
 
 ```ini
-# .editorconfig
+# Editor configuration, see http://editorconfig.org
 root = true
 
 [*]
 charset = utf-8
-end_of_line = lf
-indent_size = 4
 indent_style = space
+indent_size = 4
 insert_final_newline = true
-max_line_length = off
 trim_trailing_whitespace = true
 
 [*.md]
+max_line_length = off
 trim_trailing_whitespace = false
-
-[*.{json,yml,yaml}]
-indent_size = 2
-
-[Makefile]
-indent_style = tab
 ```
 
 **Key settings and why:**
@@ -1010,12 +1003,10 @@ indent_style = tab
 | Setting | Value | Why |
 |---|---|---|
 | `charset` | `utf-8` | Universal encoding, prevents encoding issues |
-| `end_of_line` | `lf` | Unix line endings, avoids CRLF diff noise on cross-platform teams |
 | `indent_size` | `4` | Matches our ESLint `@stylistic/indent: 4` setting |
 | `indent_style` | `space` | Spaces, not tabs — consistent rendering across all editors |
 | `insert_final_newline` | `true` | POSIX compliance, prevents "no newline at end of file" warnings |
 | `trim_trailing_whitespace` | `true` | Removes invisible trailing spaces that clutter diffs |
-| `max_line_length` | `off` | No line length limit — ESLint handles multiline formatting |
 
 > Most editors support EditorConfig natively (VS Code, WebStorm, Vim, etc.). For VS Code, install the [EditorConfig extension](https://marketplace.visualstudio.com/items?itemName=EditorConfig.EditorConfig).
 
