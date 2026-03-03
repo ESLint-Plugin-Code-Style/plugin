@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [2.2.5] - 2026-03-03
+
+### Documentation
+
+- Add boilerplate samples folder (`docs/frontend-guide/samples/`) with ready-to-use ESLint configs, package.json files, EditorConfig, and Husky hook scripts for all 4 project variants (react, react-ts, react-tw, react-ts-tw)
+- Update EditorConfig in frontend standards guide to match project conventions
+
+---
+
 ## [2.2.4] - 2026-03-03
 
 ### Documentation
