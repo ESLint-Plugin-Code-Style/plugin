@@ -37,7 +37,7 @@ Recommended ESLint configuration for React + Tailwind CSS projects using **ESLin
 ```bash
 npm install --save-dev \
   eslint@^10 \
-  @eslint/js \
+  @eslint/js@^10 \
   @eslint-react/eslint-plugin \
   @stylistic/eslint-plugin \
   globals \
@@ -52,7 +52,7 @@ npm install --save-dev \
 Or with a single line:
 
 ```bash
-npm install --save-dev eslint@^10 @eslint/js @eslint-react/eslint-plugin @stylistic/eslint-plugin globals eslint-plugin-check-file eslint-plugin-code-style eslint-plugin-import-x eslint-plugin-perfectionist eslint-plugin-simple-import-sort eslint-plugin-tailwindcss
+npm install --save-dev eslint@^10 @eslint/js@^10 @eslint-react/eslint-plugin @stylistic/eslint-plugin globals eslint-plugin-check-file eslint-plugin-code-style eslint-plugin-import-x eslint-plugin-perfectionist eslint-plugin-simple-import-sort eslint-plugin-tailwindcss
 ```
 
 > **Tailwind CSS plugin version:**

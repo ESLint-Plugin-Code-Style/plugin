@@ -36,7 +36,7 @@ Recommended ESLint configuration for React projects using **ESLint v10**.
 ```bash
 npm install --save-dev \
   eslint@^10 \
-  @eslint/js \
+  @eslint/js@^10 \
   @eslint-react/eslint-plugin \
   @stylistic/eslint-plugin \
   globals \
@@ -50,7 +50,7 @@ npm install --save-dev \
 Or with a single line:
 
 ```bash
-npm install --save-dev eslint@^10 @eslint/js @eslint-react/eslint-plugin @stylistic/eslint-plugin globals eslint-plugin-check-file eslint-plugin-code-style eslint-plugin-import-x eslint-plugin-perfectionist eslint-plugin-simple-import-sort
+npm install --save-dev eslint@^10 @eslint/js@^10 @eslint-react/eslint-plugin @stylistic/eslint-plugin globals eslint-plugin-check-file eslint-plugin-code-style eslint-plugin-import-x eslint-plugin-perfectionist eslint-plugin-simple-import-sort
 ```
 
 ## Usage

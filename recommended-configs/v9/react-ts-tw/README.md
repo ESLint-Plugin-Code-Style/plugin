@@ -37,7 +37,7 @@ Install all required dependencies:
 ```bash
 npm install --save-dev \
   eslint@^9 \
-  @eslint/js \
+  @eslint/js@^9 \
   @stylistic/eslint-plugin \
   @typescript-eslint/parser \
   @typescript-eslint/eslint-plugin \
@@ -56,7 +56,7 @@ npm install --save-dev \
 Or with a single line:
 
 ```bash
-npm install --save-dev eslint@^9 @eslint/js @stylistic/eslint-plugin @typescript-eslint/parser @typescript-eslint/eslint-plugin globals eslint-plugin-react eslint-plugin-react-hooks eslint-plugin-import-x eslint-plugin-jsx-a11y eslint-plugin-check-file eslint-plugin-perfectionist eslint-plugin-simple-import-sort eslint-plugin-tailwindcss eslint-plugin-code-style
+npm install --save-dev eslint@^9 @eslint/js@^9 @stylistic/eslint-plugin @typescript-eslint/parser @typescript-eslint/eslint-plugin globals eslint-plugin-react eslint-plugin-react-hooks eslint-plugin-import-x eslint-plugin-jsx-a11y eslint-plugin-check-file eslint-plugin-perfectionist eslint-plugin-simple-import-sort eslint-plugin-tailwindcss eslint-plugin-code-style
 ```
 
 > **Tailwind CSS plugin version:**
