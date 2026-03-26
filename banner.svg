@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 734" fill="none">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 714" fill="none">
   <defs>
     <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#070b14"/>
@@ -28,9 +28,9 @@
   </defs>
 
   <!-- Background -->
-  <rect width="1280" height="734" fill="url(#bg)"/>
-  <rect width="1280" height="734" fill="url(#glow1)"/>
-  <rect width="1280" height="734" fill="url(#glow2)"/>
+  <rect width="1280" height="714" fill="url(#bg)"/>
+  <rect width="1280" height="714" fill="url(#glow1)"/>
+  <rect width="1280" height="714" fill="url(#glow2)"/>
 
   <!-- Grid dots pattern (subtle) -->
   <g opacity="0.04" fill="white">
@@ -256,67 +256,47 @@
 
   <!-- ============ BOTTOM STATS BAR ============ -->
 
-  <!-- Stats background -->
-  <rect x="0" y="522" width="1280" height="72" fill="#0a0e18" opacity="0.6"/>
-  <rect x="0" y="522" width="1280" height="1" fill="#1e293b"/>
+  <!-- Stats background (panel bottom=512, gap=20, bar starts at 532) -->
+  <rect x="0" y="532" width="1280" height="72" fill="#0a0e18" opacity="0.6"/>
+  <rect x="0" y="532" width="1280" height="1" fill="#1e293b"/>
 
-  <!-- Stat 1: Rules -->
-  <text x="160" y="522" text-anchor="middle" font-family="system-ui, sans-serif" font-size="28" font-weight="800" fill="url(#accent)">81</text>
-  <text x="160" y="578" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12" font-weight="500" fill="#64748b" letter-spacing="1.5">RULES</text>
+  <text x="160" y="564" text-anchor="middle" font-family="system-ui, sans-serif" font-size="28" font-weight="800" fill="url(#accent)">81</text>
+  <text x="160" y="588" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12" font-weight="500" fill="#64748b" letter-spacing="1.5">RULES</text>
+  <rect x="288" y="545" width="1" height="46" fill="#1e293b"/>
 
-  <!-- Divider -->
-  <rect x="288" y="535" width="1" height="46" fill="#1e293b"/>
+  <text x="416" y="564" text-anchor="middle" font-family="system-ui, sans-serif" font-size="28" font-weight="800" fill="#4ade80">71</text>
+  <text x="416" y="588" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12" font-weight="500" fill="#64748b" letter-spacing="1.5">AUTO-FIXABLE</text>
+  <rect x="544" y="545" width="1" height="46" fill="#1e293b"/>
 
-  <!-- Stat 2: Auto-fixable -->
-  <text x="416" y="522" text-anchor="middle" font-family="system-ui, sans-serif" font-size="28" font-weight="800" fill="#4ade80">71</text>
-  <text x="416" y="578" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12" font-weight="500" fill="#64748b" letter-spacing="1.5">AUTO-FIXABLE</text>
+  <text x="672" y="564" text-anchor="middle" font-family="system-ui, sans-serif" font-size="28" font-weight="800" fill="#60a5fa">17</text>
+  <text x="672" y="588" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12" font-weight="500" fill="#64748b" letter-spacing="1.5">CATEGORIES</text>
+  <rect x="800" y="545" width="1" height="46" fill="#1e293b"/>
 
-  <!-- Divider -->
-  <rect x="544" y="535" width="1" height="46" fill="#1e293b"/>
+  <text x="928" y="564" text-anchor="middle" font-family="system-ui, sans-serif" font-size="28" font-weight="800" fill="#fbbf24">0</text>
+  <text x="928" y="588" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12" font-weight="500" fill="#64748b" letter-spacing="1.5">DEPENDENCIES</text>
+  <rect x="1056" y="545" width="1" height="46" fill="#1e293b"/>
 
-  <!-- Stat 3: Categories -->
-  <text x="672" y="522" text-anchor="middle" font-family="system-ui, sans-serif" font-size="28" font-weight="800" fill="#60a5fa">17</text>
-  <text x="672" y="578" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12" font-weight="500" fill="#64748b" letter-spacing="1.5">CATEGORIES</text>
+  <text x="1168" y="564" text-anchor="middle" font-family="system-ui, sans-serif" font-size="20" font-weight="800" fill="#a78bfa">v9 &amp; v10</text>
+  <text x="1168" y="588" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12" font-weight="500" fill="#64748b" letter-spacing="1.5">ESLINT</text>
 
-  <!-- Divider -->
-  <rect x="800" y="535" width="1" height="46" fill="#1e293b"/>
+  <!-- Tech badges (bar bottom=604, gap=16, badges at 620) -->
+  <rect x="380" y="620" width="76" height="28" rx="6" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+  <text x="418" y="639" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12" font-weight="600" fill="#61dafb">React</text>
+  <rect x="466" y="620" width="96" height="28" rx="6" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+  <text x="514" y="639" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12" font-weight="600" fill="#3178c6">TypeScript</text>
+  <rect x="572" y="620" width="100" height="28" rx="6" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+  <text x="622" y="639" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12" font-weight="600" fill="#06b6d4">Tailwind CSS</text>
+  <rect x="682" y="620" width="76" height="28" rx="6" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+  <text x="720" y="639" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12" font-weight="600" fill="white">Next.js</text>
+  <rect x="768" y="620" width="66" height="28" rx="6" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+  <text x="801" y="639" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12" font-weight="600" fill="#4b32c3">ESLint</text>
+  <rect x="844" y="620" width="56" height="28" rx="6" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+  <text x="872" y="639" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12" font-weight="600" fill="#a78bfa">JSX</text>
 
-  <!-- Stat 4: Zero deps -->
-  <text x="928" y="522" text-anchor="middle" font-family="system-ui, sans-serif" font-size="28" font-weight="800" fill="#fbbf24">0</text>
-  <text x="928" y="578" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12" font-weight="500" fill="#64748b" letter-spacing="1.5">DEPENDENCIES</text>
+  <!-- Terminal (badges bottom=648, gap=16, terminal at 664) -->
+  <rect x="360" y="664" width="560" height="34" rx="8" fill="#0d1117" stroke="#1e293b" stroke-width="1"/>
+  <text x="640" y="686" text-anchor="middle" font-family="'Courier New', monospace" font-size="13" fill="#cbd5e1">$ npm install eslint-plugin-code-style --save-dev</text>
 
-  <!-- Divider -->
-  <rect x="1056" y="535" width="1" height="46" fill="#1e293b"/>
-
-  <!-- Stat 5: ESLint -->
-  <text x="1168" y="522" text-anchor="middle" font-family="system-ui, sans-serif" font-size="20" font-weight="800" fill="#a78bfa">v9 &amp; v10</text>
-  <text x="1168" y="578" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12" font-weight="500" fill="#64748b" letter-spacing="1.5">ESLINT</text>
-
-  <!-- ============ BOTTOM TECH BADGES ============ -->
-
-  <!-- Tech stack pills (total=520px, center=640, start=380) -->
-  <rect x="380" y="618" width="76" height="28" rx="6" fill="#1e293b" stroke="#334155" stroke-width="1"/>
-  <text x="418" y="637" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12" font-weight="600" fill="#61dafb">React</text>
-
-  <rect x="466" y="618" width="96" height="28" rx="6" fill="#1e293b" stroke="#334155" stroke-width="1"/>
-  <text x="514" y="637" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12" font-weight="600" fill="#3178c6">TypeScript</text>
-
-  <rect x="572" y="618" width="100" height="28" rx="6" fill="#1e293b" stroke="#334155" stroke-width="1"/>
-  <text x="622" y="637" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12" font-weight="600" fill="#06b6d4">Tailwind CSS</text>
-
-  <rect x="682" y="618" width="76" height="28" rx="6" fill="#1e293b" stroke="#334155" stroke-width="1"/>
-  <text x="720" y="637" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12" font-weight="600" fill="white">Next.js</text>
-
-  <rect x="768" y="618" width="66" height="28" rx="6" fill="#1e293b" stroke="#334155" stroke-width="1"/>
-  <text x="801" y="637" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12" font-weight="600" fill="#4b32c3">ESLint</text>
-
-  <rect x="844" y="618" width="56" height="28" rx="6" fill="#1e293b" stroke="#334155" stroke-width="1"/>
-  <text x="872" y="637" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12" font-weight="600" fill="#a78bfa">JSX</text>
-
-  <!-- Install command (width=560, center=640, start=360) -->
-  <rect x="360" y="668" width="560" height="34" rx="8" fill="#0d1117" stroke="#1e293b" stroke-width="1"/>
-  <text x="640" y="690" text-anchor="middle" font-family="'Courier New', monospace" font-size="13" fill="#cbd5e1">$ npm install eslint-plugin-code-style --save-dev</text>
-
-  <!-- Bottom accent line -->
-  <rect y="730" width="1280" height="2" fill="url(#accent)" opacity="0.6"/>
+  <!-- Bottom accent line (terminal bottom=698, gap=12) -->
+  <rect y="710" width="1280" height="2" fill="url(#accent)" opacity="0.6"/>
 </svg>
