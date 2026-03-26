@@ -523,10 +523,15 @@ export const componentStringsData = {
 
 // Metadata strings (root layout)
 export const metadataStringsData = {
-    defaultDescription: "81 custom ESLint rules for enforcing consistent code formatting in React/JSX projects. 71 auto-fixable, 20 configurable. Built for ESLint v9+ flat config.",
+    authorName: "Mohamed Elhawary",
+    authorUrl: "https://hawary.dev",
+    defaultDescription: "81 custom ESLint rules for enforcing consistent code formatting in React/JSX projects. 71 auto-fixable, 20 configurable. Built for ESLint v9 and v10 flat config.",
     defaultTitle: "eslint-plugin-code-style",
-    ogDescription: "81 custom ESLint rules for React/JSX projects",
+    keywords: "eslint,eslint-plugin,code-style,react,jsx,typescript,tailwindcss,linting,formatting,auto-fix,eslint-rules,code-quality",
+    ogDescription: "81 custom ESLint rules for React/JSX projects. Auto-fixable, zero dependencies, ESLint v9 and v10.",
     ogSiteName: "eslint-plugin-code-style",
-    ogTitle: "eslint-plugin-code-style",
+    ogTitle: "eslint-plugin-code-style — 81 ESLint Rules for React",
     titleTemplate: "%s \u2014 eslint-plugin-code-style",
+    twitterDescription: "81 custom ESLint rules for React/JSX. 71 auto-fixable, 20 configurable. Zero dependencies.",
+    twitterTitle: "eslint-plugin-code-style",
 };

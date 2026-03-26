@@ -8,18 +8,37 @@ import { ThemeProvider } from "@/components";
 import { layoutStringsData, metadataStringsData } from "@/data";
 
 export const metadata: Metadata = {
+    authors: [
+        {
+            name: metadataStringsData.authorName,
+            url: metadataStringsData.authorUrl,
+        },
+    ],
+    creator: metadataStringsData.authorName,
     description: metadataStringsData.defaultDescription,
+    keywords: metadataStringsData.keywords.split(","),
     metadataBase: new URL("https://eslint-plugin-code-style.vercel.app"),
     openGraph: {
         description: metadataStringsData.ogDescription,
+        locale: "en_US",
         siteName: metadataStringsData.ogSiteName,
         title: metadataStringsData.ogTitle,
         type: "website",
         url: "https://eslint-plugin-code-style.vercel.app",
     },
+    publisher: metadataStringsData.authorName,
+    robots: {
+        follow: true,
+        index: true,
+    },
     title: {
         default: metadataStringsData.defaultTitle,
         template: metadataStringsData.titleTemplate,
+    },
+    twitter: {
+        card: "summary_large_image",
+        description: metadataStringsData.twitterDescription,
+        title: metadataStringsData.twitterTitle,
     },
 };
 
