@@ -1,7 +1,7 @@
 import js from "@eslint/js";
 import stylistic from "@stylistic/eslint-plugin";
-import tsParser from "@typescript-eslint/parser";
 import tsPlugin from "@typescript-eslint/eslint-plugin";
+import tsParser from "@typescript-eslint/parser";
 import checkFile from "eslint-plugin-check-file";
 import codeStyle from "eslint-plugin-code-style";
 import importX from "eslint-plugin-import-x";
@@ -12,11 +12,6 @@ import reactHooks from "eslint-plugin-react-hooks";
 import simpleImportSort from "eslint-plugin-simple-import-sort";
 import tailwind from "eslint-plugin-tailwindcss";
 import globals from "globals";
-/*
-* Tailwind CSS v4 only: Resolve __dirname and set the tailwindcss config path in the tailwind.configs map below.
-* For Tailwind CSS v3, remove the .map() and use just: ...tailwind.configs["flat/recommended"],
-* Also for v3, use "eslint-plugin-tailwindcss": "^3.18.2" instead of "^4.0.0-beta.0"
-*/
 import { dirname, join } from "path";
 import { fileURLToPath } from "url";
 
@@ -83,8 +78,6 @@ export default [ // eslint-disable-line
             ...react.configs.recommended.rules,
             ...reactHooks.configs.recommended.rules,
             ...tsPlugin.configs.recommended.rules,
-
-            // Stylistic rules
             "@stylistic/comma-dangle": ["error", "always-multiline"],
             "@stylistic/comma-spacing": "error",
             "@stylistic/dot-location": "error",
@@ -136,8 +129,6 @@ export default [ // eslint-disable-line
             "@stylistic/semi-style": "error",
             "@stylistic/space-in-parens": "error",
             "@stylistic/space-infix-ops": "error",
-
-            // TypeScript rules
             "@typescript-eslint/consistent-type-imports": [
                 "error",
                 {
@@ -153,14 +144,10 @@ export default [ // eslint-disable-line
                     varsIgnorePattern: "^_",
                 },
             ],
-
-            // Base ESLint rules
             "array-callback-return": "off",
             "arrow-body-style": ["error", "as-needed"],
             camelcase: "off",
             "capitalized-comments": ["error"],
-
-            // Check file rules
             "check-file/filename-naming-convention": [
                 "error",
                 { "**/*.{js,jsx,ts,tsx}": "KEBAB_CASE" },
@@ -170,8 +157,6 @@ export default [ // eslint-disable-line
                 "error",
                 { "src/**": "KEBAB_CASE" },
             ],
-
-            // Code style rules
             "code-style/absolute-imports-only": "error",
             "code-style/array-callback-destructure": "error",
             "code-style/array-items-per-line": "error",
@@ -253,8 +238,6 @@ export default [ // eslint-disable-line
             "code-style/typescript-definition-location": "error",
             "code-style/use-state-naming-convention": "error",
             "code-style/variable-naming-convention": "error",
-
-            // General rules
             complexity: "off",
             "consistent-return": "off",
             curly: ["error", "multi-or-nest"],
@@ -263,16 +246,12 @@ export default [ // eslint-disable-line
             "dot-notation": ["error", { allowKeywords: false }],
             eqeqeq: "error",
             "func-style": ["error", "expression"],
-
-            // Import rules
             "import-x/no-cycle": 0,
             "import-x/no-default-export": "error",
             "import-x/no-named-as-default": 0,
             "import-x/no-named-as-default-member": 0,
             "import-x/no-unresolved": 0,
             "import-x/prefer-default-export": 0,
-
-            // Accessibility rules
             "jsx-a11y/anchor-is-valid": "off",
             "jsx-a11y/click-events-have-key-events": "off",
             "jsx-a11y/html-has-lang": "off",
@@ -280,16 +259,12 @@ export default [ // eslint-disable-line
             "jsx-a11y/media-has-caption": "off",
             "jsx-a11y/no-static-element-interactions": "off",
             "jsx-a11y/tabindex-no-positive": "off",
-
-            // Complexity rules
             "max-depth": ["error", 4],
             "max-len": "off",
             "max-lines": "off",
             "max-lines-per-function": "off",
             "max-nested-callbacks": ["error", 4],
             "max-params": "off",
-
-            // Error prevention rules
             "no-alert": "error",
             "no-await-in-loop": "error",
             "no-cond-assign": "error",
@@ -310,8 +285,6 @@ export default [ // eslint-disable-line
             "no-use-before-define": "off",
             "no-useless-escape": "off",
             "no-var": "error",
-
-            // Perfectionist rules
             "perfectionist/sort-array-includes": [
                 "error",
                 {
@@ -376,15 +349,10 @@ export default [ // eslint-disable-line
                     type: "natural",
                 },
             ],
-            
             radix: 0,
-
-            // React hooks rules
             "react-hooks/exhaustive-deps": "off",
             "react-hooks/set-state-in-effect": 0,
             "react-hooks/use-memo": 0,
-
-            // React rules
             "react/button-has-type": 0,
             "react/display-name": "off",
             "react/forbid-prop-types": 0,
@@ -441,31 +409,33 @@ export default [ // eslint-disable-line
             "react/react-in-jsx-scope": "off",
             "react/require-default-props": 0,
             "react/self-closing-comp": "error",
-
-            // Import sort rules
             "simple-import-sort/exports": "error",
             "simple-import-sort/imports": "error",
-
             "sort-keys": "off",
-
-            // Tailwind rules
             "tailwindcss/classnames-order": "error",
             "tailwindcss/enforces-negative-arbitrary-values": "error",
             "tailwindcss/enforces-shorthand": "error",
             "tailwindcss/no-custom-classname": "error",
             "tailwindcss/no-unnecessary-arbitrary-value": "error",
-
             "valid-typeof": "error",
             "vars-on-top": "error",
         },
         settings: {
-            "import-x/extensions": [".js", ".jsx", ".ts", ".tsx"],
-            "import-x/parsers": {
-                "@typescript-eslint/parser": [".ts", ".tsx"],
-            },
+            "import-x/extensions": [
+                ".js",
+                ".jsx",
+                ".ts",
+                ".tsx",
+            ],
+            "import-x/parsers": { "@typescript-eslint/parser": [".ts", ".tsx"] },
             "import-x/resolver": {
                 node: {
-                    extensions: [".js", ".jsx", ".ts", ".tsx"],
+                    extensions: [
+                        ".js",
+                        ".jsx",
+                        ".ts",
+                        ".tsx",
+                    ],
                     paths: ["src"],
                 },
             },
