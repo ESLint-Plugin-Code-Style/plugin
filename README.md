@@ -37,6 +37,7 @@ This plugin provides **81 custom rules** (71 auto-fixable, 20 configurable) for 
 - **Self-sufficient rules** — Each rule handles complete formatting independently
 - **Consistency at scale** — Reduces code-style differences between team members by enforcing uniform formatting across your projects
 - **Highly automated** — 71 of 81 rules support auto-fix with `eslint --fix`
+- **Next.js compatible** — Rules automatically detect and respect App Router conventions (dynamic routes, reserved filenames, route groups, parallel routes)
 
 When combined with ESLint's native rules and other popular plugins, this package helps create a complete code style solution that keeps your codebase clean and consistent.
 
@@ -135,6 +136,20 @@ Designed for ESLint's flat config system. Supports both ESLint v9 and v10 with d
 
 ### 📭 Zero Dependencies
 Lightweight plugin with no external dependencies. Fast and efficient.
+
+</td>
+</tr>
+<tr>
+<td width="50%">
+
+### 🔄 Next.js Compatible
+Rules automatically detect and respect Next.js App Router conventions — dynamic routes, reserved filenames, and special folders.
+
+</td>
+<td width="50%">
+
+### 📦 TypeScript First
+9 dedicated TypeScript rules for enums, interfaces, types, prop naming, and type annotation formatting.
 
 </td>
 </tr>

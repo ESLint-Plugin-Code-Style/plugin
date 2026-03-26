@@ -994,18 +994,19 @@ This makes `git log` readable and helps understand what each version contains wi
 
 When bumping MINOR or MAJOR version, the CHANGELOG entry must follow this format.
 
-**IMPORTANT:** The release should contain ALL changes since the **previous RELEASE** (MINOR/MAJOR). The Version Range starts from the first version AFTER the previous release.
+**IMPORTANT:** The Version Range and Full Changelog link must compare against the **immediately preceding version** (the last tag published before this one), NOT the previous MINOR/MAJOR release.
 
-Example: If releasing v1.7.0 and the previous release was v1.6.0:
-- Version Range: **v1.6.1 → v1.7.0** (starts AFTER v1.6.0)
-- Include changes from: v1.6.1, v1.6.2, ... v1.6.6, AND v1.7.0
+Example: If releasing v1.7.0 and the last published tag was v1.6.6:
+- Version Range: **v1.6.6 → v1.7.0** (immediately preceding tag)
+- Full Changelog link: `compare/v1.6.6...v1.7.0`
+- Include changes from: ALL patches since the previous MINOR/MAJOR (v1.6.1 through v1.6.6 AND v1.7.0)
 
 ```markdown
 ## [X.Y.0] - YYYY-MM-DD
 
 **Release Title (Brief Description of Main Features)**
 
-**Version Range:** vAfterPreviousRelease → vCurrent
+**Version Range:** vImmediatelyPrecedingTag → vCurrent
 
 ### Added
 
@@ -1026,12 +1027,12 @@ Example: If releasing v1.7.0 and the previous release was v1.6.0:
 - Auto-fixable: ZZ rules 🔧
 - Report-only: N rules
 
-**Full Changelog:** [vAfterPreviousRelease...vCurrent](https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/vAfterPreviousRelease...vCurrent)
+**Full Changelog:** [vImmediatelyPrecedingTag...vCurrent](https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/vImmediatelyPrecedingTag...vCurrent)
 ```
 
 **Required elements for MINOR/MAJOR releases:**
 1. **Release title** in bold describing main changes
-2. **Version Range** showing first version AFTER previous release → current version
+2. **Version Range** showing immediately preceding tag → current version
 3. **Consolidated changes** from all versions since last release
 4. **Stats** section with rule counts
 5. **Full Changelog** link at the end
@@ -1093,7 +1094,7 @@ GitHub Releases group multiple version tags into a single release announcement. 
 - **All MAJOR versions (X.0.0)** - Every new MAJOR version is a release
 - Optionally after multiple PATCH versions accumulate significant changes
 
-**Note:** All MINOR versions (e.g., v1.7.0, v1.8.0) and MAJOR versions (e.g., v2.0.0) are considered releases and must be added to the "Current releases" list. The Version Range for a release always starts from the first version AFTER the previous release (MINOR or MAJOR) up to the current version.
+**Note:** All MINOR versions (e.g., v1.7.0, v1.8.0) and MAJOR versions (e.g., v2.0.0) are considered releases and must be added to the "Current releases" list. The Version Range for a release always compares the **immediately preceding tag** (the last published version before this one) to the current version.
 
 **Release format:**
 
@@ -1173,11 +1174,11 @@ This project follows the [Keep a Changelog](https://keepachangelog.com/en/1.1.0/
 #### Two Types of Entries
 
 **1. Releases** (published to GitHub Releases)
-- Have **Version Range** showing tags covered
+- Have **Version Range** showing immediately preceding tag → current version
 - Full detailed sections with sub-categories
 - Include **Full Changelog** link at the end
 - Content must match the GitHub Release description
-- **Current releases:** v2.2.0, v2.1.0, v2.0.0, v1.20.0, v1.19.0, v1.18.0, v1.17.0, v1.16.0, v1.15.0, v1.14.0, v1.13.0, v1.12.0, v1.11.0, v1.10.0, v1.9.0, v1.8.0, v1.7.0, v1.6.0, v1.5.0, v1.4.2, v1.3.0, v1.2.0, v1.1.0, v1.0.16, v1.0.14, v1.0.7, v1.0.6
+- **Current releases:** v3.0.0, v2.2.0, v2.1.0, v2.0.0, v1.20.0, v1.19.0, v1.18.0, v1.17.0, v1.16.0, v1.15.0, v1.14.0, v1.13.0, v1.12.0, v1.11.0, v1.10.0, v1.9.0, v1.8.0, v1.7.0, v1.6.0, v1.5.0, v1.4.2, v1.3.0, v1.2.0, v1.1.0, v1.0.16, v1.0.14, v1.0.7, v1.0.6
 
 **2. Tags/PATCH versions** (between releases)
 - Simpler entries with just the changes
@@ -1311,7 +1312,7 @@ When creating a release:
 - [ ] Create GitHub Release with the description and title
 - [ ] Copy exact same content to CHANGELOG.md
 - [ ] Add **Release Title** (bold text after version header)
-- [ ] Add **Version Range** showing first and last tag in release
+- [ ] Add **Version Range** showing immediately preceding tag → current version
 - [ ] Add **Full Changelog** link at the end: `**Full Changelog:** [vX.X.X...vY.Y.Y](compare-url)`
 - [ ] Update the "Current releases" list in this file (AGENTS.md)
 - [ ] Verify content matches between GitHub Release and CHANGELOG

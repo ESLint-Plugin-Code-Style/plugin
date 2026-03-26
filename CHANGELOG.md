@@ -38,7 +38,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 **Documentation Website, Next.js Compatibility & ESLint v10 Support**
 
 **Version Range:** v2.2.5 → v3.0.0
-**Full Changelog:** [v2.2.5...v3.0.0](https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v2.2.5...v3.0.0)
 
 ### Added
 
@@ -83,6 +82,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Recommended config paths changed: `recommended-configs/react/` → `recommended-configs/v9/react/` (same for all 4 variants)
 - Test project paths changed: `_tests_/react/` → `_tests_/v9/react/` (same for all 4 variants)
 - Removed `docs/frontend-guide/` directory
+
+**Full Changelog:** [v2.2.5...v3.0.0](https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v2.2.5...v3.0.0)
 
 ---
 
