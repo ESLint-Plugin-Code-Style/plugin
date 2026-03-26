@@ -44,19 +44,20 @@
 
   <!-- ============ HEADER SECTION ============ -->
 
-  <!-- Logo + Plugin name (centered as one group) -->
-  <rect x="401" y="34" width="52" height="52" rx="12" fill="url(#accent)"/>
-  <text x="427" y="68" text-anchor="middle" font-family="'Courier New', monospace" font-size="26" font-weight="700" fill="white">CS</text>
-  <text x="465" y="70" font-family="system-ui, -apple-system, sans-serif" font-size="30" font-weight="800" fill="white" letter-spacing="-0.5">eslint-plugin-code-style</text>
+  <!-- Plugin name (centered) -->
+  <text x="640" y="70" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="30" font-weight="800" fill="white" letter-spacing="-0.5">eslint-plugin-code-style</text>
+  <!-- Logo badge (positioned left of centered text) -->
+  <rect x="382" y="42" width="48" height="48" rx="11" fill="url(#accent)"/>
+  <text x="406" y="74" text-anchor="middle" font-family="'Courier New', monospace" font-size="24" font-weight="700" fill="white">CS</text>
 
-  <!-- Tagline -->
-  <text x="640" y="112" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="17" fill="#7c8ca3">Consistent code formatting for React, TypeScript &amp; Tailwind CSS projects</text>
+  <!-- Tagline (centered) -->
+  <text x="640" y="106" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="17" fill="#7c8ca3">Consistent code formatting for React, TypeScript &amp; Tailwind CSS projects</text>
 
   <!-- ============ BEFORE / AFTER CODE PANELS ============ -->
 
   <!-- Before panel (messy code) -->
-  <g transform="translate(60, 148)">
-    <rect width="555" height="268" rx="12" fill="#0d1117" stroke="#1e293b" stroke-width="1"/>
+  <g transform="translate(60, 140)">
+    <rect width="555" height="282" rx="12" fill="#0d1117" stroke="#1e293b" stroke-width="1"/>
     <rect width="555" height="34" rx="12" fill="#161b22"/>
     <rect y="24" width="555" height="10" fill="#161b22"/>
     <circle cx="18" cy="17" r="5" fill="#f87171" opacity="0.8"/>
@@ -64,80 +65,71 @@
     <circle cx="54" cy="17" r="5" fill="#4ade80" opacity="0.8"/>
     <text x="277" y="22" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12" fill="#64748b">before.tsx</text>
     <rect x="458" y="6" width="82" height="22" rx="6" fill="#ef4444" opacity="0.15"/>
-    <text x="499" y="21" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" font-weight="600" fill="#f87171">14 errors</text>
+    <text x="499" y="21" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" font-weight="600" fill="#f87171">8 errors</text>
 
-    <!-- 1: cramped imports (import-format) -->
-    <text x="16" y="56" font-family="'Courier New', monospace" font-size="11.5" fill="#475569">1</text>
-    <text x="38" y="56" font-family="'Courier New', monospace" font-size="11.5" fill="#c084fc">import</text>
-    <text x="86" y="56" font-family="'Courier New', monospace" font-size="11.5" fill="#e2e8f0">{useState,useEffect,useCallback} </text>
-    <text x="378" y="56" font-family="'Courier New', monospace" font-size="11.5" fill="#c084fc">from</text>
-    <text x="414" y="56" font-family="'Courier New', monospace" font-size="11.5" fill="#a3e635">"react"</text>
-    <rect x="86" y="59" width="320" height="2" rx="1" fill="#ef4444" opacity="0.5"/>
+    <!-- Line 1: cramped imports -->
+    <text x="16" y="58" font-family="'Courier New', monospace" font-size="11" fill="#475569">1</text>
+    <text x="38" y="58" font-family="'Courier New', monospace" font-size="11" fill="#c084fc">import</text>
+    <text x="82" y="58" font-family="'Courier New', monospace" font-size="11" fill="#e2e8f0">{useState,useEffect,useCallback}</text>
+    <text x="336" y="58" font-family="'Courier New', monospace" font-size="11" fill="#c084fc">from</text>
+    <text x="370" y="58" font-family="'Courier New', monospace" font-size="11" fill="#a3e635">"react"</text>
+    <rect x="82" y="61" width="282" height="1.5" rx="1" fill="#ef4444" opacity="0.6"/>
 
-    <!-- 2: function declaration (function-declaration-style) -->
-    <text x="16" y="76" font-family="'Courier New', monospace" font-size="11.5" fill="#475569">2</text>
-    <text x="38" y="76" font-family="'Courier New', monospace" font-size="11.5" fill="#c084fc">function</text>
-    <text x="106" y="76" font-family="'Courier New', monospace" font-size="11.5" fill="#60a5fa">UserDashboard</text>
-    <text x="222" y="76" font-family="'Courier New', monospace" font-size="11.5" fill="#e2e8f0">(props) {</text>
-    <rect x="38" y="79" width="100" height="2" rx="1" fill="#ef4444" opacity="0.5"/>
-    <rect x="222" y="79" width="50" height="2" rx="1" fill="#ef4444" opacity="0.5"/>
+    <!-- Line 2: blank -->
+    <!-- Line 3: function declaration + props -->
+    <text x="16" y="82" font-family="'Courier New', monospace" font-size="11" fill="#475569">3</text>
+    <text x="38" y="82" font-family="'Courier New', monospace" font-size="11" fill="#c084fc">function</text>
+    <text x="102" y="82" font-family="'Courier New', monospace" font-size="11" fill="#60a5fa">UserDashboard</text>
+    <text x="210" y="82" font-family="'Courier New', monospace" font-size="11" fill="#e2e8f0">(props) {</text>
+    <rect x="38" y="85" width="90" height="1.5" rx="1" fill="#ef4444" opacity="0.6"/>
+    <rect x="210" y="85" width="48" height="1.5" rx="1" fill="#ef4444" opacity="0.6"/>
 
-    <!-- 3: wrong hook order — useEffect before useState (react-code-order) -->
-    <text x="16" y="96" font-family="'Courier New', monospace" font-size="11.5" fill="#475569">3</text>
-    <text x="56" y="96" font-family="'Courier New', monospace" font-size="11.5" fill="#60a5fa">useEffect</text>
-    <text x="128" y="96" font-family="'Courier New', monospace" font-size="11.5" fill="#e2e8f0">(() =&gt; { fetchData() }, [id])</text>
-    <rect x="56" y="99" width="280" height="2" rx="1" fill="#ef4444" opacity="0.5"/>
+    <!-- Line 4: useEffect before useState (wrong order) -->
+    <text x="16" y="106" font-family="'Courier New', monospace" font-size="11" fill="#475569">4</text>
+    <text x="56" y="106" font-family="'Courier New', monospace" font-size="11" fill="#60a5fa">useEffect</text>
+    <text x="124" y="106" font-family="'Courier New', monospace" font-size="11" fill="#e2e8f0">(() =&gt; fetchData(), [id])</text>
+    <rect x="56" y="109" width="240" height="1.5" rx="1" fill="#ef4444" opacity="0.6"/>
 
-    <!-- 4: boolean state without prefix (use-state-naming-convention) -->
-    <text x="16" y="116" font-family="'Courier New', monospace" font-size="11.5" fill="#475569">4</text>
-    <text x="56" y="116" font-family="'Courier New', monospace" font-size="11.5" fill="#c084fc">const</text>
-    <text x="100" y="116" font-family="'Courier New', monospace" font-size="11.5" fill="#e2e8f0">[loading, setLoading] =</text>
-    <text x="310" y="116" font-family="'Courier New', monospace" font-size="11.5" fill="#60a5fa">useState</text>
-    <text x="378" y="116" font-family="'Courier New', monospace" font-size="11.5" fill="#e2e8f0">(</text>
-    <text x="386" y="116" font-family="'Courier New', monospace" font-size="11.5" fill="#f97316">false</text>
-    <text x="426" y="116" font-family="'Courier New', monospace" font-size="11.5" fill="#e2e8f0">)</text>
-    <rect x="100" y="119" width="80" height="2" rx="1" fill="#ef4444" opacity="0.5"/>
+    <!-- Line 5: boolean state no prefix -->
+    <text x="16" y="130" font-family="'Courier New', monospace" font-size="11" fill="#475569">5</text>
+    <text x="56" y="130" font-family="'Courier New', monospace" font-size="11" fill="#c084fc">const</text>
+    <text x="96" y="130" font-family="'Courier New', monospace" font-size="11" fill="#e2e8f0">[loading, setLoading] = useState(</text>
+    <text x="340" y="130" font-family="'Courier New', monospace" font-size="11" fill="#f97316">false</text>
+    <text x="376" y="130" font-family="'Courier New', monospace" font-size="11" fill="#e2e8f0">)</text>
+    <rect x="96" y="133" width="72" height="1.5" rx="1" fill="#ef4444" opacity="0.6"/>
 
-    <!-- 5: handleClick pattern (function-naming-convention) -->
-    <text x="16" y="136" font-family="'Courier New', monospace" font-size="11.5" fill="#475569">5</text>
-    <text x="56" y="136" font-family="'Courier New', monospace" font-size="11.5" fill="#c084fc">const</text>
-    <text x="100" y="136" font-family="'Courier New', monospace" font-size="11.5" fill="#e2e8f0">handleSubmit = () =&gt; {</text>
-    <rect x="100" y="139" width="108" height="2" rx="1" fill="#ef4444" opacity="0.5"/>
+    <!-- Line 6: handleSubmit pattern -->
+    <text x="16" y="154" font-family="'Courier New', monospace" font-size="11" fill="#475569">6</text>
+    <text x="56" y="154" font-family="'Courier New', monospace" font-size="11" fill="#c084fc">const</text>
+    <text x="96" y="154" font-family="'Courier New', monospace" font-size="11" fill="#e2e8f0">handleSubmit = () =&gt; { </text>
+    <text x="296" y="154" font-family="'Courier New', monospace" font-size="11" fill="#c084fc">return</text>
+    <text x="340" y="154" font-family="'Courier New', monospace" font-size="11" fill="#e2e8f0">send(data) }</text>
+    <rect x="96" y="157" width="100" height="1.5" rx="1" fill="#ef4444" opacity="0.6"/>
 
-    <!-- 6: block body with single return (arrow-function-simplify) -->
-    <text x="16" y="156" font-family="'Courier New', monospace" font-size="11.5" fill="#475569">6</text>
-    <text x="74" y="156" font-family="'Courier New', monospace" font-size="11.5" fill="#c084fc">return</text>
-    <text x="122" y="156" font-family="'Courier New', monospace" font-size="11.5" fill="#60a5fa">submitForm</text>
-    <text x="202" y="156" font-family="'Courier New', monospace" font-size="11.5" fill="#e2e8f0">(data)</text>
+    <!-- Line 7: inline object -->
+    <text x="16" y="178" font-family="'Courier New', monospace" font-size="11" fill="#475569">7</text>
+    <text x="56" y="178" font-family="'Courier New', monospace" font-size="11" fill="#c084fc">const</text>
+    <text x="96" y="178" font-family="'Courier New', monospace" font-size="11" fill="#e2e8f0">config = {theme: "dark", lang: "en"}</text>
+    <rect x="148" y="181" width="224" height="1.5" rx="1" fill="#ef4444" opacity="0.6"/>
 
-    <!-- 7: closing brace -->
-    <text x="16" y="176" font-family="'Courier New', monospace" font-size="11.5" fill="#475569">7</text>
-    <text x="56" y="176" font-family="'Courier New', monospace" font-size="11.5" fill="#e2e8f0">}</text>
+    <!-- Line 8: double spaces in className -->
+    <text x="16" y="202" font-family="'Courier New', monospace" font-size="11" fill="#475569">8</text>
+    <text x="56" y="202" font-family="'Courier New', monospace" font-size="11" fill="#c084fc">return</text>
+    <text x="102" y="202" font-family="'Courier New', monospace" font-size="11" fill="#e2e8f0">&lt;div className="flex  items-center "&gt;</text>
+    <rect x="202" y="205" width="170" height="1.5" rx="1" fill="#ef4444" opacity="0.6"/>
 
-    <!-- 8: inline object (object-property-per-line) -->
-    <text x="16" y="196" font-family="'Courier New', monospace" font-size="11.5" fill="#475569">8</text>
-    <text x="56" y="196" font-family="'Courier New', monospace" font-size="11.5" fill="#c084fc">const</text>
-    <text x="100" y="196" font-family="'Courier New', monospace" font-size="11.5" fill="#e2e8f0">config = {theme: "dark", lang: "en"}</text>
-    <rect x="156" y="199" width="230" height="2" rx="1" fill="#ef4444" opacity="0.5"/>
+    <!-- Line 9: closing -->
+    <text x="16" y="226" font-family="'Courier New', monospace" font-size="11" fill="#475569">9</text>
+    <text x="38" y="226" font-family="'Courier New', monospace" font-size="11" fill="#e2e8f0">}</text>
 
-    <!-- 9: double spaces in className (classname-no-extra-spaces) -->
-    <text x="16" y="216" font-family="'Courier New', monospace" font-size="11.5" fill="#475569">9</text>
-    <text x="56" y="216" font-family="'Courier New', monospace" font-size="11.5" fill="#c084fc">return</text>
-    <text x="104" y="216" font-family="'Courier New', monospace" font-size="11.5" fill="#e2e8f0">&lt;div className="flex  items-center "&gt;</text>
-    <rect x="214" y="219" width="180" height="2" rx="1" fill="#ef4444" opacity="0.5"/>
-
-    <!-- 10: closing -->
-    <text x="16" y="236" font-family="'Courier New', monospace" font-size="11.5" fill="#475569">10</text>
-    <text x="38" y="236" font-family="'Courier New', monospace" font-size="11.5" fill="#e2e8f0">}</text>
-
-    <!-- Rule annotations (right side, small) -->
-    <text x="500" y="56" text-anchor="end" font-family="system-ui, sans-serif" font-size="9" fill="#f87171" opacity="0.7">import-format</text>
-    <text x="500" y="76" text-anchor="end" font-family="system-ui, sans-serif" font-size="9" fill="#f87171" opacity="0.7">func-style + props</text>
-    <text x="500" y="96" text-anchor="end" font-family="system-ui, sans-serif" font-size="9" fill="#f87171" opacity="0.7">react-code-order</text>
-    <text x="500" y="116" text-anchor="end" font-family="system-ui, sans-serif" font-size="9" fill="#f87171" opacity="0.7">useState-naming</text>
-    <text x="500" y="136" text-anchor="end" font-family="system-ui, sans-serif" font-size="9" fill="#f87171" opacity="0.7">naming-convention</text>
-    <text x="500" y="196" text-anchor="end" font-family="system-ui, sans-serif" font-size="9" fill="#f87171" opacity="0.7">object-per-line</text>
-    <text x="500" y="216" text-anchor="end" font-family="system-ui, sans-serif" font-size="9" fill="#f87171" opacity="0.7">classname-spaces</text>
+    <!-- Rule names — right-aligned, outside code column -->
+    <text x="540" y="58" text-anchor="end" font-family="system-ui, sans-serif" font-size="8" fill="#f87171" opacity="0.7">import-format</text>
+    <text x="540" y="82" text-anchor="end" font-family="system-ui, sans-serif" font-size="8" fill="#f87171" opacity="0.7">func-style + props</text>
+    <text x="540" y="106" text-anchor="end" font-family="system-ui, sans-serif" font-size="8" fill="#f87171" opacity="0.7">code-order</text>
+    <text x="540" y="130" text-anchor="end" font-family="system-ui, sans-serif" font-size="8" fill="#f87171" opacity="0.7">useState-naming</text>
+    <text x="540" y="154" text-anchor="end" font-family="system-ui, sans-serif" font-size="8" fill="#f87171" opacity="0.7">naming + simplify</text>
+    <text x="540" y="178" text-anchor="end" font-family="system-ui, sans-serif" font-size="8" fill="#f87171" opacity="0.7">object-per-line</text>
+    <text x="540" y="202" text-anchor="end" font-family="system-ui, sans-serif" font-size="8" fill="#f87171" opacity="0.7">classname-spaces</text>
   </g>
 
   <!-- Arrow -->
@@ -267,29 +259,29 @@
 
   <!-- ============ BOTTOM TECH BADGES ============ -->
 
-  <!-- Tech stack pills -->
-  <rect x="310" y="528" width="76" height="28" rx="6" fill="#1e293b" stroke="#334155" stroke-width="1"/>
-  <text x="348" y="547" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12" font-weight="600" fill="#61dafb">React</text>
+  <!-- Tech stack pills (centered: total width ~560px, center=640, start=360) -->
+  <rect x="360" y="528" width="76" height="28" rx="6" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+  <text x="398" y="547" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12" font-weight="600" fill="#61dafb">React</text>
 
-  <rect x="400" y="528" width="100" height="28" rx="6" fill="#1e293b" stroke="#334155" stroke-width="1"/>
-  <text x="450" y="547" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12" font-weight="600" fill="#3178c6">TypeScript</text>
+  <rect x="446" y="528" width="96" height="28" rx="6" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+  <text x="494" y="547" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12" font-weight="600" fill="#3178c6">TypeScript</text>
 
-  <rect x="514" y="528" width="104" height="28" rx="6" fill="#1e293b" stroke="#334155" stroke-width="1"/>
-  <text x="566" y="547" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12" font-weight="600" fill="#06b6d4">Tailwind CSS</text>
+  <rect x="552" y="528" width="100" height="28" rx="6" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+  <text x="602" y="547" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12" font-weight="600" fill="#06b6d4">Tailwind CSS</text>
 
-  <rect x="632" y="528" width="80" height="28" rx="6" fill="#1e293b" stroke="#334155" stroke-width="1"/>
-  <text x="672" y="547" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12" font-weight="600" fill="white">Next.js</text>
+  <rect x="662" y="528" width="76" height="28" rx="6" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+  <text x="700" y="547" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12" font-weight="600" fill="white">Next.js</text>
 
-  <rect x="726" y="528" width="68" height="28" rx="6" fill="#1e293b" stroke="#334155" stroke-width="1"/>
-  <text x="760" y="547" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12" font-weight="600" fill="#4b32c3">ESLint</text>
+  <rect x="748" y="528" width="66" height="28" rx="6" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+  <text x="781" y="547" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12" font-weight="600" fill="#4b32c3">ESLint</text>
 
-  <rect x="808" y="528" width="64" height="28" rx="6" fill="#1e293b" stroke="#334155" stroke-width="1"/>
-  <text x="840" y="547" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12" font-weight="600" fill="#a78bfa">JSX</text>
+  <rect x="824" y="528" width="56" height="28" rx="6" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+  <text x="852" y="547" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12" font-weight="600" fill="#a78bfa">JSX</text>
 
-  <!-- Install command -->
-  <rect x="340" y="578" width="600" height="34" rx="8" fill="#0d1117" stroke="#1e293b" stroke-width="1"/>
-  <text x="360" y="600" font-family="'Courier New', monospace" font-size="13" fill="#4ade80">$</text>
-  <text x="380" y="600" font-family="'Courier New', monospace" font-size="13" fill="#cbd5e1">npm install eslint-plugin-code-style --save-dev</text>
+  <!-- Install command (centered: width=580, center=640) -->
+  <rect x="350" y="578" width="580" height="34" rx="8" fill="#0d1117" stroke="#1e293b" stroke-width="1"/>
+  <text x="374" y="600" font-family="'Courier New', monospace" font-size="13" fill="#4ade80">$</text>
+  <text x="394" y="600" font-family="'Courier New', monospace" font-size="13" fill="#cbd5e1">npm install eslint-plugin-code-style --save-dev</text>
 
   <!-- Bottom accent line -->
   <rect y="638" width="1280" height="2" fill="url(#accent)" opacity="0.6"/>
