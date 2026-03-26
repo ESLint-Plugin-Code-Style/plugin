@@ -66,7 +66,7 @@
     <circle cx="48" cy="16" r="5" fill="#4ade80" opacity="0.8"/>
     <text x="277" y="21" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" fill="#64748b">before.tsx</text>
     <rect x="456" y="5" width="86" height="22" rx="6" fill="#ef4444" opacity="0.15"/>
-    <text x="499" y="20" text-anchor="middle" font-family="system-ui, sans-serif" font-size="10" font-weight="600" fill="#f87171">12 errors</text>
+    <text x="499" y="20" text-anchor="middle" font-family="system-ui, sans-serif" font-size="10" font-weight="600" fill="#f87171">13 errors</text>
 
     <!-- cramped imports -->
     <text x="14" y="50" font-family="'Courier New', monospace" font-size="10" fill="#475569">1</text>
@@ -93,10 +93,9 @@
     <!-- boolean state no prefix -->
     <text x="14" y="110" font-family="'Courier New', monospace" font-size="10" fill="#475569">4</text>
     <text x="48" y="110" font-family="'Courier New', monospace" font-size="10" fill="#c084fc">const</text>
-    <text x="84" y="110" font-family="'Courier New', monospace" font-size="10" fill="#e2e8f0">[loading, setLoading] = useState(</text>
-    <text x="308" y="110" font-family="'Courier New', monospace" font-size="10" fill="#f97316">false</text>
-    <text x="340" y="110" font-family="'Courier New', monospace" font-size="10" fill="#e2e8f0">)</text>
+    <text x="84" y="110" font-family="'Courier New', monospace" font-size="10"><tspan fill="#e2e8f0">[loading, setLoading] = useState( </tspan><tspan fill="#f97316">false</tspan><tspan fill="#e2e8f0"> )</tspan></text>
     <rect x="84" y="113" width="66" height="1.5" rx="1" fill="#ef4444" opacity="0.5"/>
+    <rect x="290" y="113" width="60" height="1.5" rx="1" fill="#ef4444" opacity="0.5"/>
 
     <!-- handleSubmit + block body -->
     <text x="14" y="130" font-family="'Courier New', monospace" font-size="10" fill="#475569">5</text>
@@ -141,7 +140,7 @@
     <text x="540" y="50" text-anchor="end" font-family="system-ui, sans-serif" font-size="7.5" fill="#f87171" opacity="0.7">import-format</text>
     <text x="540" y="70" text-anchor="end" font-family="system-ui, sans-serif" font-size="7.5" fill="#f87171" opacity="0.7">func-style + props</text>
     <text x="540" y="90" text-anchor="end" font-family="system-ui, sans-serif" font-size="7.5" fill="#f87171" opacity="0.7">code-order + hook-format</text>
-    <text x="540" y="110" text-anchor="end" font-family="system-ui, sans-serif" font-size="7.5" fill="#f87171" opacity="0.7">useState-naming</text>
+    <text x="540" y="110" text-anchor="end" font-family="system-ui, sans-serif" font-size="7.5" fill="#f87171" opacity="0.7">naming + spacing</text>
     <text x="540" y="130" text-anchor="end" font-family="system-ui, sans-serif" font-size="7.5" fill="#f87171" opacity="0.7">naming + simplify</text>
     <text x="540" y="150" text-anchor="end" font-family="system-ui, sans-serif" font-size="7.5" fill="#f87171" opacity="0.7">object-per-line</text>
     <text x="540" y="170" text-anchor="end" font-family="system-ui, sans-serif" font-size="7.5" fill="#f87171" opacity="0.7">hook-callback-format</text>
