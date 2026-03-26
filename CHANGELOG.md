@@ -7,6 +7,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [3.0.1] - 2026-03-26
+
+### Fixed
+
+- Add `.gitignore` for docs website to exclude `.next/` build artifacts and `node_modules/` from version control
+- Pin `@eslint/js` version in all recommended config install commands (`@^9` for v9, `@^10` for v10)
+- Fix footer author link to use `hawary.dev` instead of GitHub profile
+- Import author URL dynamically from centralized metadata strings
+
+### Changed
+
+- Enhance website `package.json` with full metadata: description, license, author, homepage, repository, bugs, keywords, engines
+- Add comprehensive SEO metadata to website: Twitter card, authors, creator, publisher, robots, keywords, OpenGraph locale
+- Suppress hydration warnings on `<body>` for browser extension compatibility
+
+---
+
 ## [3.0.0] - 2026-03-26
 
 **Documentation Website, Next.js Compatibility & ESLint v10 Support**
@@ -2308,6 +2325,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+[3.0.1]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v3.0.0...v3.0.1
 [3.0.0]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v2.2.5...v3.0.0
 [2.2.5]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v2.2.4...v2.2.5
 [2.2.4]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v2.2.3...v2.2.4
