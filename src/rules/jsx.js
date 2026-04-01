@@ -414,19 +414,8 @@ const jsxElementChildNewLine = {
             return false;
         };
 
-        // Check if child is a complex JSX child (not simple text or expression)
-        const isComplexJsxChildHandler = (child) => {
-            if (child.type === "JSXElement" || child.type === "JSXFragment") {
-                return true;
-            }
-
-            // JSXExpressionContainer with complex expression (not simple variable)
-            if (child.type === "JSXExpressionContainer") {
-                return !isSimpleExpressionHandler(child.expression);
-            }
-
-            return false;
-        };
+        // Check if child is a direct JSX element/fragment (not expression containers — those are handled by jsx-children-on-new-line)
+        const isComplexJsxChildHandler = (child) => child.type === "JSXElement" || child.type === "JSXFragment";
 
         return {
             JSXElement(node) {

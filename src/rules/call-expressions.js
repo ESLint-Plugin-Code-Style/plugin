@@ -2075,8 +2075,10 @@ const simpleCallSingleLine = {
             // Simple call/import expressions
             if (isSimpleBodyHandler(bodyNode)) return true;
 
-            // Binary/logical expressions (comparisons like code === x)
-            if (bodyNode.type === "BinaryExpression" || bodyNode.type === "LogicalExpression") return true;
+            // Binary/logical expressions (comparisons like code === x) — both sides must also be simple
+            if (bodyNode.type === "BinaryExpression" || bodyNode.type === "LogicalExpression") {
+                return isSimpleExpressionHandler(bodyNode.left) && isSimpleExpressionHandler(bodyNode.right);
+            }
 
             // Member expressions (a.b, a?.b)
             if (bodyNode.type === "MemberExpression") return true;
@@ -2104,6 +2106,11 @@ const simpleCallSingleLine = {
 
                 // Callbacks with 2+ params should be multiline (handled by function-params-per-line)
                 if (arg.params.length >= 2) return;
+
+                // Skip destructured params with 2+ properties (would conflict with array-callback-destructure)
+                const param = arg.params[0];
+
+                if (param && param.type === "ObjectPattern" && param.properties.filter((p) => p.type === "Property").length >= 2) return;
 
                 const { body } = arg;
 
