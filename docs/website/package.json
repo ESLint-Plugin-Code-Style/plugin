@@ -40,11 +40,13 @@
     },
     "scripts": {
         "dev": "next dev --turbopack",
+        "prebuild": "node scripts/validate-sync.js",
         "build": "next build",
         "start": "next start",
         "preview": "next start",
         "lint": "eslint src/",
-        "lint:fix": "eslint src/ --fix"
+        "lint:fix": "eslint src/ --fix",
+        "validate-sync": "node scripts/validate-sync.js"
     },
     "dependencies": {
         "next": "^15.3.2",

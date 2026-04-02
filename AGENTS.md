@@ -93,11 +93,29 @@ Each test project in `_tests_/` corresponds to a specific tech stack. Rules shou
 
 ## Documentation Website (`docs/website/`)
 
-The repository includes a documentation website at `docs/website/` built with Vite, React 19, React Router v7, Tailwind CSS v4, and TypeScript. It is deployed at **https://www.eslint-plugin-code-style.org**.
+The repository includes a documentation website at `docs/website/` built with Next.js 15, React 19, Tailwind CSS v4, and TypeScript. It is deployed at **https://www.eslint-plugin-code-style.org**.
 
-### CRITICAL: Complete Website Sync Checklist
+### Automatic Sync Validation
 
-The documentation website MUST be kept 100% in sync with the plugin. ANY change to the plugin requires checking and updating the website. Here is the COMPLETE list of synced data:
+The website build runs `scripts/validate-sync.js` automatically (via `prebuild` script). This **blocks the build** if any of these checks fail:
+- Version in `config.ts` matches `package.json`
+- Rule count in `rules.ts` matches rules exported in `src/index.js`
+- Every rule name in `src/index.js` exists in `rules.ts` (and vice versa)
+- `CHANGELOG.md` exists and is parseable (the `/docs/changelog` page reads it at build time)
+- Rule doc files exist in `docs/rules/` for every category
+- Navigation includes all categories
+
+Run manually: `cd docs/website && npm run validate-sync`
+
+### Auto-Synced Content (Build-Time)
+
+These files are read directly from the repository at build time — no manual sync needed:
+- **CHANGELOG.md** → rendered at `/docs/changelog` page automatically
+- **Version** → centralized in `docs/website/src/data/config.ts` (single source of truth)
+
+### CRITICAL: Manual Sync Checklist
+
+The documentation website MUST be kept 100% in sync with the plugin. ANY change to the plugin requires checking and updating the website. The build will catch missing rules, but descriptions, examples, and page content must be updated manually. Here is the COMPLETE list of synced data:
 
 **Rule Data (`docs/website/src/data/rules.ts`):**
 - Total rule count (currently 81)
@@ -131,12 +149,13 @@ The documentation website MUST be kept 100% in sync with the plugin. ANY change 
 
 | Change Type | Files to Update |
 |-------------|----------------|
-| New rule | `docs/website/src/data/rules.ts`, verify category page, verify homepage category counts |
-| Remove rule | `docs/website/src/data/rules.ts`, verify category page, update all count references |
-| Edit rule (behavior/options) | `docs/website/src/data/rules.ts` |
+| New rule | `docs/website/src/data/rules.ts`, `docs/rules/<category>.md`, verify category page, verify homepage counts |
+| Remove rule | `docs/website/src/data/rules.ts`, `docs/rules/<category>.md`, update all count references |
+| Edit rule (behavior/options) | `docs/website/src/data/rules.ts`, `docs/rules/<category>.md` |
 | Version bump | `docs/website/src/data/config.ts` (single source of truth) |
+| Changelog update | `CHANGELOG.md` only (auto-synced to website at build time) |
 | Config change | `docs/website/src/app/docs/configuration/page.tsx` |
-| New category | `docs/website/src/data/rules.ts`, `docs/website/src/data/navigation.ts`, `src/app/page.tsx` |
+| New category | `docs/website/src/data/rules.ts`, `docs/website/src/data/navigation.ts`, `docs/rules/<category>.md`, `src/app/page.tsx` |
 | ESLint version support change | `docs/website/src/data/config.ts`, `docs/website/src/app/docs/configuration/page.tsx`, `docs/website/src/app/docs/getting-started/page.tsx`, README.md |
 
 ### Running the Website
