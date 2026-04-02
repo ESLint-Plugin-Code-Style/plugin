@@ -7,7 +7,7 @@
 **Why use it:** Breaking after `=` creates awkward formatting and wastes vertical space. Keeping values on the same line as `=` is more readable.
 
 ```javascript
-// ✅ Good — value starts on same line as =
+// Good — value starts on same line as =
 const name = "John";
 const config = {
     host: "localhost",
@@ -18,7 +18,7 @@ const items = [
     "second",
 ];
 
-// ❌ Bad — value on new line after =
+// Bad — value on new line after =
 const name =
     "John";
 const config =
@@ -42,13 +42,13 @@ const items =
 **Why use it:** Consistent with JavaScript conventions. Spaces inside brackets look inconsistent with array literals and other bracket usage.
 
 ```javascript
-// ✅ Good — no spaces inside brackets
+// Good — no spaces inside brackets
 const value = arr[0];
 const name = obj[key];
 const item = data[index];
 const nested = matrix[row][col];
 
-// ❌ Bad — spaces inside brackets
+// Bad — spaces inside brackets
 const value = arr[ 0 ];
 const name = obj[ key ];
 const item = data[ index ];
@@ -58,4 +58,4 @@ const item = data[ index ];
 
 ---
 
-[← Back to Rules Index](./README.md) | [← Back to Main README](../../README.md)
+[<- Back to Rules Index](./README.md) | [<- Back to Main README](../../README.md)

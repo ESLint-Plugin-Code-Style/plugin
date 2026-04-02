@@ -107,6 +107,10 @@ export const docsNavigationData: NavSectionInterface[] = [
                 href: "/docs/contributing",
                 title: "Contributing",
             },
+            {
+                href: "/docs/changelog",
+                title: "Changelog",
+            },
         ],
         title: "Guides",
     },

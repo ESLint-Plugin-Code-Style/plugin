@@ -957,11 +957,9 @@ const HomePage = () => (
                         >
                             {homeStringsData.footerGitHub}
                         </a>
-                        <a
-                            href="https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/blob/main/CHANGELOG.md"
-                            rel="noopener noreferrer"
+                        <Link
+                            href="/docs/changelog"
                             style={{ color: "var(--text-secondary)" }}
-                            target="_blank"
                             className="
                                 text-sm
                                 font-medium
@@ -970,7 +968,7 @@ const HomePage = () => (
                             "
                         >
                             {homeStringsData.footerChangelog}
-                        </a>
+                        </Link>
                     </div>
                 </div>
             </div>

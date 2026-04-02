@@ -12,33 +12,33 @@
 - Relative imports within the same module folder avoid circular dependencies
 
 ```javascript
-// ✅ Good — import from index files using alias
+// Good — import from index files using alias
 import { Button, Input } from "@/components";
 import { useAuth, useUser } from "@/hooks";
 import { fetchUsers } from "@/apis";
 import { formatDate } from "@/utils";
 
-// ✅ Good — assets allow deep imports by default
+// Good — assets allow deep imports by default
 import logo from "@/assets/images/logo.png";
 
-// ✅ Good — relative import within the same module folder (siblings)
+// Good — relative import within the same module folder (siblings)
 // File: utils/formatters.js
 import { isNumber } from "./validators";
 
-// ✅ Good — relative import within the same module folder (nested)
+// Good — relative import within the same module folder (nested)
 // File: data/auth/forget-password/index.ts
 import { guestLoginData } from "../../login/guest";
 
-// ❌ Bad — absolute import to own module folder (should use relative)
+// Bad — absolute import to own module folder (should use relative)
 // File: data/auth/forget-password/index.ts
 import { guestLoginData } from "@/data";
 // → use relative import instead: import { guestLoginData } from "../../login/guest";
 
-// ❌ Bad — relative imports across different folders
+// Bad — relative imports across different folders
 import { Button } from "../../components";
 import { useAuth } from "../../../hooks";
 
-// ❌ Bad — deep imports into component internals
+// Bad — deep imports into component internals
 import { Button } from "@/components/buttons/primary-button";
 import { useAuth } from "@/hooks/auth/useAuth";
 import { fetchUsers } from "@/apis/users/fetchUsers";
@@ -80,12 +80,12 @@ import { fetchUsers } from "@/apis/users/fetchUsers";
 **Why use it:** Consistent export formatting improves readability. Short exports stay compact, long exports become scannable.
 
 ```javascript
-// ✅ Good — 3 or fewer specifiers stay compact
+// Good — 3 or fewer specifiers stay compact
 export { Button };
 export { Button, Input };
 export { Button, Input, Select };
 
-// ✅ Good — 4+ specifiers expand with one per line
+// Good — 4+ specifiers expand with one per line
 export {
     Button,
     Input,
@@ -93,7 +93,7 @@ export {
     Checkbox,
 };
 
-// ✅ Good — re-exports follow same rules
+// Good — re-exports follow same rules
 export { Button, Input, Select } from "./components";
 export {
     createUser,
@@ -102,14 +102,14 @@ export {
     getUser,
 } from "./api";
 
-// ❌ Bad — no spaces
+// Bad — no spaces
 export {Button,Input,Select};
 
-// ❌ Bad — keyword on different line
+// Bad — keyword on different line
 export
     { Button };
 
-// ❌ Bad — too many on one line
+// Bad — too many on one line
 export { Button, Input, Select, Checkbox, Radio };
 ```
 
@@ -136,12 +136,12 @@ export { Button, Input, Select, Checkbox, Radio };
 **Why use it:** Consistent import formatting improves readability and makes diffs cleaner when adding/removing imports.
 
 ```javascript
-// ✅ Good — 3 or fewer specifiers stay compact
+// Good — 3 or fewer specifiers stay compact
 import { useState } from "react";
 import { Button, Input } from "@/components";
 import { get, post, put } from "@/api";
 
-// ✅ Good — 4+ specifiers expand with one per line
+// Good — 4+ specifiers expand with one per line
 import {
     useState,
     useEffect,
@@ -156,18 +156,18 @@ import {
     Checkbox,
 } from "@/components";
 
-// ❌ Bad — no spaces
+// Bad — no spaces
 import {useState,useEffect} from "react";
 
-// ❌ Bad — keyword on different line
+// Bad — keyword on different line
 import
     { Button } from "@/components";
 
-// ❌ Bad — from on different line
+// Bad — from on different line
 import { Button }
     from "@/components";
 
-// ❌ Bad — too many on one line
+// Bad — too many on one line
 import { useState, useEffect, useCallback, useMemo, useRef } from "react";
 ```
 
@@ -190,18 +190,18 @@ import { useState, useEffect, useCallback, useMemo, useRef } from "react";
 **Why use it:** Spaces in module paths are almost always typos and can cause import resolution issues.
 
 ```javascript
-// ✅ Good — no extra spaces
+// Good — no extra spaces
 import { Button } from "@mui/material";
 import React from "react";
 import styles from "./styles.css";
 
-// ❌ Bad — leading space
+// Bad — leading space
 import { Button } from " @mui/material";
 
-// ❌ Bad — trailing space
+// Bad — trailing space
 import React from "react ";
 
-// ❌ Bad — both
+// Bad — both
 import styles from " ./styles.css ";
 ```
 
@@ -217,14 +217,14 @@ import styles from " ./styles.css ";
 
 **Regular files (non-index):**
 ```javascript
-// ✅ Good — blank lines between exports
+// Good — blank lines between exports
 export const API_URL = "/api";
 
 export const MAX_RETRIES = 3;
 
 export const fetchData = async () => {};
 
-// ❌ Bad — no blank lines in regular file
+// Bad — no blank lines in regular file
 export const API_URL = "/api";
 export const MAX_RETRIES = 3;
 export const fetchData = async () => {};
@@ -232,7 +232,7 @@ export const fetchData = async () => {};
 
 **Index files — Style: "shorthand" (default):**
 ```javascript
-// ✅ Good — shorthand re-exports, no blank lines
+// Good — shorthand re-exports, no blank lines
 export { Button } from "./button";
 export { Input, Select } from "./form";
 export { Modal } from "./modal";
@@ -241,7 +241,7 @@ export { useAuth, useUser } from "./hooks";
 
 **Index files — Style: "import-export":**
 ```javascript
-// ✅ Good — imports grouped, single export at bottom
+// Good — imports grouped, single export at bottom
 import { Button } from "./button";
 import { Input, Select } from "./form";
 import { Modal } from "./modal";
@@ -273,13 +273,13 @@ export {
 **Why use it:** Index files should be "barrels" that aggregate exports from a module. Mixing definitions with re-exports makes the codebase harder to navigate and can cause circular dependency issues.
 
 ```javascript
-// ✅ Good — index.ts with only imports and re-exports
+// Good — index.ts with only imports and re-exports
 export { Button } from "./Button";
 export { helper } from "./utils";
 export type { ButtonProps } from "./types";
 export * from "./constants";
 
-// ❌ Bad — index.ts with code definitions
+// Bad — index.ts with code definitions
 export type ButtonVariant = "primary" | "secondary";  // Move to types.ts
 export interface ButtonProps { ... }                  // Move to types.ts
 export const CONSTANT = "value";                      // Move to constants.ts
@@ -299,7 +299,7 @@ export function helper() { ... }                      // Move to utils.ts
 - **Aliased exports** (`export { a as b }`) are skipped since they cannot be expressed as inline exports
 
 ```javascript
-// ✅ Good — inline export declarations
+// Good — inline export declarations
 export const strings = {
     title: "Hello",
     subtitle: "World",
@@ -311,7 +311,7 @@ export function fetchData() {
     return fetch("/api/data");
 }
 
-// ❌ Bad — grouped export statement
+// Bad — grouped export statement
 const strings = {
     title: "Hello",
     subtitle: "World",
@@ -335,7 +335,7 @@ export { strings, MAX_RETRIES, fetchData };
 **Why use it:** Index files allow importing from the folder level (`@/components`) instead of deep paths (`@/components/Button/Button`). This enforces proper module boundaries.
 
 ```javascript
-// ✅ Good — components/index.js exports everything
+// Good — components/index.js exports everything
 export { Button } from "./Button";
 export { Input } from "./Input";
 export { Select } from "./Select";
@@ -344,7 +344,7 @@ export { Modal } from "./Modal";
 // Then consumers can import cleanly:
 import { Button, Input, Select } from "@/components";
 
-// ❌ Bad — missing exports in index.js
+// Bad — missing exports in index.js
 // If Button exists but isn't exported from index.js,
 // consumers have to use deep imports:
 import { Button } from "@/components/Button/Button"; // Avoid this!
@@ -380,4 +380,4 @@ import { Button } from "@/components/Button/Button"; // Avoid this!
 
 ---
 
-[← Back to Rules Index](./README.md) | [← Back to Main README](../../README.md)
+[<- Back to Rules Index](./README.md) | [<- Back to Main README](../../README.md)

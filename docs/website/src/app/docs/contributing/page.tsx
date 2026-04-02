@@ -309,13 +309,7 @@ const ContributingPage = () => {
                     </a>
                 </li>
                 <li>
-                    <a
-                        href="https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/blob/main/CHANGELOG.md"
-                        rel="noopener noreferrer"
-                        target="_blank"
-                    >
-                        {contributingStringsData.linkChangelog}
-                    </a>
+                    <Link href="/docs/changelog">{contributingStringsData.linkChangelog}</Link>
                 </li>
                 <li>
                     <a

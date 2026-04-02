@@ -24,6 +24,7 @@ export {
     tsOnlyRulesData,
 } from "./rules";
 export {
+    changelogStringsData,
     codeSnippetStringsData,
     componentStringsData,
     configurationStringsData,

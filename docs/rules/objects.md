@@ -7,7 +7,7 @@
 **Why use it:** Empty lines inside objects break the visual grouping of properties. Properties should flow as a cohesive unit.
 
 ```javascript
-// ✅ Good — no empty lines
+// Good — no empty lines
 const user = {
     name: "John",
     email: "john@example.com",
@@ -20,7 +20,7 @@ const config = {
     debug: true,
 };
 
-// ❌ Bad — empty line between properties
+// Bad — empty line between properties
 const user = {
     name: "John",
 
@@ -29,14 +29,14 @@ const user = {
     role: "admin",
 };
 
-// ❌ Bad — empty line after opening brace
+// Bad — empty line after opening brace
 const config = {
 
     host: "localhost",
     port: 3000,
 };
 
-// ❌ Bad — empty line before closing brace
+// Bad — empty line before closing brace
 const config = {
     host: "localhost",
     port: 3000,
@@ -55,12 +55,12 @@ const config = {
 **Why use it:** Single-property objects are clear on one line. Multiple properties need expansion for readability and clean diffs.
 
 ```javascript
-// ✅ Good — single property stays compact
+// Good — single property stays compact
 const point = { x: 10 };
 const config = { debug: true };
 fn({ callback: handleClick });
 
-// ✅ Good — 2+ properties get full expansion
+// Good — 2+ properties get full expansion
 const point = {
     x: 10,
     y: 20,
@@ -72,7 +72,7 @@ const user = {
     role: "admin",
 };
 
-// ✅ Good — nested objects follow same rules
+// Good — nested objects follow same rules
 const config = {
     server: { port: 3000 },
     database: {
@@ -81,11 +81,11 @@ const config = {
     },
 };
 
-// ❌ Bad — multiple properties on one line
+// Bad — multiple properties on one line
 const point = { x: 10, y: 20 };
 const user = { name: "John", email: "john@example.com" };
 
-// ❌ Bad — inconsistent formatting
+// Bad — inconsistent formatting
 const point = { x: 10,
     y: 20 };
 ```
@@ -110,7 +110,7 @@ const point = { x: 10,
 **Why use it:** Braces on new lines waste vertical space and disconnect the property key from its value.
 
 ```javascript
-// ✅ Good — brace on same line as colon
+// Good — brace on same line as colon
 const styles = {
     "& a": { color: "red" },
     "& button": { padding: "10px" },
@@ -123,7 +123,7 @@ const config = {
     },
 };
 
-// ❌ Bad — brace on new line
+// Bad — brace on new line
 const styles = {
     "& a":
         { color: "red" },
@@ -131,7 +131,7 @@ const styles = {
         { padding: "10px" },
 };
 
-// ❌ Bad — inconsistent
+// Bad — inconsistent
 const config = {
     server:
     {
@@ -149,7 +149,7 @@ const config = {
 **Why use it:** Values on new lines after the colon waste space and look disconnected from their keys.
 
 ```javascript
-// ✅ Good — values on same line as colon
+// Good — values on same line as colon
 const user = {
     name: "John",
     age: 30,
@@ -157,7 +157,7 @@ const user = {
     role: userRole,
 };
 
-// ✅ Good — complex values can span lines
+// Good — complex values can span lines
 const config = {
     handler: (event) => {
         process(event);
@@ -168,7 +168,7 @@ const config = {
     ],
 };
 
-// ❌ Bad — simple values on new line
+// Bad — simple values on new line
 const user = {
     name:
         "John",
@@ -188,7 +188,7 @@ const user = {
 **Why use it:** Whitespace in property keys is usually unintentional and can cause bugs when accessing properties.
 
 ```javascript
-// ✅ Good — no extra whitespace
+// Good — no extra whitespace
 const styles = {
     "& a": { color: "red" },
     "& .button": { padding: "10px" },
@@ -200,18 +200,18 @@ const obj = {
     "X-Custom-Header": "value",
 };
 
-// ❌ Bad — leading whitespace
+// Bad — leading whitespace
 const styles = {
     " & a": { color: "red" },
     " & .button": { padding: "10px" },
 };
 
-// ❌ Bad — trailing whitespace
+// Bad — trailing whitespace
 const obj = {
     "Content-Type ": "application/json",
 };
 
-// ❌ Bad — both
+// Bad — both
 const styles = {
     " & a ": { color: "red" },
 };
@@ -221,4 +221,4 @@ const styles = {
 
 ---
 
-[← Back to Rules Index](./README.md) | [← Back to Main README](../../README.md)
+[<- Back to Rules Index](./README.md) | [<- Back to Main README](../../README.md)

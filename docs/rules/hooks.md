@@ -7,7 +7,7 @@
 **Why use it:** Hooks with callbacks and dependencies are complex. Multi-line formatting makes the callback, return cleanup, and dependencies clearly visible.
 
 ```javascript
-// ✅ Good — callback and deps clearly separated
+// Good — callback and deps clearly separated
 useEffect(
     () => {
         fetchData();
@@ -27,7 +27,7 @@ useMemo(
     [items],
 );
 
-// ✅ Good — cleanup function visible
+// Good — cleanup function visible
 useEffect(
     () => {
         const subscription = subscribe();
@@ -37,10 +37,10 @@ useEffect(
     [subscribe],
 );
 
-// ❌ Bad — everything crammed on one line
+// Bad — everything crammed on one line
 useEffect(() => { fetchData(); }, [userId]);
 
-// ❌ Bad — hard to see dependencies
+// Bad — hard to see dependencies
 useCallback(() => { handleSubmit(data); }, [data, handleSubmit]);
 ```
 
@@ -53,11 +53,11 @@ useCallback(() => { handleSubmit(data); }, [data, handleSubmit]);
 **Why use it:** Long dependency arrays are hard to scan and diff. One per line makes it easy to see what changed and catch missing/extra dependencies.
 
 ```javascript
-// ✅ Good — 2 or fewer deps stay inline
+// Good — 2 or fewer deps stay inline
 useEffect(() => {}, [userId]);
 useEffect(() => {}, [userId, token]);
 
-// ✅ Good — 3+ deps get one per line
+// Good — 3+ deps get one per line
 useEffect(
     () => {},
     [
@@ -77,10 +77,10 @@ useCallback(
     ],
 );
 
-// ❌ Bad — too many deps on one line
+// Bad — too many deps on one line
 useEffect(() => {}, [userId, token, refreshToken, apiUrl]);
 
-// ❌ Bad — deps should be one per line when expanded
+// Bad — deps should be one per line when expanded
 useEffect(() => {}, [
     userId, token, refreshToken,
 ]);
@@ -106,7 +106,7 @@ useEffect(() => {}, [
 **Why use it:** Files like `use-create-super-admin.ts` exporting `useCreate` instead of `useCreateSuperAdmin` are misleading. The function name should encode the full intent from the file name so it's clear what the hook does when imported elsewhere.
 
 ```typescript
-// ✅ Good — function name matches file name
+// Good — function name matches file name
 // hooks/super-admins/use-create-super-admin.ts
 export const useCreateSuperAdmin = () => { ... };
 
@@ -116,7 +116,7 @@ export const useSuperAdminsList = () => { ... };
 // hooks/use-debounce.ts
 export const useDebounce = () => { ... };
 
-// ❌ Bad — function name doesn't match file name
+// Bad — function name doesn't match file name
 // hooks/super-admins/use-create-super-admin.ts
 export const useCreate = () => { ... };
 // Error: Hook function "useCreate" should be named "useCreateSuperAdmin"
@@ -183,13 +183,13 @@ hooks/super-admins/use-list.ts
 **Why use it:** Consistent boolean state naming makes code more predictable and self-documenting. When you see `isLoading`, you immediately know it's a boolean state.
 
 ```typescript
-// ✅ Good — boolean state with proper prefix
+// Good — boolean state with proper prefix
 const [isLoading, setIsLoading] = useState(false);
 const [hasError, setHasError] = useState<boolean>(false);
 const [isAuthenticated, setIsAuthenticated] = useState(true);
 const [withBorder, setWithBorder] = useState(false);
 
-// ❌ Bad — boolean state without prefix
+// Bad — boolean state without prefix
 const [loading, setLoading] = useState(false);
 const [authenticated, setAuthenticated] = useState<boolean>(true);
 const [error, setError] = useState<boolean>(false);
@@ -221,4 +221,4 @@ const [error, setError] = useState<boolean>(false);
 
 ---
 
-[← Back to Rules Index](./README.md) | [← Back to Main README](../../README.md)
+[<- Back to Rules Index](./README.md) | [<- Back to Main README](../../README.md)

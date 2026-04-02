@@ -10,7 +10,7 @@ export const categoriesRulesData = [
             {
                 badExample: "const result = items.map(({ name, value, id }) => `${name}: ${value}`);",
                 description: "When destructuring parameters in array method callbacks, enforces each property on its own line when there are 2 or more properties",
-                goodExample: `const result = items.map((
+                goodExample: `const result = items.map(({
     name,
     value,
 }) => \`\${name}: \${value}\`);`,
@@ -72,7 +72,7 @@ const weekdays = [
                 badExample: `const Button = () => <button className="primary">
     Click me
 </button>;`,
-                description: "Arrow functions with multiline expressions should use block body or wrap in parentheses",
+                description: "Arrow functions with complex or multiline expressions should use block body or wrap in parentheses for consistent formatting",
                 goodExample: `const Button = () => (
     <button className="primary">
         Click me
@@ -585,7 +585,7 @@ const style = variant === "ghost"
                 name: "ternary-condition-multiline",
                 options: [
                     {
-                        default: "2",
+                        default: "3",
                         description: "Maximum condition operands for single-line ternary",
                         name: "maxOperands",
                         type: "integer",
@@ -642,7 +642,7 @@ function clickHandler() {}`,
             {
                 badExample: `const createUserHandler = async ({ age, email, name }: CreateUserParamsInterface) => {
 };`,
-                description: "Non-component functions: use typed params, destructure in body",
+                description: "Non-component functions should accept typed params and destructure in the body. Also detects when object params are accessed via dot notation and suggests destructuring instead",
                 goodExample: `const createUserHandler = async (data: CreateUserParamsInterface) => {
     const { age, email, name } = data;
 };`,

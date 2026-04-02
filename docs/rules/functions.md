@@ -7,14 +7,14 @@
 **Why use it:** Standard JavaScript convention. `fn()` is correct, `fn ()` looks like a typo and can cause confusion.
 
 ```javascript
-// ✅ Good — no space before parenthesis
+// Good — no space before parenthesis
 useDispatch();
 myFunction(arg);
 console.log("message");
 array.map((x) => x * 2);
 obj.method();
 
-// ❌ Bad — space before parenthesis
+// Bad — space before parenthesis
 useDispatch ();
 myFunction (arg);
 console.log ("message");
@@ -32,7 +32,7 @@ array.map ((x) => x * 2);
 > **Important:** This rule depends on `func-style: ["error", "expression"]` being configured. If `func-style` is set to `"declaration"` or is disabled, do not enable this rule — it would conflict.
 
 ```typescript
-// ✅ Good — arrow function expression
+// Good — arrow function expression
 export const getToken = (): string | null => getCookie(tokenKey);
 
 export const clearAuth = (): void => {
@@ -45,7 +45,7 @@ const isAuthenticated = (): boolean => {
     return !!token;
 };
 
-// ❌ Bad — function declaration
+// Bad — function declaration
 export function getToken(): string | null {
     return getCookie(tokenKey);
 }
@@ -75,7 +75,7 @@ function isAuthenticated(): boolean {
 **Why use it:** Function names should describe actions. Verb prefixes make the purpose immediately clear, and consistent Handler suffix makes event handlers easy to identify.
 
 ```javascript
-// ✅ Good — verb prefix + Handler suffix
+// Good — verb prefix + Handler suffix
 function getUserDataHandler() {}
 function setUserNameHandler(name) {}
 function clickHandler() {}
@@ -85,17 +85,17 @@ function hasPermissionHandler(user) {}
 function canAccessHandler(resource) {}
 const fetchUsersHandler = async () => {};
 
-// ❌ Bad (auto-fixed) — handleXxx → xxxHandler
+// Bad (auto-fixed) — handleXxx → xxxHandler
 function handleClick() {}    // → clickHandler
 function handleSubmit() {}   // → submitHandler
 function handleChange() {}   // → changeHandler
 
-// ❌ Bad (auto-fixed) — missing Handler suffix
+// Bad (auto-fixed) — missing Handler suffix
 function getUserData() {}    // → getUserDataHandler
 function setUserName() {}    // → setUserNameHandler
 function fetchUsers() {}     // → fetchUsersHandler
 
-// ❌ Bad (auto-fixed) — PascalCase to camelCase
+// Bad (auto-fixed) — PascalCase to camelCase
 function GetUserData() {}    // → getUserDataHandler
 function FetchStatus() {}    // → fetchStatusHandler
 ```
@@ -109,7 +109,7 @@ function FetchStatus() {}    // → fetchStatusHandler
 **Why use it:** Keeping function signatures clean and short improves readability. Destructuring in the body makes it clear what properties are being used. For React components, this rule does NOT apply — components should destructure props in the signature.
 
 ```typescript
-// ✅ Good — typed param with destructuring in body
+// Good — typed param with destructuring in body
 const createUserHandler = async (data: CreateUserParamsInterface) => {
     const { age, email, isActive, name } = data;
 
@@ -122,7 +122,7 @@ const updateUserHandler = (params: UpdateParamsInterface) => {
     // Use id, updates...
 };
 
-// ✅ Good — React components CAN destructure in signature
+// Good — React components CAN destructure in signature
 const UserCard = ({
     name,
     email,
@@ -133,7 +133,7 @@ const UserCard = ({
     <div>{name} - {email}</div>
 );
 
-// ❌ Bad — non-component function destructures in signature
+// Bad — non-component function destructures in signature
 const createUserHandler = async ({
     age,
     email,
@@ -143,7 +143,7 @@ const createUserHandler = async ({
     // ...
 };
 
-// ❌ Bad — accessing param via dot notation (should destructure)
+// Bad — accessing param via dot notation (should destructure)
 const processDataHandler = (data: DataInterface) => {
     console.log(data.id);      // Bad: use destructuring
     console.log(data.name);    // Bad: use destructuring
@@ -160,7 +160,7 @@ const processDataHandler = (data: DataInterface) => {
 **Why use it:** Mixed formatting (some params on same line, some on different lines) is confusing. One per line is scannable and easy to edit.
 
 ```javascript
-// ✅ Good — each param on own line
+// Good — each param on own line
 function createUser(
     name,
     email,
@@ -174,15 +174,15 @@ const handler = (
     callback,
 ) => {};
 
-// ✅ Good — short params can stay on one line
+// Good — short params can stay on one line
 function add(a, b) {}
 
-// ❌ Bad — mixed formatting
+// Bad — mixed formatting
 function createUser(name,
     email, password,
     role) {}
 
-// ❌ Bad — some on same line, some not
+// Bad — some on same line, some not
 const handler = (event, context,
     callback) => {};
 ```
@@ -196,7 +196,7 @@ const handler = (event, context,
 **Why use it:** Empty lines in parameter lists waste space and make parameters harder to scan as a group.
 
 ```javascript
-// ✅ Good — no empty lines
+// Good — no empty lines
 function createUser(
     name,
     email,
@@ -208,7 +208,7 @@ const handler = (
     context,
 ) => {};
 
-// ❌ Bad — empty line between params
+// Bad — empty line between params
 function createUser(
     name,
 
@@ -217,7 +217,7 @@ function createUser(
     role,
 ) {}
 
-// ❌ Bad — empty line after opening paren
+// Bad — empty line after opening paren
 const handler = (
 
     event,
@@ -229,4 +229,4 @@ const handler = (
 
 ---
 
-[← Back to Rules Index](./README.md) | [← Back to Main README](../../README.md)
+[<- Back to Rules Index](./README.md) | [<- Back to Main README](../../README.md)
