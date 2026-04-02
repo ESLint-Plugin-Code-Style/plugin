@@ -147,12 +147,6 @@ const renderEntriesHandler = (entries: string[]) => {
                                 key={`item-${keyCounter}-${i}`}
                                 style={{ color: "var(--text-primary)" }}
                             >
-                                <span
-                                    className="mr-2"
-                                    style={{ color: "var(--text-tertiary)" }}
-                                >
-                                    {changelogStringsData.bullet}
-                                </span>
                                 <span dangerouslySetInnerHTML={{ __html: formatEntryHtmlHandler(item) }} />
                             </li>
                         ))}
