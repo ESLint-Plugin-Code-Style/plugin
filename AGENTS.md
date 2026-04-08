@@ -91,9 +91,9 @@ Each test project in `_tests_/` corresponds to a specific tech stack. Rules shou
 5. Update this table in AGENTS.md
 6. Update "Available Configurations" table above
 
-## Documentation Website (`docs/website/`)
+## Documentation Website (separate repo)
 
-The repository includes a documentation website at `docs/website/` built with Next.js 15, React 19, Tailwind CSS v4, and TypeScript. It is deployed at **https://www.eslint-plugin-code-style.org**.
+The documentation website lives in a **separate repository**: [`ESLint-Plugin-Code-Style/website`](https://github.com/ESLint-Plugin-Code-Style/website). Built with Next.js 15, React 19, Tailwind CSS v4, and TypeScript. Deployed at **https://www.eslint-plugin-code-style.org**.
 
 ### Automatic Sync Validation
 
@@ -102,22 +102,22 @@ The website build runs `scripts/validate-sync.js` automatically (via `prebuild` 
 - Rule count in `rules.ts` matches rules exported in `src/index.js`
 - Every rule name in `src/index.js` exists in `rules.ts` (and vice versa)
 - `CHANGELOG.md` exists and is parseable (the `/docs/changelog` page reads it at build time)
-- Rule doc files exist in `docs/rules/` for every category
+- Rule doc files exist in `rules/` for every category
 - Navigation includes all categories
 
-Run manually: `cd docs/website && npm run validate-sync`
+Run manually: `cd <website-repo> && npm run validate-sync`
 
 ### Auto-Synced Content (Build-Time)
 
 These files are read directly from the repository at build time — no manual sync needed:
 - **CHANGELOG.md** → rendered at `/docs/changelog` page automatically
-- **Version** → centralized in `docs/website/src/data/config.ts` (single source of truth)
+- **Version** → centralized in `src/data/config.ts` (single source of truth)
 
 ### CRITICAL: Manual Sync Checklist
 
 The documentation website MUST be kept 100% in sync with the plugin. ANY change to the plugin requires checking and updating the website. The build will catch missing rules, but descriptions, examples, and page content must be updated manually. Here is the COMPLETE list of synced data:
 
-**Rule Data (`docs/website/src/data/rules.ts`):**
+**Rule Data (`src/data/rules.ts`):**
 - Total rule count (currently 81)
 - Auto-fixable count (currently 71)
 - Configurable count (currently 20)
@@ -126,15 +126,15 @@ The documentation website MUST be kept 100% in sync with the plugin. ANY change 
 - Category count (currently 17)
 - Each rule's: name, description, rationale, fixable flag, configurable flag, tsOnly flag, options array, good/bad examples
 
-**Version (`docs/website/src/data/config.ts`):**
+**Version (`src/data/config.ts`):**
 - Plugin version string (single source of truth — all other website references import from here)
 
-**Navigation (`docs/website/src/data/navigation.ts`):**
+**Navigation (`src/data/navigation.ts`):**
 - Sidebar category list must match the categories in rules.ts
 
 **Pages that reference counts or rules:**
 - Homepage (`src/app/page.tsx`) — stats bar (81/71/20/17), category grid with counts
-- Rules index (`src/app/docs/rules/page.tsx`) — stats cards
+- Rules index (`src/app/rules/page.tsx`) — stats cards
 - Getting started (`src/app/docs/getting-started/page.tsx`) — all rules list
 - Configuration (`src/app/docs/configuration/page.tsx`) — config descriptions, rule counts
 
@@ -145,25 +145,27 @@ The documentation website MUST be kept 100% in sync with the plugin. ANY change 
 **When changing recommended configs:** Update configuration page, v9/v10 README files.
 **When changing ESLint version support:** Update config.ts, configuration page, getting-started page, all README files.
 
+> **Note:** All file paths below are relative to the website repo (`ESLint-Plugin-Code-Style/website`), except `rules/<category>.md` which is in the plugin repo.
+
 ### Website Files to Update per Change Type
 
 | Change Type | Files to Update |
 |-------------|----------------|
-| New rule | `docs/website/src/data/rules.ts`, `docs/rules/<category>.md`, verify category page, verify homepage counts |
-| Remove rule | `docs/website/src/data/rules.ts`, `docs/rules/<category>.md`, update all count references |
-| Edit rule (behavior/options) | `docs/website/src/data/rules.ts`, `docs/rules/<category>.md` |
-| Version bump | `docs/website/src/data/config.ts` (single source of truth) |
+| New rule | `src/data/rules.ts`, `rules/<category>.md` (plugin repo), verify category page, verify homepage counts |
+| Remove rule | `src/data/rules.ts`, `rules/<category>.md` (plugin repo), update all count references |
+| Edit rule (behavior/options) | `src/data/rules.ts`, `rules/<category>.md` (plugin repo) |
+| Version bump | `src/data/config.ts` (single source of truth) |
 | Changelog update | `CHANGELOG.md` only (auto-synced to website at build time) |
-| Config change | `docs/website/src/app/docs/configuration/page.tsx` |
-| New category | `docs/website/src/data/rules.ts`, `docs/website/src/data/navigation.ts`, `docs/rules/<category>.md`, `src/app/page.tsx` |
-| ESLint version support change | `docs/website/src/data/config.ts`, `docs/website/src/app/docs/configuration/page.tsx`, `docs/website/src/app/docs/getting-started/page.tsx`, README.md |
+| Config change | `src/app/docs/configuration/page.tsx` |
+| New category | `src/data/rules.ts`, `src/data/navigation.ts`, `rules/<category>.md` (plugin repo), `src/app/page.tsx` |
+| ESLint version support change | `src/data/config.ts`, `src/app/docs/configuration/page.tsx`, `src/app/docs/getting-started/page.tsx`, README.md |
 
 ### Running the Website
 
 ```bash
-cd docs/website
+cd <website-repo>
 pnpm dev      # Development server at http://localhost:5173
-pnpm build    # Production build to docs/website/dist/
+pnpm build    # Production build
 pnpm preview  # Preview production build
 ```
 
@@ -350,9 +352,9 @@ When creating a new rule, ALL of the following files must be updated:
 - Add 🔧 emoji if auto-fixable
 - Add ⚙️ emoji if has configurable options
 
-#### 3b. `docs/rules/<category>.md` — Detailed Rule Documentation
+#### 3b. `rules/<category>.md` — Detailed Rule Documentation
 
-Add detailed rule documentation to the appropriate category file in `docs/rules/`:
+Add detailed rule documentation to the appropriate category file in `rules/`:
 
 ```markdown
 ### `new-rule-name`
@@ -522,11 +524,11 @@ comm -23 /tmp/a.txt /tmp/b.txt
 - [ ] Remove from `RuleNames` type union
 - [ ] Remove from `PluginRules` interface
 
-#### 3. `README.md` + `docs/rules/`
+#### 3. `README.md` + `rules/`
 - [ ] Update all rule counts (see [Rule Count Locations](#rule-count-locations))
 - [ ] Remove from `rules: {}` example in Quick Start
 - [ ] Remove from Rules Summary table
-- [ ] Remove detailed documentation from `docs/rules/<category>.md`
+- [ ] Remove detailed documentation from `rules/<category>.md`
 
 #### 4. `AGENTS.md`
 - [ ] Update all rule counts
@@ -553,7 +555,7 @@ comm -23 /tmp/a.txt /tmp/b.txt
 
 When modifying an existing rule, check if these need updates:
 
-> ⚠️ **Documentation Reminder:** If the rule's behavior, examples, or options change, update README.md (Quick Start example, Rules Summary table) and the detailed docs in `docs/rules/<category>.md`. See the note in "Adding a New Rule" section for details.
+> ⚠️ **Documentation Reminder:** If the rule's behavior, examples, or options change, update README.md (Quick Start example, Rules Summary table) and the detailed docs in `rules/<category>.md`. See the note in "Adding a New Rule" section for details.
 
 #### If fixing a bug (PATCH version: x.x.+1):
 - [ ] Fix the issue in rule's `create()` function in `src/rules/<category>.js`
@@ -662,9 +664,9 @@ See "When to Bump Version & Create Tag" section in Git Workflow for details.
 
 ---
 
-### Rule Documentation Format in docs/rules/
+### Rule Documentation Format in rules/
 
-Each rule should have this format in its category file under `docs/rules/`:
+Each rule should have this format in its category file under `rules/`:
 
 ```markdown
 ### `rule-name`
@@ -824,8 +826,8 @@ Rules are organized in these categories (alphabetically sorted in src/index.js a
 ## Documentation Files
 
 - `README.md` - Main documentation with rule overview and links
-- `docs/rules/` - Detailed rule documentation (17 category files with examples and options)
-- `recommended-configs/<config-name>/README.md` - Config-specific documentation (references docs/rules/ for rule details)
+- `rules/` - Detailed rule documentation (17 category files with examples and options)
+- `recommended-configs/<config-name>/README.md` - Config-specific documentation (references rules/ for rule details)
 - `index.d.ts` - TypeScript types for IDE autocomplete
 
 ## Important Notes
@@ -865,7 +867,7 @@ Rules are organized in these categories (alphabetically sorted in src/index.js a
 | `README.md` | ~100 | `**71 rules** support automatic fixing... **20 rules** have configurable options. 10 rules are report-only` |
 | `README.md` | ~272 | `**81 rules total** — 71 with auto-fix, 20 configurable` |
 | `README.md` | ~409 | `71 of 81 rules support auto-fixing` |
-| `docs/rules/README.md` | ~3 | `**81 rules total** — 71 with auto-fix, 20 configurable` |
+| `rules/README.md` | ~3 | `**81 rules total** — 71 with auto-fix, 20 configurable` |
 | `AGENTS.md` | ~7 | `81 custom formatting rules (71 auto-fixable, 20 configurable, 10 report-only)` |
 | `AGENTS.md` | ~37 | `(72 rules in JS projects, 81 in TS projects)` |
 | `AGENTS.md` | ~675 | `all 81 rules` |
@@ -1098,7 +1100,7 @@ git push origin main --tags
    - Feature description 1
    - Feature description 2"
    ```
-5. **Update docs/website version references and rule data if applicable**
+5. **Update website repo (`ESLint-Plugin-Code-Style/website`) version references and rule data if applicable**
 6. **Push (requires explicit approval):** `git push origin main --tags`
 7. **Publish (requires explicit approval):** `npm publish`
 

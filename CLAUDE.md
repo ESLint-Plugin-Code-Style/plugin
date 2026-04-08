@@ -10,5 +10,5 @@ When working on this codebase, Claude Code should:
 - Do NOT include Claude Code signature/footer in commits
 - Keep commit messages clean and standard (no AI attribution)
 - When user asks to "commit" with approval, follow the full release workflow in [AGENTS.md](./AGENTS.md#release-steps)
-- The documentation website (`docs/website/`) must be 100% synced with the plugin. When ANY rule, count, version, or configuration changes, update the website. See AGENTS.md for the complete sync checklist.
-- For git push, use HTTPS URL instead of SSH: `git push https://github.com/Mohamed-Elhawary/eslint-plugin-code-style.git <branch>`. This applies to all remote operations (push, creating PRs, closing issues). Use `gh` CLI for GitHub API operations (PRs, issues).
+- The documentation website is in a separate repo (`ESLint-Plugin-Code-Style/website`). When ANY rule, count, version, or configuration changes, the website must also be updated.
+- For git push, use HTTPS URL instead of SSH: `git push https://github.com/ESLint-Plugin-Code-Style/plugin.git <branch>`. This applies to all remote operations (push, creating PRs, closing issues). Use `gh` CLI for GitHub API operations (PRs, issues).

@@ -310,7 +310,7 @@ rules: {
 
 > **81 rules total** — 71 with auto-fix 🔧, 20 configurable ⚙️, 10 report-only
 >
-> 📖 **Full documentation with examples:** [www.eslint-plugin-code-style.org](https://www.eslint-plugin-code-style.org/docs/rules) • [Local docs](./docs/rules/)
+> 📖 **Full documentation with examples:** [www.eslint-plugin-code-style.org](https://www.eslint-plugin-code-style.org/rules) • [Local docs](./rules/)
 >
 > **Legend:** 🔧 Auto-fixable with `eslint --fix` • ⚙️ Customizable options
 
@@ -421,27 +421,27 @@ rules: {
 
 ## 📖 Rules Reference
 
-For detailed documentation with examples, configuration options, and best practices for each rule, see the **[Rules Reference Documentation](https://www.eslint-plugin-code-style.org/docs/rules)** or the [local docs](./docs/rules/).
+For detailed documentation with examples, configuration options, and best practices for each rule, see the **[Rules Reference Documentation](https://www.eslint-plugin-code-style.org/rules)** or the [local docs](./rules/).
 
 | Category | Rules | Highlights |
 |----------|:-----:|------------|
-| [Arrays](./docs/rules/arrays.md) | 3 | Callback destructuring, items-per-line, objects-on-new-lines |
-| [Arrow Functions](./docs/rules/arrow-functions.md) | 4 | Block body, simple JSX, implicit return, curried arrows |
-| [Call Expressions](./docs/rules/call-expressions.md) | 6 | Argument formatting, nested brackets, single-line calls |
-| [Classes](./docs/rules/classes.md) | 2 | Method formatting, naming conventions |
-| [Comments](./docs/rules/comments.md) | 1 | Comment spacing and format |
-| [Components](./docs/rules/components.md) | 6 | Props destructure, folder naming, structure consistency |
-| [Control Flow](./docs/rules/control-flow.md) | 8 | Block newlines, if/else, logical expressions, ternaries |
-| [Functions](./docs/rules/functions.md) | 6 | Call spacing, declaration style, naming, params |
-| [Hooks](./docs/rules/hooks.md) | 5 | Callback format, deps-per-line, file naming, function naming, useState naming |
-| [Imports/Exports](./docs/rules/imports-exports.md) | 8 | Absolute imports, format, index exports, module exports |
-| [JSX](./docs/rules/jsx.md) | 14 | ClassName handling, children, logical expressions |
-| [Objects](./docs/rules/objects.md) | 5 | Property formatting, empty lines, string properties |
-| [React](./docs/rules/react.md) | 1 | Component/hook code ordering |
-| [Spacing](./docs/rules/spacing.md) | 2 | Assignment values, bracket spacing |
-| [Strings](./docs/rules/strings.md) | 1 | No hardcoded strings |
-| [TypeScript](./docs/rules/typescript.md) | 8 | Enum/interface/type formatting, definition location |
-| [Variables](./docs/rules/variables.md) | 1 | Naming conventions (camelCase, PascalCase) |
+| [Arrays](./rules/arrays.md) | 3 | Callback destructuring, items-per-line, objects-on-new-lines |
+| [Arrow Functions](./rules/arrow-functions.md) | 4 | Block body, simple JSX, implicit return, curried arrows |
+| [Call Expressions](./rules/call-expressions.md) | 6 | Argument formatting, nested brackets, single-line calls |
+| [Classes](./rules/classes.md) | 2 | Method formatting, naming conventions |
+| [Comments](./rules/comments.md) | 1 | Comment spacing and format |
+| [Components](./rules/components.md) | 6 | Props destructure, folder naming, structure consistency |
+| [Control Flow](./rules/control-flow.md) | 8 | Block newlines, if/else, logical expressions, ternaries |
+| [Functions](./rules/functions.md) | 6 | Call spacing, declaration style, naming, params |
+| [Hooks](./rules/hooks.md) | 5 | Callback format, deps-per-line, file naming, function naming, useState naming |
+| [Imports/Exports](./rules/imports-exports.md) | 8 | Absolute imports, format, index exports, module exports |
+| [JSX](./rules/jsx.md) | 14 | ClassName handling, children, logical expressions |
+| [Objects](./rules/objects.md) | 5 | Property formatting, empty lines, string properties |
+| [React](./rules/react.md) | 1 | Component/hook code ordering |
+| [Spacing](./rules/spacing.md) | 2 | Assignment values, bracket spacing |
+| [Strings](./rules/strings.md) | 1 | No hardcoded strings |
+| [TypeScript](./rules/typescript.md) | 8 | Enum/interface/type formatting, definition location |
+| [Variables](./rules/variables.md) | 1 | Naming conventions (camelCase, PascalCase) |
 
 <br />
 
