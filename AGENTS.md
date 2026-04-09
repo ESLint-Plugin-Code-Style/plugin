@@ -126,31 +126,99 @@ The website syncs automatically after push. Do NOT manually edit the website rep
 
 ### What still requires manual website edits
 
-These are rare and require editing the website repo directly:
+These are rare and require editing the [`ESLint-Plugin-Code-Style/website`](https://github.com/ESLint-Plugin-Code-Style/website) repo directly:
 - New static pages (e.g., a new guide page)
 - Layout/design changes
 - Configuration page content changes
 - Getting started page content changes
 
-### Local Development
+### How the Sync Works — Full Architecture
 
-The plugin and website repos are sibling directories:
+The plugin and website are two independent repos in the same GitHub org. They do NOT depend on each other being on the same machine. The sync is entirely automated via GitHub Actions.
+
+**The 3 files that power the sync:**
 
 ```
-ESLint Plugin Code Style/
-├── plugin/    ← this repo (ESLint-Plugin-Code-Style/plugin)
-└── website/   ← website repo (ESLint-Plugin-Code-Style/website)
+PLUGIN REPO                              WEBSITE REPO
+────────────                             ────────────
+metadata.json ─── single source ───►     scripts/sync-from-plugin.js
+                  of truth                     │
+                                               ├──► src/data/rules.ts      (auto-generated)
+.github/workflows/                             ├──► src/data/config.ts     (auto-generated)
+  sync-website.yml                             ├──► src/data/navigation.ts (auto-generated)
+       │                                       └──► CHANGELOG.md           (fetched)
+       │  sends "plugin-updated"
+       │  event via repository_dispatch   .github/workflows/
+       └──────────────────────────────►     sync-from-plugin.yml
+                                                 │
+                                                 └──► runs sync script
+                                                      commits changes
+                                                      Vercel deploys
 ```
 
-```bash
-# Run website locally
-cd ../website
-pnpm dev      # Development server at http://localhost:5173
-pnpm build    # Production build
-pnpm preview  # Preview production build
+**Step-by-step flow:**
 
-# Test sync locally
-node scripts/sync-from-plugin.js ../plugin/metadata.json
+```
+1. Developer changes a rule in the plugin
+   └── Updates metadata.json in the same commit (REQUIRED)
+
+2. Push to main
+   └── GitHub detects metadata.json changed
+
+3. Plugin workflow (sync-website.yml) runs
+   └── Sends "plugin-updated" event to website repo
+       (uses WEBSITE_SYNC_TOKEN secret for cross-repo auth)
+
+4. Website workflow (sync-from-plugin.yml) receives the event
+   ├── Checks out the website code
+   ├── Runs: node scripts/sync-from-plugin.js
+   │   ├── Fetches metadata.json from GitHub raw URL
+   │   ├── Fetches CHANGELOG.md from GitHub raw URL
+   │   ├── Generates rules.ts (all 81 rules with examples, options, descriptions)
+   │   ├── Generates config.ts (version, URLs, counts)
+   │   ├── Generates navigation.ts (sidebar category links)
+   │   └── Saves CHANGELOG.md to website root
+   ├── If any files changed → commits as github-actions[bot]
+   └── Pushes to website main
+
+5. Vercel detects the push → builds → deploys
+   └── Users see the change live at eslint-plugin-code-style.org
+```
+
+**What metadata.json contains (and must always reflect the plugin's current state):**
+
+```json
+{
+    "version": "3.0.6",              ← must match package.json
+    "githubUrl": "...",              ← org repo URL
+    "npmUrl": "...",                 ← npm package URL
+    "websiteUrl": "...",             ← website URL
+    "eslintVersions": "v9 and v10",  ← supported ESLint versions
+    "totalRules": 81,                ← aggregate counts
+    "fixableRules": 71,
+    "configurableRules": 20,
+    "reportOnlyRules": 10,
+    "categories": [                  ← every category with every rule
+        {
+            "name": "Arrays",
+            "slug": "arrays",
+            "description": "...",
+            "rules": [
+                {
+                    "name": "array-callback-destructure",
+                    "description": "...",   ← shown on website
+                    "rationale": "...",      ← shown on website
+                    "isFixable": true,
+                    "isConfigurable": false,
+                    "isTsOnly": false,
+                    "goodExample": "...",    ← shown on website
+                    "badExample": "...",     ← shown on website
+                    "options": []            ← shown on website
+                }
+            ]
+        }
+    ]
+}
 ```
 
 ## Build & Test Commands
