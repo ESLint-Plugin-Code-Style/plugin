@@ -116,8 +116,8 @@ Plugin change → update metadata.json in same commit → push to main
 | New rule | `src/rules/<category>.js`, `metadata.json` (add rule to category), `rules/<category>.md` |
 | Remove rule | `src/rules/<category>.js`, `metadata.json` (remove rule), `rules/<category>.md` |
 | Edit rule (behavior/options/examples) | `src/rules/<category>.js`, `metadata.json` (update description/examples/options) |
-| Version bump | `package.json` (version field), `metadata.json` (version field) |
-| Changelog update | `CHANGELOG.md` only |
+| Version bump | `package.json` (version field), `metadata.json` (version field), `CHANGELOG.md` (new version entry) |
+| Changelog update | `CHANGELOG.md` — website fetches it automatically via the sync script prebuild |
 | Add/change good or bad examples | `metadata.json` (update goodExample/badExample for the rule) |
 | Add/change rule options | `metadata.json` (update options array for the rule) |
 | Change rule rationale | `metadata.json` (update rationale for the rule) |

@@ -7,6 +7,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [3.0.7] - 2026-04-10
+
+### Changed
+
+- **Organization** - Moved repository from `Mohamed-Elhawary/eslint-plugin-code-style` to `ESLint-Plugin-Code-Style/plugin` under a dedicated GitHub organization
+- **Website** - Extracted documentation website into a separate repository (`ESLint-Plugin-Code-Style/website`)
+- **Structure** - Moved `docs/rules/` to `rules/` at the root level
+- **Sync** - Added automated sync between plugin and website via `metadata.json` and GitHub Actions (`repository_dispatch`)
+- **Website** - All hardcoded rule counts replaced with dynamic imports from auto-generated data
+- **URLs** - Updated all GitHub URLs across README, AGENTS, package.json, recommended configs, and website source code
+
+### Added
+
+- `metadata.json` - Single source of truth for all rule data, version, and metadata consumed by the website
+- `.github/workflows/sync-website.yml` - GitHub Action to trigger website sync on plugin changes
+- `context7.json` - Context7 library ownership claim
+
+### Fixed
+
+- All ESLint errors in the documentation website resolved (plugin's own rules applied as showcase)
+
+---
+
 ## [3.0.6] - 2026-04-02
 
 ### Fixed
