@@ -1,6 +1,6 @@
 {
     "version": "3.0.6",
-    "githubUrl": "https://github.com/Mohamed-Elhawary/eslint-plugin-code-style",
+    "githubUrl": "https://github.com/ESLint-Plugin-Code-Style/plugin",
     "npmUrl": "https://www.npmjs.com/package/eslint-plugin-code-style",
     "websiteUrl": "https://www.eslint-plugin-code-style.org",
     "eslintVersions": "v9 and v10",
