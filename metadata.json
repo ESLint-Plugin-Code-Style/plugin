@@ -16,7 +16,7 @@
             "rules": [
                 {
                     "name": "array-callback-destructure",
-                    "description": "When destructuring parameters in array method callbacks, enforces each property on its own line when there are 2 or more properties",
+                    "description": "When destructuring parameters in array method callbacks, enforces each property on its own line when there are 2 or more properties (TEST SYNC - will revert)",
                     "rationale": "Improves readability of array transformations by making destructured properties easy to scan vertically",
                     "isFixable": true,
                     "isConfigurable": false,
