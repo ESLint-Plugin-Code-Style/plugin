@@ -1,0 +1,21 @@
+name: Sync Website
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'metadata.json'
+      - 'CHANGELOG.md'
+      - 'package.json'
+
+jobs:
+  trigger-website-sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger website rebuild
+        uses: peter-evans/repository-dispatch@v3
+        with:
+          token: ${{ secrets.WEBSITE_SYNC_TOKEN }}
+          repository: ESLint-Plugin-Code-Style/website
+          event-type: plugin-updated
+          client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}"}'

@@ -1,0 +1,1230 @@
+{
+    "version": "3.0.6",
+    "githubUrl": "https://github.com/Mohamed-Elhawary/eslint-plugin-code-style",
+    "npmUrl": "https://www.npmjs.com/package/eslint-plugin-code-style",
+    "websiteUrl": "https://www.eslint-plugin-code-style.org",
+    "eslintVersions": "v9 and v10",
+    "totalRules": 81,
+    "fixableRules": 71,
+    "configurableRules": 20,
+    "reportOnlyRules": 10,
+    "categories": [
+        {
+            "name": "Arrays",
+            "slug": "arrays",
+            "description": "Array formatting, callback destructuring, and line break rules",
+            "rules": [
+                {
+                    "name": "array-callback-destructure",
+                    "description": "When destructuring parameters in array method callbacks, enforces each property on its own line when there are 2 or more properties",
+                    "rationale": "Improves readability of array transformations by making destructured properties easy to scan vertically",
+                    "isFixable": true,
+                    "isConfigurable": false,
+                    "isTsOnly": false,
+                    "goodExample": "const result = items.map(({\n    name,\n    value,\n}) => `${name}: ${value}`);",
+                    "badExample": "const result = items.map(({ name, value, id }) => `${name}: ${value}`);",
+                    "options": []
+                },
+                {
+                    "name": "array-items-per-line",
+                    "description": "Collapse arrays with few items to one line; expand larger arrays with each item on its own line",
+                    "rationale": "Prevents overly long single-line arrays while avoiding unnecessary expansion for simple arrays",
+                    "isFixable": true,
+                    "isConfigurable": true,
+                    "isTsOnly": false,
+                    "goodExample": "const colors = [\"red\", \"green\", \"blue\"];\n\nconst weekdays = [\n    \"Monday\",\n    \"Tuesday\",\n    \"Wednesday\",\n    \"Thursday\",\n    \"Friday\",\n];",
+                    "badExample": "const weekdays = [\"Monday\", \"Tuesday\", \"Wednesday\", \"Thursday\", \"Friday\"];",
+                    "options": [
+                        {
+                            "name": "maxItems",
+                            "type": "integer",
+                            "default": "3",
+                            "description": "Maximum items to keep on single line"
+                        }
+                    ]
+                },
+                {
+                    "name": "array-objects-on-new-lines",
+                    "description": "Each object in an array starts on its own line for better visual scanning",
+                    "rationale": "Object literals in arrays are visually complex. Own lines make it easier to scan, compare, and edit",
+                    "isFixable": true,
+                    "isConfigurable": false,
+                    "isTsOnly": false,
+                    "goodExample": "const users = [\n    { id: 1, name: \"Alice\" },\n    { id: 2, name: \"Bob\" },\n];",
+                    "badExample": "const users = [{ id: 1, name: \"Alice\" }, { id: 2, name: \"Bob\" }];",
+                    "options": []
+                }
+            ]
+        },
+        {
+            "name": "Arrow Functions",
+            "slug": "arrow-functions",
+            "description": "Arrow function body style, implicit returns, and curried functions",
+            "rules": [
+                {
+                    "name": "arrow-function-block-body",
+                    "description": "Arrow functions with complex or multiline expressions should use block body or wrap in parentheses for consistent formatting",
+                    "rationale": "Clear boundaries with braces make the function body obvious",
+                    "isFixable": true,
+                    "isConfigurable": false,
+                    "isTsOnly": false,
+                    "goodExample": "const Button = () => (\n    <button className=\"primary\">\n        Click me\n    </button>\n);",
+                    "badExample": "const Button = () => <button className=\"primary\">\n    Click me\n</button>;",
+                    "options": []
+                },
+                {
+                    "name": "arrow-function-simple-jsx",
+                    "description": "Collapse arrow functions returning simple single-element JSX to one line",
+                    "rationale": "Simple component wrappers don't need multi-line formatting",
+                    "isFixable": true,
+                    "isConfigurable": false,
+                    "isTsOnly": false,
+                    "goodExample": "export const Layout = ({ children }) => <Container>{children}</Container>;",
+                    "badExample": "export const Layout = ({ children }) => (\n    <Container>{children}</Container>\n);",
+                    "options": []
+                },
+                {
+                    "name": "arrow-function-simplify",
+                    "description": "Convert block body with single return to implicit return",
+                    "rationale": "Implicit returns are more concise and idiomatic JavaScript",
+                    "isFixable": true,
+                    "isConfigurable": false,
+                    "isTsOnly": false,
+                    "goodExample": "const double = (x) => x * 2;",
+                    "badExample": "const double = (x) => { return x * 2; };",
+                    "options": []
+                },
+                {
+                    "name": "curried-arrow-same-line",
+                    "description": "Curried arrow functions start on same line as =>, not on new line",
+                    "rationale": "Curried functions are easier to read when the chain is visible",
+                    "isFixable": true,
+                    "isConfigurable": false,
+                    "isTsOnly": false,
+                    "goodExample": "const createAction = (type) => (payload) => ({ type, payload });",
+                    "badExample": "const createAction = (type) =>\n    (payload) => ({ type, payload });",
+                    "options": []
+                }
+            ]
+        },
+        {
+            "name": "Call Expressions",
+            "slug": "call-expressions",
+            "description": "Function call argument formatting, bracket placement, and single-line rules",
+            "rules": [
+                {
+                    "name": "function-arguments-format",
+                    "description": "Format function call arguments consistently — one per line when threshold is met",
+                    "rationale": "Consistent argument formatting makes function calls scannable and diffs clean",
+                    "isFixable": true,
+                    "isConfigurable": true,
+                    "isTsOnly": false,
+                    "goodExample": "setValue(\n    \"email\",\n    \"user@example.com\",\n);",
+                    "badExample": "setValue(\"email\", \"user@example.com\");",
+                    "options": [
+                        {
+                            "name": "minArgs",
+                            "type": "integer",
+                            "default": "2",
+                            "description": "Minimum arguments to enforce multiline"
+                        },
+                        {
+                            "name": "skipHooks",
+                            "type": "boolean",
+                            "default": "true",
+                            "description": "Skip React hooks"
+                        },
+                        {
+                            "name": "skipSingleArg",
+                            "type": "boolean",
+                            "default": "true",
+                            "description": "Skip calls with single complex argument"
+                        }
+                    ]
+                },
+                {
+                    "name": "nested-call-closing-brackets",
+                    "description": "Chain closing brackets on same line: })); not scattered across lines",
+                    "rationale": "Scattered closing brackets waste vertical space",
+                    "isFixable": true,
+                    "isConfigurable": false,
+                    "isTsOnly": false,
+                    "goodExample": "const StyledCard = styled(Card)(({ theme }) => ({\n    color: theme.palette.text.primary,\n}));",
+                    "badExample": "const StyledCard = styled(Card)(({ theme }) => ({\n    color: theme.palette.text.primary,\n})\n);",
+                    "options": []
+                },
+                {
+                    "name": "no-empty-lines-in-function-calls",
+                    "description": "No empty lines between arguments or after opening/before closing parentheses",
+                    "rationale": "Empty lines between arguments break visual grouping",
+                    "isFixable": true,
+                    "isConfigurable": false,
+                    "isTsOnly": false,
+                    "goodExample": "createUser(\n    name,\n    email,\n    password,\n);",
+                    "badExample": "createUser(\n    name,\n\n    email,\n\n    password,\n);",
+                    "options": []
+                },
+                {
+                    "name": "opening-brackets-same-line",
+                    "description": "Opening brackets in function arguments stay on same line as the function call",
+                    "rationale": "Opening brackets on new lines create unnecessary indentation",
+                    "isFixable": true,
+                    "isConfigurable": false,
+                    "isTsOnly": false,
+                    "goodExample": "fn({\n    key: value,\n    other: data,\n});",
+                    "badExample": "fn(\n    { key: value }\n);",
+                    "options": []
+                },
+                {
+                    "name": "simple-call-single-line",
+                    "description": "Collapse simple arrow function calls to single line",
+                    "rationale": "Common patterns like lazy(() => import(...)) don't need multiline",
+                    "isFixable": true,
+                    "isConfigurable": false,
+                    "isTsOnly": false,
+                    "goodExample": "const Page = lazy(() => import(\"./Page\"));",
+                    "badExample": "const Page = lazy(\n    () => import(\"./Page\"),\n);",
+                    "options": []
+                },
+                {
+                    "name": "single-argument-on-one-line",
+                    "description": "Function calls with a single simple argument stay on one line",
+                    "rationale": "Single-argument calls don't need multiline formatting",
+                    "isFixable": true,
+                    "isConfigurable": false,
+                    "isTsOnly": false,
+                    "goodExample": "fetchUser(userId);\nconsole.log(message);",
+                    "badExample": "fetchUser(\n    userId,\n);",
+                    "options": []
+                }
+            ]
+        },
+        {
+            "name": "Comments",
+            "slug": "comments",
+            "description": "Comment spacing and format consistency",
+            "rules": [
+                {
+                    "name": "comment-format",
+                    "description": "Space after //, space inside /* */, convert single-line blocks to //",
+                    "rationale": "Consistent comment formatting improves readability",
+                    "isFixable": true,
+                    "isConfigurable": false,
+                    "isTsOnly": false,
+                    "goodExample": "// This is a comment\n/* This is a block comment */",
+                    "badExample": "//This is a comment\n/*No space*/",
+                    "options": []
+                }
+            ]
+        },
+        {
+            "name": "Components",
+            "slug": "components",
+            "description": "Component props, folder naming, structure consistency, and SVG icons",
+            "rules": [
+                {
+                    "name": "component-props-destructure",
+                    "description": "Component props must be destructured in the function parameter",
+                    "rationale": "Destructured props make it clear what props a component uses",
+                    "isFixable": true,
+                    "isConfigurable": false,
+                    "isTsOnly": false,
+                    "goodExample": "export const Button = ({ label, onClick }) => (\n    <button onClick={onClick}>{label}</button>\n);",
+                    "badExample": "export const Button = (props) => (\n    <button onClick={props.onClick}>{props.label}</button>\n);",
+                    "options": []
+                },
+                {
+                    "name": "component-props-inline-type",
+                    "description": "Enforce inline type annotation for component props instead of interface reference",
+                    "rationale": "Inline types keep prop definitions colocated with the component",
+                    "isFixable": true,
+                    "isConfigurable": false,
+                    "isTsOnly": true,
+                    "goodExample": "export const Button = ({ label } : { label: string }) => (\n    <button>{label}</button>\n);",
+                    "badExample": "export const Button = ({ label }: ButtonPropsInterface) => (\n    <button>{label}</button>\n);",
+                    "options": []
+                },
+                {
+                    "name": "folder-based-naming-convention",
+                    "description": "Enforce naming based on folder: suffix for views/layouts/pages/providers, camelCase for data/constants",
+                    "rationale": "Consistent naming based on folder structure makes purpose immediately clear",
+                    "isFixable": true,
+                    "isConfigurable": true,
+                    "isTsOnly": false,
+                    "goodExample": "// views/dashboard.tsx\nexport const DashboardView = () => <div>Dashboard</div>;",
+                    "badExample": "// views/dashboard.tsx\nexport const Dashboard = () => <div>Dashboard</div>;",
+                    "options": [
+                        {
+                            "name": "chainOrder",
+                            "type": "string",
+                            "default": "\"child-parent\"",
+                            "description": "Order of folder chain in names"
+                        },
+                        {
+                            "name": "files",
+                            "type": "array",
+                            "default": "[]",
+                            "description": "Per-path chainOrder overrides"
+                        }
+                    ]
+                },
+                {
+                    "name": "folder-structure-consistency",
+                    "description": "Enforce consistent folder structure (flat vs wrapped) in module folders",
+                    "rationale": "Mixing flat files and wrapped folders creates inconsistency",
+                    "isFixable": false,
+                    "isConfigurable": true,
+                    "isTsOnly": false,
+                    "goodExample": "atoms/input.tsx\natoms/calendar.tsx",
+                    "badExample": "atoms/input.tsx\natoms/calendar/index.tsx\natoms/calendar/helpers.ts",
+                    "options": [
+                        {
+                            "name": "moduleFolders",
+                            "type": "string[]",
+                            "default": "(built-in list)",
+                            "description": "Module folders to check"
+                        },
+                        {
+                            "name": "extraModuleFolders",
+                            "type": "string[]",
+                            "default": "[]",
+                            "description": "Additional folders to check"
+                        }
+                    ]
+                },
+                {
+                    "name": "no-redundant-folder-suffix",
+                    "description": "Disallow file/folder names that redundantly include the parent folder name as a suffix",
+                    "rationale": "The folder already provides context, so the name doesn't need to repeat it",
+                    "isFixable": false,
+                    "isConfigurable": false,
+                    "isTsOnly": false,
+                    "goodExample": "layouts/main.tsx",
+                    "badExample": "layouts/main-layout.tsx",
+                    "options": []
+                },
+                {
+                    "name": "svg-icon-naming-convention",
+                    "description": "SVG components must end with 'Icon' suffix; 'Icon' suffix components must return SVG",
+                    "rationale": "Consistent naming makes it clear which components render icons",
+                    "isFixable": false,
+                    "isConfigurable": false,
+                    "isTsOnly": false,
+                    "goodExample": "export const SuccessIcon = () => (\n    <svg><path d=\"M9 12l2 2 4-4\" /></svg>\n);",
+                    "badExample": "export const Success = () => (\n    <svg><path d=\"M9 12l2 2 4-4\" /></svg>\n);",
+                    "options": []
+                }
+            ]
+        },
+        {
+            "name": "Classes",
+            "slug": "classes",
+            "description": "Class method formatting and naming conventions",
+            "rules": [
+                {
+                    "name": "class-method-definition-format",
+                    "description": "Consistent spacing in class/method definitions: space before {, no space before (",
+                    "rationale": "Consistent formatting makes code more readable",
+                    "isFixable": true,
+                    "isConfigurable": false,
+                    "isTsOnly": false,
+                    "goodExample": "class ApiServiceClass {\n    getDataHandler(): string {\n        return \"data\";\n    }\n}",
+                    "badExample": "class ApiServiceClass{\n    getDataHandler (): string{\n        return \"data\";\n    }\n}",
+                    "options": []
+                },
+                {
+                    "name": "class-naming-convention",
+                    "description": "Class declarations must end with 'Class' suffix",
+                    "rationale": "The 'Class' suffix distinguishes class definitions from components or types",
+                    "isFixable": true,
+                    "isConfigurable": false,
+                    "isTsOnly": false,
+                    "goodExample": "class ApiServiceClass {\n    fetch() {}\n}",
+                    "badExample": "class ApiService {\n    fetch() {}\n}",
+                    "options": []
+                }
+            ]
+        },
+        {
+            "name": "Control Flow",
+            "slug": "control-flow",
+            "description": "Block formatting, if/else, logical expressions, ternaries, and switch cases",
+            "rules": [
+                {
+                    "name": "block-statement-newlines",
+                    "description": "Newline after { and before } in block statements",
+                    "rationale": "Consistent block formatting improves readability",
+                    "isFixable": true,
+                    "isConfigurable": false,
+                    "isTsOnly": false,
+                    "goodExample": "if (condition) {\n    doSomething();\n}",
+                    "badExample": "if (condition) { doSomething(); }",
+                    "options": []
+                },
+                {
+                    "name": "empty-line-after-block",
+                    "description": "Empty line required between closing } and next statement",
+                    "rationale": "Visual separation between logical blocks improves readability",
+                    "isFixable": true,
+                    "isConfigurable": false,
+                    "isTsOnly": false,
+                    "goodExample": "if (condition) {\n    doSomething();\n}\n\nconst x = 1;",
+                    "badExample": "if (condition) {\n    doSomething();\n}\nconst x = 1;",
+                    "options": []
+                },
+                {
+                    "name": "if-else-spacing",
+                    "description": "Empty line between consecutive if blocks, no empty line between single-line if/else",
+                    "rationale": "Maintains visual separation between distinct conditional blocks",
+                    "isFixable": true,
+                    "isConfigurable": false,
+                    "isTsOnly": false,
+                    "goodExample": "if (status === \"loading\") {\n    return <Loading />;\n}\n\nif (status === \"error\") {\n    return <Error />;\n}",
+                    "badExample": "if (status === \"loading\") {\n    return <Loading />;\n}\nif (status === \"error\") {\n    return <Error />;\n}",
+                    "options": []
+                },
+                {
+                    "name": "if-statement-format",
+                    "description": "{ on same line as if/else if, else on same line as }",
+                    "rationale": "Follows the most common JavaScript style (K&R / 'one true brace style')",
+                    "isFixable": true,
+                    "isConfigurable": false,
+                    "isTsOnly": false,
+                    "goodExample": "if (condition) {\n    doSomething();\n} else {\n    doOther();\n}",
+                    "badExample": "if (condition)\n{\n    doSomething();\n}\nelse\n{\n    doOther();\n}",
+                    "options": []
+                },
+                {
+                    "name": "logical-expression-multiline",
+                    "description": "Logical expressions with more than threshold operands get one per line",
+                    "rationale": "Long logical expressions are hard to read on one line",
+                    "isFixable": true,
+                    "isConfigurable": true,
+                    "isTsOnly": false,
+                    "goodExample": "const err = data.error\n    || data.message\n    || data.status\n    || data.fallback;",
+                    "badExample": "const err = data.error || data.message || data.status || data.fallback;",
+                    "options": [
+                        {
+                            "name": "maxOperands",
+                            "type": "integer",
+                            "default": "3",
+                            "description": "Maximum operands on a single line"
+                        }
+                    ]
+                },
+                {
+                    "name": "multiline-if-conditions",
+                    "description": "If conditions exceeding threshold get one per line",
+                    "rationale": "Long conditions are hard to read on one line",
+                    "isFixable": true,
+                    "isConfigurable": true,
+                    "isTsOnly": false,
+                    "goodExample": "if (\n    isAuthenticated &&\n    hasPermission &&\n    !isExpired &&\n    isEnabled\n) {\n    allowAccess();\n}",
+                    "badExample": "if (isAuthenticated && hasPermission && !isExpired && isEnabled) {}",
+                    "options": [
+                        {
+                            "name": "maxOperands",
+                            "type": "integer",
+                            "default": "3",
+                            "description": "Maximum operands to keep on single line"
+                        }
+                    ]
+                },
+                {
+                    "name": "no-empty-lines-in-switch-cases",
+                    "description": "No empty lines at start of case blocks or between consecutive cases",
+                    "rationale": "Empty lines inside switch cases create unnecessary gaps",
+                    "isFixable": true,
+                    "isConfigurable": false,
+                    "isTsOnly": false,
+                    "goodExample": "switch (status) {\n    case \"pending\":\n        return \"Waiting...\";\n    case \"success\":\n        return \"Done!\";\n}",
+                    "badExample": "switch (status) {\n    case \"pending\":\n\n        return \"Waiting...\";\n\n    case \"success\":\n        return \"Done!\";\n}",
+                    "options": []
+                },
+                {
+                    "name": "ternary-condition-multiline",
+                    "description": "Simple ternaries on one line; complex ones (>maxOperands) get multiline formatting",
+                    "rationale": "Consistent formatting based on complexity, not line length",
+                    "isFixable": true,
+                    "isConfigurable": true,
+                    "isTsOnly": false,
+                    "goodExample": "const x = a && b ? \"yes\" : \"no\";\n\nconst style = variant === \"ghost\"\n    || variant === \"danger\"\n    || variant === \"muted\"\n    ? \"transparent\"\n    : \"solid\";",
+                    "badExample": "const style = variant === \"ghost\" || variant === \"danger\" || variant === \"muted\" ? \"transparent\" : \"solid\";",
+                    "options": [
+                        {
+                            "name": "maxOperands",
+                            "type": "integer",
+                            "default": "3",
+                            "description": "Maximum condition operands for single-line ternary"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Functions",
+            "slug": "functions",
+            "description": "Function call spacing, declaration style, naming conventions, and parameters",
+            "rules": [
+                {
+                    "name": "function-call-spacing",
+                    "description": "No space between function name and opening parenthesis",
+                    "rationale": "Standard JavaScript convention",
+                    "isFixable": true,
+                    "isConfigurable": false,
+                    "isTsOnly": false,
+                    "goodExample": "myFunction(arg);\nconsole.log(\"message\");",
+                    "badExample": "myFunction (arg);\nconsole.log (\"message\");",
+                    "options": []
+                },
+                {
+                    "name": "function-declaration-style",
+                    "description": "Convert function declarations to const arrow function expressions",
+                    "rationale": "Auto-fix companion to ESLint's func-style rule",
+                    "isFixable": true,
+                    "isConfigurable": false,
+                    "isTsOnly": false,
+                    "goodExample": "export const getToken = (): string | null => getCookie(tokenKey);",
+                    "badExample": "export function getToken(): string | null {\n    return getCookie(tokenKey);\n}",
+                    "options": []
+                },
+                {
+                    "name": "function-naming-convention",
+                    "description": "Functions use camelCase, start with verb, end with Handler suffix",
+                    "rationale": "Function names should describe actions clearly",
+                    "isFixable": true,
+                    "isConfigurable": false,
+                    "isTsOnly": false,
+                    "goodExample": "function getUserDataHandler() {}\nfunction clickHandler() {}",
+                    "badExample": "function handleClick() {}\nfunction getUserData() {}",
+                    "options": []
+                },
+                {
+                    "name": "function-object-destructure",
+                    "description": "Non-component functions should accept typed params and destructure in the body. Also detects when object params are accessed via dot notation and suggests destructuring instead",
+                    "rationale": "Keeping function signatures clean and short improves readability",
+                    "isFixable": true,
+                    "isConfigurable": false,
+                    "isTsOnly": false,
+                    "goodExample": "const createUserHandler = async (data: CreateUserParamsInterface) => {\n    const { age, email, name } = data;\n};",
+                    "badExample": "const createUserHandler = async ({ age, email, name }: CreateUserParamsInterface) => {\n};",
+                    "options": []
+                },
+                {
+                    "name": "function-params-per-line",
+                    "description": "When multiline, each parameter on its own line",
+                    "rationale": "Mixed formatting is confusing; one per line is scannable",
+                    "isFixable": true,
+                    "isConfigurable": false,
+                    "isTsOnly": false,
+                    "goodExample": "function createUser(\n    name,\n    email,\n    password,\n) {}",
+                    "badExample": "function createUser(name,\n    email, password,\n    role) {}",
+                    "options": []
+                },
+                {
+                    "name": "no-empty-lines-in-function-params",
+                    "description": "No empty lines between parameters",
+                    "rationale": "Empty lines in parameter lists waste space",
+                    "isFixable": true,
+                    "isConfigurable": false,
+                    "isTsOnly": false,
+                    "goodExample": "function createUser(\n    name,\n    email,\n    role,\n) {}",
+                    "badExample": "function createUser(\n    name,\n\n    email,\n\n    role,\n) {}",
+                    "options": []
+                }
+            ]
+        },
+        {
+            "name": "Hooks",
+            "slug": "hooks",
+            "description": "React hook callback formatting, dependency arrays, and naming conventions",
+            "rules": [
+                {
+                    "name": "hook-callback-format",
+                    "description": "React hooks: callback on new line, deps array on separate line",
+                    "rationale": "Hooks with callbacks and dependencies are complex; multiline makes them clear",
+                    "isFixable": true,
+                    "isConfigurable": false,
+                    "isTsOnly": false,
+                    "goodExample": "useEffect(\n    () => {\n        fetchData();\n    },\n    [userId],\n);",
+                    "badExample": "useEffect(() => { fetchData(); }, [userId]);",
+                    "options": []
+                },
+                {
+                    "name": "hook-deps-per-line",
+                    "description": "When hook deps exceed threshold, each dependency on its own line",
+                    "rationale": "Long dependency arrays are hard to scan and diff",
+                    "isFixable": true,
+                    "isConfigurable": true,
+                    "isTsOnly": false,
+                    "goodExample": "useEffect(\n    () => {},\n    [\n        userId,\n        token,\n        refreshToken,\n    ],\n);",
+                    "badExample": "useEffect(() => {}, [userId, token, refreshToken, apiUrl]);",
+                    "options": [
+                        {
+                            "name": "maxDeps",
+                            "type": "integer",
+                            "default": "2",
+                            "description": "Maximum dependencies on single line"
+                        }
+                    ]
+                },
+                {
+                    "name": "hook-file-naming-convention",
+                    "description": "Hook files in module subfolders must include the module name",
+                    "rationale": "Files like use-create.ts don't indicate which module they belong to",
+                    "isFixable": false,
+                    "isConfigurable": false,
+                    "isTsOnly": false,
+                    "goodExample": "hooks/super-admins/use-create-super-admin.ts",
+                    "badExample": "hooks/super-admins/use-create.ts",
+                    "options": []
+                },
+                {
+                    "name": "hook-function-naming-convention",
+                    "description": "Hook function name must match camelCase of file name",
+                    "rationale": "Files exporting mismatched hook names are misleading",
+                    "isFixable": true,
+                    "isConfigurable": false,
+                    "isTsOnly": false,
+                    "goodExample": "// hooks/use-create-super-admin.ts\nexport const useCreateSuperAdmin = () => { ... };",
+                    "badExample": "// hooks/use-create-super-admin.ts\nexport const useCreate = () => { ... };",
+                    "options": []
+                },
+                {
+                    "name": "use-state-naming-convention",
+                    "description": "Boolean useState variables must start with is/has/with/without prefix",
+                    "rationale": "Consistent boolean state naming makes code more predictable",
+                    "isFixable": true,
+                    "isConfigurable": true,
+                    "isTsOnly": false,
+                    "goodExample": "const [isLoading, setIsLoading] = useState(false);\nconst [hasError, setHasError] = useState(false);",
+                    "badExample": "const [loading, setLoading] = useState(false);\nconst [error, setError] = useState(false);",
+                    "options": [
+                        {
+                            "name": "booleanPrefixes",
+                            "type": "string[]",
+                            "default": "[\"is\", \"has\", \"with\", \"without\"]",
+                            "description": "Replace default prefixes"
+                        },
+                        {
+                            "name": "extendBooleanPrefixes",
+                            "type": "string[]",
+                            "default": "[]",
+                            "description": "Add additional prefixes"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Imports & Exports",
+            "slug": "imports-exports",
+            "description": "Import/export formatting, absolute paths, index file conventions, and module exports",
+            "rules": [
+                {
+                    "name": "absolute-imports-only",
+                    "description": "Use alias imports from index files, no relative imports across folders",
+                    "rationale": "Absolute imports are cleaner than ../../../components",
+                    "isFixable": true,
+                    "isConfigurable": true,
+                    "isTsOnly": false,
+                    "goodExample": "import { Button, Input } from \"@/components\";\nimport { useAuth } from \"@/hooks\";",
+                    "badExample": "import { Button } from \"../../components\";\nimport { useAuth } from \"../../../hooks\";",
+                    "options": [
+                        {
+                            "name": "aliasPrefix",
+                            "type": "string",
+                            "default": "\"@/\"",
+                            "description": "Path alias prefix"
+                        },
+                        {
+                            "name": "extraAllowedFolders",
+                            "type": "string[]",
+                            "default": "[]",
+                            "description": "Additional importable folders"
+                        }
+                    ]
+                },
+                {
+                    "name": "export-format",
+                    "description": "Collapse short exports to one line; expand larger ones",
+                    "rationale": "Consistent export formatting improves readability",
+                    "isFixable": true,
+                    "isConfigurable": true,
+                    "isTsOnly": false,
+                    "goodExample": "export { Button, Input, Select };\n\nexport {\n    Button,\n    Input,\n    Select,\n    Checkbox,\n};",
+                    "badExample": "export { Button, Input, Select, Checkbox, Radio };",
+                    "options": [
+                        {
+                            "name": "maxSpecifiers",
+                            "type": "integer",
+                            "default": "3",
+                            "description": "Maximum specifiers on single line"
+                        }
+                    ]
+                },
+                {
+                    "name": "import-format",
+                    "description": "Collapse short imports to one line; expand larger ones",
+                    "rationale": "Consistent import formatting makes diffs cleaner",
+                    "isFixable": true,
+                    "isConfigurable": true,
+                    "isTsOnly": false,
+                    "goodExample": "import { useState } from \"react\";\n\nimport {\n    useState,\n    useEffect,\n    useCallback,\n    useMemo,\n} from \"react\";",
+                    "badExample": "import { useState, useEffect, useCallback, useMemo, useRef } from \"react\";",
+                    "options": [
+                        {
+                            "name": "maxSpecifiers",
+                            "type": "integer",
+                            "default": "3",
+                            "description": "Maximum specifiers on single line"
+                        }
+                    ]
+                },
+                {
+                    "name": "import-source-spacing",
+                    "description": "No leading/trailing spaces inside import path strings",
+                    "rationale": "Spaces in module paths are almost always typos",
+                    "isFixable": true,
+                    "isConfigurable": false,
+                    "isTsOnly": false,
+                    "goodExample": "import { Button } from \"@mui/material\";",
+                    "badExample": "import { Button } from \" @mui/material\";",
+                    "options": []
+                },
+                {
+                    "name": "index-export-style",
+                    "description": "Index files: compact re-exports; regular files: blank lines between exports",
+                    "rationale": "Index files are aggregators and should be compact",
+                    "isFixable": true,
+                    "isConfigurable": true,
+                    "isTsOnly": false,
+                    "goodExample": "// index.js\nexport { Button } from \"./button\";\nexport { Input } from \"./form\";",
+                    "badExample": "// index.js\nexport { Button } from \"./button\";\n\nexport { Input } from \"./form\";",
+                    "options": [
+                        {
+                            "name": "style",
+                            "type": "string",
+                            "default": "\"shorthand\"",
+                            "description": "Export style: \"shorthand\" or \"import-export\""
+                        }
+                    ]
+                },
+                {
+                    "name": "index-exports-only",
+                    "description": "Index files should only contain imports and re-exports, not code definitions",
+                    "rationale": "Index files should be barrels that aggregate exports",
+                    "isFixable": false,
+                    "isConfigurable": false,
+                    "isTsOnly": false,
+                    "goodExample": "export { Button } from \"./Button\";\nexport { helper } from \"./utils\";",
+                    "badExample": "export const CONSTANT = \"value\";\nexport function helper() {}",
+                    "options": []
+                },
+                {
+                    "name": "inline-export-declaration",
+                    "description": "Enforce inline export declarations instead of grouped export statements",
+                    "rationale": "Inline exports make it clear which declarations are public",
+                    "isFixable": true,
+                    "isConfigurable": true,
+                    "isTsOnly": false,
+                    "goodExample": "export const API_URL = \"/api\";\n\nexport const MAX_RETRIES = 3;",
+                    "badExample": "const API_URL = \"/api\";\nconst MAX_RETRIES = 3;\n\nexport { API_URL, MAX_RETRIES };",
+                    "options": [
+                        {
+                            "name": "allowGrouped",
+                            "type": "boolean",
+                            "default": "false",
+                            "description": "Allow grouped exports"
+                        }
+                    ]
+                },
+                {
+                    "name": "module-index-exports",
+                    "description": "Index files must export all folder contents",
+                    "rationale": "Ensures proper module boundaries and folder-level imports",
+                    "isFixable": false,
+                    "isConfigurable": true,
+                    "isTsOnly": false,
+                    "goodExample": "// components/index.js\nexport { Button } from \"./Button\";\nexport { Input } from \"./Input\";",
+                    "badExample": "// components/index.js (missing Input export)\nexport { Button } from \"./Button\";",
+                    "options": [
+                        {
+                            "name": "extraModuleFolders",
+                            "type": "string[]",
+                            "default": "[]",
+                            "description": "Additional module folders to check"
+                        },
+                        {
+                            "name": "extraIgnorePatterns",
+                            "type": "string[]",
+                            "default": "[]",
+                            "description": "Additional file patterns to skip"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "JSX",
+            "slug": "jsx",
+            "description": "JSX formatting, className handling, children, logical expressions, and ternaries",
+            "rules": [
+                {
+                    "name": "classname-dynamic-at-end",
+                    "description": "Dynamic expressions in className must be at the end of class strings",
+                    "rationale": "Static classes should come first for consistent Tailwind ordering",
+                    "isFixable": true,
+                    "isConfigurable": false,
+                    "isTsOnly": false,
+                    "goodExample": "<div className={`flex items-center gap-4 ${className}`} />",
+                    "badExample": "<div className={`${className} flex items-center gap-4`} />",
+                    "options": []
+                },
+                {
+                    "name": "classname-multiline",
+                    "description": "Long className strings broken into multiple lines",
+                    "rationale": "Long class strings are hard to read and review",
+                    "isFixable": true,
+                    "isConfigurable": true,
+                    "isTsOnly": false,
+                    "goodExample": "<div\n    className=\"\n        flex\n        items-center\n        justify-center\n        rounded-lg\n        p-4\n    \"\n/>",
+                    "badExample": "<div className=\"flex items-center justify-center rounded-lg p-4 font-bold\" />",
+                    "options": [
+                        {
+                            "name": "maxLength",
+                            "type": "integer",
+                            "default": "80",
+                            "description": "Maximum line length for class strings"
+                        }
+                    ]
+                },
+                {
+                    "name": "classname-no-extra-spaces",
+                    "description": "No extra/leading/trailing spaces in class strings",
+                    "rationale": "Extra spaces are usually unintentional",
+                    "isFixable": true,
+                    "isConfigurable": false,
+                    "isTsOnly": false,
+                    "goodExample": "<div className=\"flex items-center gap-4\" />",
+                    "badExample": "<div className=\"flex  items-center   gap-4\" />",
+                    "options": []
+                },
+                {
+                    "name": "classname-order",
+                    "description": "Tailwind class ordering in variables, objects, and return statements",
+                    "rationale": "Complements tailwindcss/classnames-order for non-JSX contexts",
+                    "isFixable": true,
+                    "isConfigurable": false,
+                    "isTsOnly": false,
+                    "goodExample": "const btn = \"flex items-center bg-blue-500 hover:bg-blue-600\";",
+                    "badExample": "const btn = \"hover:bg-blue-600 bg-blue-500 flex items-center\";",
+                    "options": []
+                },
+                {
+                    "name": "jsx-children-on-new-line",
+                    "description": "Multiple JSX children: each on own line",
+                    "rationale": "Individual lines make the component structure clear",
+                    "isFixable": true,
+                    "isConfigurable": false,
+                    "isTsOnly": false,
+                    "goodExample": "<Container>\n    <Header />\n    <Content />\n    <Footer />\n</Container>",
+                    "badExample": "<Container><Header /><Content /><Footer /></Container>",
+                    "options": []
+                },
+                {
+                    "name": "jsx-closing-bracket-spacing",
+                    "description": "No space before > or /> in JSX tags",
+                    "rationale": "Standard JSX convention",
+                    "isFixable": true,
+                    "isConfigurable": false,
+                    "isTsOnly": false,
+                    "goodExample": "<Button />\n<Input type=\"text\" />",
+                    "badExample": "<Button / >\n<Input type=\"text\" / >",
+                    "options": []
+                },
+                {
+                    "name": "jsx-element-child-new-line",
+                    "description": "Nested JSX elements on new lines; text children can stay inline",
+                    "rationale": "New lines make nesting visible",
+                    "isFixable": true,
+                    "isConfigurable": false,
+                    "isTsOnly": false,
+                    "goodExample": "<Button>\n    <Icon name=\"check\" />\n</Button>",
+                    "badExample": "<Button><Icon name=\"check\" /></Button>",
+                    "options": []
+                },
+                {
+                    "name": "jsx-logical-expression-simplify",
+                    "description": "Remove unnecessary parens around conditions and JSX in logical expressions",
+                    "rationale": "Extra parentheses add visual noise",
+                    "isFixable": true,
+                    "isConfigurable": false,
+                    "isTsOnly": false,
+                    "goodExample": "{isLoading && <Spinner />}",
+                    "badExample": "{(isLoading) && (<Spinner />)}",
+                    "options": []
+                },
+                {
+                    "name": "jsx-parentheses-position",
+                    "description": "Opening ( for multiline JSX on same line as return/=>",
+                    "rationale": "Parenthesis on new line wastes space",
+                    "isFixable": true,
+                    "isConfigurable": false,
+                    "isTsOnly": false,
+                    "goodExample": "const Card = () => (\n    <div className=\"card\">\n        <h1>Title</h1>\n    </div>\n);",
+                    "badExample": "const Card = () =>\n    (\n        <div className=\"card\">\n            <h1>Title</h1>\n        </div>\n    );",
+                    "options": []
+                },
+                {
+                    "name": "jsx-prop-naming-convention",
+                    "description": "Props: camelCase for regular, kebab-case for data-*/aria-*",
+                    "rationale": "Consistent prop naming follows React conventions",
+                    "isFixable": false,
+                    "isConfigurable": false,
+                    "isTsOnly": false,
+                    "goodExample": "<Button onClick={handleClick} isDisabled={false} />\n<Button data-testid=\"submit\" aria-label=\"Submit\" />",
+                    "badExample": "<Button on_click={handler} is_disabled={false} />",
+                    "options": []
+                },
+                {
+                    "name": "jsx-simple-element-one-line",
+                    "description": "Collapse simple JSX with single text/expression child to one line",
+                    "rationale": "Simple elements don't need multi-line formatting",
+                    "isFixable": true,
+                    "isConfigurable": false,
+                    "isTsOnly": false,
+                    "goodExample": "<Button>{buttonText}</Button>\n<Title>Welcome</Title>",
+                    "badExample": "<Button>\n    {buttonText}\n</Button>",
+                    "options": []
+                },
+                {
+                    "name": "jsx-string-value-trim",
+                    "description": "No leading/trailing whitespace inside JSX string attribute values",
+                    "rationale": "Whitespace in attribute values is usually unintentional",
+                    "isFixable": true,
+                    "isConfigurable": false,
+                    "isTsOnly": false,
+                    "goodExample": "<Button className=\"primary\" />",
+                    "badExample": "<Button className=\" primary \" />",
+                    "options": []
+                },
+                {
+                    "name": "jsx-ternary-format",
+                    "description": "Simple ternaries on one line; complex branches get parens with indentation",
+                    "rationale": "Consistent ternary formatting makes conditional rendering predictable",
+                    "isFixable": true,
+                    "isConfigurable": false,
+                    "isTsOnly": false,
+                    "goodExample": "{isLoading ? <Spinner /> : <Content />}\n\n{isLoading ? (\n    <Spinner size=\"large\" />\n) : (\n    <Content>\n        <Header />\n    </Content>\n)}",
+                    "badExample": "{isLoading\n    ? <Spinner />\n    : <Content />}",
+                    "options": []
+                },
+                {
+                    "name": "no-empty-lines-in-jsx",
+                    "description": "No empty lines between children or after opening/before closing tags",
+                    "rationale": "Empty lines inside JSX break the component's visual structure",
+                    "isFixable": true,
+                    "isConfigurable": false,
+                    "isTsOnly": false,
+                    "goodExample": "<div>\n    <Header />\n    <Content />\n    <Footer />\n</div>",
+                    "badExample": "<div>\n\n    <Header />\n\n    <Content />\n</div>",
+                    "options": []
+                }
+            ]
+        },
+        {
+            "name": "Objects",
+            "slug": "objects",
+            "description": "Object property formatting, empty lines, and string property spacing",
+            "rules": [
+                {
+                    "name": "no-empty-lines-in-objects",
+                    "description": "No empty lines between properties or after {/before }",
+                    "rationale": "Empty lines inside objects break visual grouping",
+                    "isFixable": true,
+                    "isConfigurable": false,
+                    "isTsOnly": false,
+                    "goodExample": "const user = {\n    name: \"John\",\n    email: \"john@example.com\",\n};",
+                    "badExample": "const user = {\n    name: \"John\",\n\n    email: \"john@example.com\",\n};",
+                    "options": []
+                },
+                {
+                    "name": "object-property-per-line",
+                    "description": "Collapse objects with 1 property; expand larger objects",
+                    "rationale": "Multiple properties need expansion for readability",
+                    "isFixable": true,
+                    "isConfigurable": true,
+                    "isTsOnly": false,
+                    "goodExample": "const point = { x: 10 };\n\nconst point = {\n    x: 10,\n    y: 20,\n};",
+                    "badExample": "const point = { x: 10, y: 20 };",
+                    "options": [
+                        {
+                            "name": "minProperties",
+                            "type": "integer",
+                            "default": "2",
+                            "description": "Minimum properties to trigger expansion"
+                        }
+                    ]
+                },
+                {
+                    "name": "object-property-value-brace",
+                    "description": "Opening { of object value on same line as :, not on new line",
+                    "rationale": "Braces on new lines waste vertical space",
+                    "isFixable": true,
+                    "isConfigurable": false,
+                    "isTsOnly": false,
+                    "goodExample": "const config = {\n    server: {\n        host: \"localhost\",\n    },\n};",
+                    "badExample": "const config = {\n    server:\n    {\n        host: \"localhost\",\n    },\n};",
+                    "options": []
+                },
+                {
+                    "name": "object-property-value-format",
+                    "description": "Simple property values on same line as :",
+                    "rationale": "Values on new lines after : waste space",
+                    "isFixable": true,
+                    "isConfigurable": false,
+                    "isTsOnly": false,
+                    "goodExample": "const user = {\n    name: \"John\",\n    age: 30,\n};",
+                    "badExample": "const user = {\n    name:\n        \"John\",\n    age:\n        30,\n};",
+                    "options": []
+                },
+                {
+                    "name": "string-property-spacing",
+                    "description": "No leading/trailing whitespace inside string property keys",
+                    "rationale": "Whitespace in property keys is usually unintentional",
+                    "isFixable": true,
+                    "isConfigurable": false,
+                    "isTsOnly": false,
+                    "goodExample": "const styles = {\n    \"& a\": { color: \"red\" },\n};",
+                    "badExample": "const styles = {\n    \" & a\": { color: \"red\" },\n};",
+                    "options": []
+                }
+            ]
+        },
+        {
+            "name": "Spacing",
+            "slug": "spacing",
+            "description": "Assignment values and bracket spacing",
+            "rules": [
+                {
+                    "name": "assignment-value-same-line",
+                    "description": "Assignment values start on same line as =",
+                    "rationale": "Breaking after = creates awkward formatting",
+                    "isFixable": true,
+                    "isConfigurable": false,
+                    "isTsOnly": false,
+                    "goodExample": "const name = \"John\";\nconst config = {\n    host: \"localhost\",\n};",
+                    "badExample": "const name =\n    \"John\";\nconst config =\n    {\n        host: \"localhost\",\n    };",
+                    "options": []
+                },
+                {
+                    "name": "member-expression-bracket-spacing",
+                    "description": "No spaces inside brackets in computed member expressions",
+                    "rationale": "Consistent with JavaScript conventions",
+                    "isFixable": true,
+                    "isConfigurable": false,
+                    "isTsOnly": false,
+                    "goodExample": "const value = arr[0];\nconst name = obj[key];",
+                    "badExample": "const value = arr[ 0 ];\nconst name = obj[ key ];",
+                    "options": []
+                }
+            ]
+        },
+        {
+            "name": "React",
+            "slug": "react",
+            "description": "Component and hook code ordering",
+            "rules": [
+                {
+                    "name": "react-code-order",
+                    "description": "Enforce consistent ordering in components: refs > state > redux > router > context > hooks > derived > memo > callback > handlers > effects > return",
+                    "rationale": "A consistent code structure makes components predictable and easier to navigate",
+                    "isFixable": true,
+                    "isConfigurable": false,
+                    "isTsOnly": false,
+                    "goodExample": "const UserDashboard = ({ title }) => {\n    const inputRef = useRef(null);\n    const [count, setCount] = useState(0);\n    const dispatch = useDispatch();\n    const navigate = useNavigate();\n    const { data } = useFetchData();\n    const isReady = !!data;\n    const resetHandler = () => setCount(0);\n    useEffect(() => {}, []);\n    return <div>{title}</div>;\n};",
+                    "badExample": "const BadComponent = ({ title }) => {\n    useEffect(() => {}, []);\n    const [count, setCount] = useState(0);\n    return <div>{title}</div>;\n};",
+                    "options": []
+                }
+            ]
+        },
+        {
+            "name": "Strings",
+            "slug": "strings",
+            "description": "String centralization and hardcoded string prevention",
+            "rules": [
+                {
+                    "name": "no-hardcoded-strings",
+                    "description": "Enforce importing strings from constants/strings modules instead of hardcoding",
+                    "rationale": "Centralized strings are easier to maintain, translate, and keep consistent",
+                    "isFixable": false,
+                    "isConfigurable": true,
+                    "isTsOnly": false,
+                    "goodExample": "import { BUTTON_LABEL } from \"@/constants\";\n\n<button>{BUTTON_LABEL}</button>",
+                    "badExample": "<button>Submit Form</button>\n<span>Something went wrong</span>",
+                    "options": [
+                        {
+                            "name": "extraIgnoreAttributes",
+                            "type": "string[]",
+                            "default": "[]",
+                            "description": "Additional JSX attributes to ignore"
+                        },
+                        {
+                            "name": "ignorePatterns",
+                            "type": "string[]",
+                            "default": "[]",
+                            "description": "Regex patterns for strings to ignore"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "TypeScript",
+            "slug": "typescript",
+            "description": "TypeScript enum, interface, type formatting, and definition organization",
+            "rules": [
+                {
+                    "name": "enum-format",
+                    "description": "Enforce enum naming (PascalCase + Enum suffix), UPPER_CASE members, trailing commas",
+                    "rationale": "Consistent enum naming makes enums instantly recognizable",
+                    "isFixable": true,
+                    "isConfigurable": false,
+                    "isTsOnly": true,
+                    "goodExample": "export enum StatusEnum {\n    ACTIVE = \"active\",\n    INACTIVE = \"inactive\",\n    PENDING = \"pending\",\n}",
+                    "badExample": "export enum Status {\n    active = \"active\",\n    inactive = \"inactive\";\n}",
+                    "options": []
+                },
+                {
+                    "name": "enum-type-enforcement",
+                    "description": "Use enum values instead of string literals for variables typed with *Type",
+                    "rationale": "Enum values provide type safety, autocompletion, and prevent typos",
+                    "isFixable": true,
+                    "isConfigurable": false,
+                    "isTsOnly": true,
+                    "goodExample": "const variant = ButtonVariantEnum.PRIMARY;",
+                    "badExample": "const variant = \"primary\"; // typed as ButtonVariantType",
+                    "options": []
+                },
+                {
+                    "name": "interface-format",
+                    "description": "Enforce interface naming (PascalCase + Interface suffix), camelCase properties, commas",
+                    "rationale": "Consistent interface naming makes interfaces instantly recognizable",
+                    "isFixable": true,
+                    "isConfigurable": false,
+                    "isTsOnly": true,
+                    "goodExample": "export interface UserInterface {\n    email: string,\n    id: string,\n    name: string,\n}",
+                    "badExample": "export interface User {\n    Email: string;\n    ID: string;\n}",
+                    "options": []
+                },
+                {
+                    "name": "no-inline-type-definitions",
+                    "description": "Inline union types in function params should be extracted to named types",
+                    "rationale": "Complex inline types make function signatures hard to read",
+                    "isFixable": false,
+                    "isConfigurable": true,
+                    "isTsOnly": true,
+                    "goodExample": "// types.ts\nexport type ButtonVariantType = \"primary\" | \"muted\" | \"danger\";\n\n// Button.tsx\nimport { ButtonVariantType } from \"./types\";",
+                    "badExample": "const Button = ({ variant }: { variant?: \"primary\" | \"muted\" | \"danger\" }) => {};",
+                    "options": [
+                        {
+                            "name": "maxUnionMembers",
+                            "type": "integer",
+                            "default": "2",
+                            "description": "Max union members before requiring extraction"
+                        },
+                        {
+                            "name": "maxLength",
+                            "type": "integer",
+                            "default": "50",
+                            "description": "Max character length before requiring extraction"
+                        }
+                    ]
+                },
+                {
+                    "name": "prop-naming-convention",
+                    "description": "Boolean props start with is/has/with/without, callbacks start with on",
+                    "rationale": "Consistent prop naming makes props self-documenting",
+                    "isFixable": true,
+                    "isConfigurable": true,
+                    "isTsOnly": true,
+                    "goodExample": "interface ButtonPropsInterface {\n    isDisabled: boolean,\n    isLoading: boolean,\n    onClick: () => void,\n}",
+                    "badExample": "interface ButtonPropsInterface {\n    disabled: boolean,\n    loading: boolean,\n    click: () => void,\n}",
+                    "options": [
+                        {
+                            "name": "extendBooleanPrefixes",
+                            "type": "string[]",
+                            "default": "[]",
+                            "description": "Add to default boolean prefixes"
+                        },
+                        {
+                            "name": "callbackPrefix",
+                            "type": "string",
+                            "default": "\"on\"",
+                            "description": "Required prefix for callback props"
+                        }
+                    ]
+                },
+                {
+                    "name": "type-annotation-spacing",
+                    "description": "No space before colon, one space after colon, no space before generics",
+                    "rationale": "Consistent type annotation spacing follows TypeScript conventions",
+                    "isFixable": true,
+                    "isConfigurable": false,
+                    "isTsOnly": true,
+                    "goodExample": "const name: string = \"John\";\nconst items: string[] = [];\nconst data: Array<number> = [];",
+                    "badExample": "const name : string = \"John\";\nconst items:string [] = [];",
+                    "options": []
+                },
+                {
+                    "name": "type-format",
+                    "description": "Enforce type naming (PascalCase + Type suffix), properties, union formatting",
+                    "rationale": "Consistent type naming makes types instantly recognizable",
+                    "isFixable": true,
+                    "isConfigurable": true,
+                    "isTsOnly": true,
+                    "goodExample": "export type UserType = {\n    email: string,\n    id: string,\n    name: string,\n};\n\nexport type ButtonVariantType =\n    \"danger\"\n    | \"ghost\"\n    | \"link\"\n    | \"muted\"\n    | \"primary\";",
+                    "badExample": "export type User = {\n    Email: string;\n    ID: string;\n};",
+                    "options": [
+                        {
+                            "name": "minUnionMembersForMultiline",
+                            "type": "integer",
+                            "default": "5",
+                            "description": "Minimum union members for multiline format"
+                        }
+                    ]
+                },
+                {
+                    "name": "typescript-definition-location",
+                    "description": "Enforce TypeScript definitions to be in designated folders (interfaces/, types/, enums/)",
+                    "rationale": "Separating definitions by category makes them easier to find and maintain",
+                    "isFixable": false,
+                    "isConfigurable": true,
+                    "isTsOnly": true,
+                    "goodExample": "// src/interfaces/user.ts\nexport interface UserInterface { ... }\n\n// src/types/config.ts\nexport type ConfigType = { ... }",
+                    "badExample": "// src/components/user-card.tsx\ninterface UserProps { ... } // Should be in interfaces/",
+                    "options": []
+                }
+            ]
+        },
+        {
+            "name": "Variables",
+            "slug": "variables",
+            "description": "Variable naming conventions for camelCase, PascalCase, and hooks",
+            "rules": [
+                {
+                    "name": "variable-naming-convention",
+                    "description": "camelCase for variables, PascalCase for components, use prefix for hooks",
+                    "rationale": "Consistent naming makes code predictable",
+                    "isFixable": true,
+                    "isConfigurable": false,
+                    "isTsOnly": false,
+                    "goodExample": "const userName = \"John\";\nconst UserProfile = () => <div />;\nconst useAuth = () => {};",
+                    "badExample": "const user_name = \"John\";\nconst MAX_RETRIES = 3;\nconst userProfile = () => <div />;",
+                    "options": []
+                }
+            ]
+        }
+    ]
+}

@@ -95,74 +95,42 @@ Each test project in `_tests_/` corresponds to a specific tech stack. Rules shou
 
 The documentation website lives in a **separate repository**: [`ESLint-Plugin-Code-Style/website`](https://github.com/ESLint-Plugin-Code-Style/website). Built with Next.js 15, React 19, Tailwind CSS v4, and TypeScript. Deployed at **https://www.eslint-plugin-code-style.org**.
 
-### Automatic Sync Validation
+### Automated Sync via metadata.json
 
-The website build runs `scripts/validate-sync.js` automatically (via `prebuild` script). This **blocks the build** if any of these checks fail:
-- Version in `config.ts` matches `package.json`
-- Rule count in `rules.ts` matches rules exported in `src/index.js`
-- Every rule name in `src/index.js` exists in `rules.ts` (and vice versa)
-- `CHANGELOG.md` exists and is parseable (the `/docs/changelog` page reads it at build time)
-- Rule doc files exist in `rules/` for every category
-- Navigation includes all categories
+The plugin and website sync is **fully automated** through `metadata.json`:
 
-Run manually: `cd <website-repo> && npm run validate-sync`
+```
+Plugin change → update metadata.json → push to main
+  → GitHub Action triggers website repo
+  → Website auto-generates rules.ts, config.ts, navigation.ts
+  → Website rebuilds and deploys
+```
 
-### Auto-Synced Content (Build-Time)
+**`metadata.json`** is the single source of truth for all rule data (names, descriptions, examples, options, categories, version). The website reads from it — no manual website edits needed for rule/version changes.
 
-These files are read directly from the repository at build time — no manual sync needed:
-- **CHANGELOG.md** → rendered at `/docs/changelog` page automatically
-- **Version** → centralized in `src/data/config.ts` (single source of truth)
+### What to update in the plugin
 
-### CRITICAL: Manual Sync Checklist
+| Change Type | Plugin Files to Update |
+|-------------|----------------------|
+| New rule | `src/rules/<category>.js`, `metadata.json` (add rule to category), `rules/<category>.md` |
+| Remove rule | `src/rules/<category>.js`, `metadata.json` (remove rule), `rules/<category>.md` |
+| Edit rule (behavior/options) | `src/rules/<category>.js`, `metadata.json` (update description/examples/options) |
+| Version bump | `package.json` (version field), `metadata.json` (version field) |
+| Changelog update | `CHANGELOG.md` only |
 
-The documentation website MUST be kept 100% in sync with the plugin. ANY change to the plugin requires checking and updating the website. The build will catch missing rules, but descriptions, examples, and page content must be updated manually. Here is the COMPLETE list of synced data:
+The website syncs automatically after push. No need to touch the website repo for these changes.
 
-**Rule Data (`src/data/rules.ts`):**
-- Total rule count (currently 81)
-- Auto-fixable count (currently 71)
-- Configurable count (currently 20)
-- Report-only count (currently 10)
-- TypeScript-only count (currently 9)
-- Category count (currently 17)
-- Each rule's: name, description, rationale, fixable flag, configurable flag, tsOnly flag, options array, good/bad examples
+### What still requires manual website edits
 
-**Version (`src/data/config.ts`):**
-- Plugin version string (single source of truth — all other website references import from here)
+These are rare and require editing the website repo directly:
+- New static pages (e.g., a new guide page)
+- Layout/design changes
+- Configuration page content changes
+- Getting started page content changes
 
-**Navigation (`src/data/navigation.ts`):**
-- Sidebar category list must match the categories in rules.ts
+### Local Development
 
-**Pages that reference counts or rules:**
-- Homepage (`src/app/page.tsx`) — stats bar (81/71/20/17), category grid with counts
-- Rules index (`src/app/rules/page.tsx`) — stats cards
-- Getting started (`src/app/docs/getting-started/page.tsx`) — all rules list
-- Configuration (`src/app/docs/configuration/page.tsx`) — config descriptions, rule counts
-
-**When adding a rule:** Update rules.ts (add rule to category), verify navigation.ts has category, verify homepage category counts match.
-**When removing a rule:** Update rules.ts (remove rule), update all count references.
-**When modifying a rule:** Update rules.ts (description, options, examples).
-**When changing version:** Update config.ts ONLY (all other references import from it).
-**When changing recommended configs:** Update configuration page, v9/v10 README files.
-**When changing ESLint version support:** Update config.ts, configuration page, getting-started page, all README files.
-
-> **Note:** All file paths below are relative to the website repo (`ESLint-Plugin-Code-Style/website`), except `rules/<category>.md` which is in the plugin repo.
-
-### Website Files to Update per Change Type
-
-| Change Type | Files to Update |
-|-------------|----------------|
-| New rule | `src/data/rules.ts`, `rules/<category>.md` (plugin repo), verify category page, verify homepage counts |
-| Remove rule | `src/data/rules.ts`, `rules/<category>.md` (plugin repo), update all count references |
-| Edit rule (behavior/options) | `src/data/rules.ts`, `rules/<category>.md` (plugin repo) |
-| Version bump | `src/data/config.ts` (single source of truth) |
-| Changelog update | `CHANGELOG.md` only (auto-synced to website at build time) |
-| Config change | `src/app/docs/configuration/page.tsx` |
-| New category | `src/data/rules.ts`, `src/data/navigation.ts`, `rules/<category>.md` (plugin repo), `src/app/page.tsx` |
-| ESLint version support change | `src/data/config.ts`, `src/app/docs/configuration/page.tsx`, `src/app/docs/getting-started/page.tsx`, README.md |
-
-### Cross-Repo Sync Workflow
-
-The plugin and website repos are sibling directories under the same parent folder:
+The plugin and website repos are sibling directories:
 
 ```
 ESLint Plugin Code Style/
@@ -170,20 +138,15 @@ ESLint Plugin Code Style/
 └── website/   ← website repo (ESLint-Plugin-Code-Style/website)
 ```
 
-When making plugin changes that affect the website (new rules, version bumps, config changes), the website repo MUST be updated as part of the same change — do NOT defer it.
-
-**Steps:**
-1. Make plugin changes and commit in the plugin repo
-2. Navigate to `../website/` and make corresponding updates (rules.ts, config.ts, navigation.ts, pages)
-3. Commit and push the website changes
-
-### Running the Website
-
 ```bash
+# Run website locally
 cd ../website
 pnpm dev      # Development server at http://localhost:5173
 pnpm build    # Production build
 pnpm preview  # Preview production build
+
+# Test sync locally
+node scripts/sync-from-plugin.js ../plugin/metadata.json
 ```
 
 ## Build & Test Commands
