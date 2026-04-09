@@ -162,18 +162,25 @@ The documentation website MUST be kept 100% in sync with the plugin. ANY change 
 
 ### Cross-Repo Sync Workflow
 
+The plugin and website repos are sibling directories under the same parent folder:
+
+```
+ESLint Plugin Code Style/
+├── plugin/    ← this repo (ESLint-Plugin-Code-Style/plugin)
+└── website/   ← website repo (ESLint-Plugin-Code-Style/website)
+```
+
 When making plugin changes that affect the website (new rules, version bumps, config changes), the website repo MUST be updated as part of the same change — do NOT defer it.
 
 **Steps:**
 1. Make plugin changes and commit in the plugin repo
-2. Clone the website repo if not already on disk: `gh repo clone ESLint-Plugin-Code-Style/website`
-3. Make corresponding website updates (rules.ts, config.ts, navigation.ts, pages)
-4. Commit and push the website changes
+2. Navigate to `../website/` and make corresponding updates (rules.ts, config.ts, navigation.ts, pages)
+3. Commit and push the website changes
 
 ### Running the Website
 
 ```bash
-cd <website-repo-path>
+cd ../website
 pnpm dev      # Development server at http://localhost:5173
 pnpm build    # Production build
 pnpm preview  # Preview production build
