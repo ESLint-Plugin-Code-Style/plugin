@@ -160,10 +160,24 @@ The documentation website MUST be kept 100% in sync with the plugin. ANY change 
 | New category | `src/data/rules.ts`, `src/data/navigation.ts`, `rules/<category>.md` (plugin repo), `src/app/page.tsx` |
 | ESLint version support change | `src/data/config.ts`, `src/app/docs/configuration/page.tsx`, `src/app/docs/getting-started/page.tsx`, README.md |
 
+### Cross-Repo Sync Workflow
+
+The website repo lives alongside the plugin repo on disk. When making plugin changes that affect the website (new rules, version bumps, config changes), Claude Code MUST sync the website in the **same session** — do NOT defer it.
+
+**Steps:**
+1. Make plugin changes and commit in the plugin repo
+2. Clone or navigate to the website repo at `../website/` (relative to the plugin repo)
+   - If not cloned yet: `gh repo clone ESLint-Plugin-Code-Style/website ../website`
+3. Make corresponding website updates (rules.ts, config.ts, navigation.ts, pages)
+4. Commit and push the website changes
+5. Return to the plugin repo to continue
+
+**The website repo location:** `../website/` (sibling directory to the plugin repo)
+
 ### Running the Website
 
 ```bash
-cd <website-repo>
+cd ../website
 pnpm dev      # Development server at http://localhost:5173
 pnpm build    # Production build
 pnpm preview  # Preview production build
@@ -1048,7 +1062,7 @@ Example: If releasing v1.7.0 and the last published tag was v1.6.6:
 - Auto-fixable: ZZ rules 🔧
 - Report-only: N rules
 
-**Full Changelog:** [vImmediatelyPrecedingTag...vCurrent](https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/vImmediatelyPrecedingTag...vCurrent)
+**Full Changelog:** [vImmediatelyPrecedingTag...vCurrent](https://github.com/ESLint-Plugin-Code-Style/plugin/compare/vImmediatelyPrecedingTag...vCurrent)
 ```
 
 **Required elements for MINOR/MAJOR releases:**
@@ -1170,7 +1184,7 @@ npm install eslint-plugin-code-style@Y.Y.Y
 - Total Rules: X (was Y)
 - All rules are auto-fixable with `eslint --fix`
 
-**Full Changelog**: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/vX.X.X...vY.Y.Y
+**Full Changelog**: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/vX.X.X...vY.Y.Y
 ```
 
 **Steps to create a GitHub Release:**
@@ -1259,7 +1273,7 @@ After creating a release:
 - Auto-fixable: 58 rules 🔧
 - Report-only: 6 rules
 
-**Full Changelog:** [v1.3.1...v1.4.2](https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.3.1...v1.4.2)
+**Full Changelog:** [v1.3.1...v1.4.2](https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.3.1...v1.4.2)
 ```
 
 #### Tag Format (PATCH versions)
@@ -1288,8 +1302,8 @@ For version bumps with no changes:
 
 **IMPORTANT:** Even though PATCH entries don't have Full Changelog links in the body, you MUST still add the link reference at the bottom of CHANGELOG.md:
 ```markdown
-[1.11.2]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.11.1...v1.11.2
-[1.11.1]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.11.0...v1.11.1
+[1.11.2]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.11.1...v1.11.2
+[1.11.1]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.11.0...v1.11.1
 ```
 
 #### Section Types
@@ -1311,8 +1325,8 @@ For version bumps with no changes:
 At the bottom of CHANGELOG.md, maintain comparison links for **every version**:
 
 ```markdown
-[1.4.2]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.4.1...v1.4.2
-[1.4.1]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.4.0...v1.4.1
+[1.4.2]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.4.1...v1.4.2
+[1.4.1]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.4.0...v1.4.1
 ```
 
 #### When to Update

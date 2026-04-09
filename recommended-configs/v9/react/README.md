@@ -388,4 +388,4 @@ export const bar = 2;
 
 ## Support
 
-For issues or feature requests, please visit the [GitHub repository](https://github.com/Mohamed-Elhawary/eslint-plugin-code-style).
+For issues or feature requests, please visit the [GitHub repository](https://github.com/ESLint-Plugin-Code-Style/plugin).
