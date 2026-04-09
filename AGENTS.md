@@ -95,18 +95,19 @@ Each test project in `_tests_/` corresponds to a specific tech stack. Rules shou
 
 The documentation website lives in a **separate repository**: [`ESLint-Plugin-Code-Style/website`](https://github.com/ESLint-Plugin-Code-Style/website). Built with Next.js 15, React 19, Tailwind CSS v4, and TypeScript. Deployed at **https://www.eslint-plugin-code-style.org**.
 
-### Automated Sync via metadata.json
+### CRITICAL: metadata.json Must Stay in Sync
 
-The plugin and website sync is **fully automated** through `metadata.json`:
+**`metadata.json` is the single source of truth** for the documentation website. Every change to the plugin that affects rules, version, examples, options, descriptions, or categories **MUST** be reflected in `metadata.json` in the same commit. No exceptions.
+
+The sync is fully automated via GitHub Actions:
 
 ```
-Plugin change → update metadata.json → push to main
+Plugin change → update metadata.json in same commit → push to main
   → GitHub Action triggers website repo
   → Website auto-generates rules.ts, config.ts, navigation.ts
-  → Website rebuilds and deploys
+  → Vercel rebuilds and deploys
+  → Users see the change live
 ```
-
-**`metadata.json`** is the single source of truth for all rule data (names, descriptions, examples, options, categories, version). The website reads from it — no manual website edits needed for rule/version changes.
 
 ### What to update in the plugin
 
@@ -114,11 +115,14 @@ Plugin change → update metadata.json → push to main
 |-------------|----------------------|
 | New rule | `src/rules/<category>.js`, `metadata.json` (add rule to category), `rules/<category>.md` |
 | Remove rule | `src/rules/<category>.js`, `metadata.json` (remove rule), `rules/<category>.md` |
-| Edit rule (behavior/options) | `src/rules/<category>.js`, `metadata.json` (update description/examples/options) |
+| Edit rule (behavior/options/examples) | `src/rules/<category>.js`, `metadata.json` (update description/examples/options) |
 | Version bump | `package.json` (version field), `metadata.json` (version field) |
 | Changelog update | `CHANGELOG.md` only |
+| Add/change good or bad examples | `metadata.json` (update goodExample/badExample for the rule) |
+| Add/change rule options | `metadata.json` (update options array for the rule) |
+| Change rule rationale | `metadata.json` (update rationale for the rule) |
 
-The website syncs automatically after push. No need to touch the website repo for these changes.
+The website syncs automatically after push. Do NOT manually edit the website repo for rule/version/example changes.
 
 ### What still requires manual website edits
 
@@ -1080,7 +1084,7 @@ git push origin main --tags
    - Feature description 1
    - Feature description 2"
    ```
-5. **Update website repo (`ESLint-Plugin-Code-Style/website`) version references and rule data if applicable**
+5. **Update `metadata.json`** with any rule/version/config changes (website syncs automatically after push)
 6. **Push (requires explicit approval):** `git push origin main --tags`
 7. **Publish (requires explicit approval):** `npm publish`
 
