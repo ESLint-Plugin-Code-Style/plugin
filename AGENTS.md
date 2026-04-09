@@ -162,22 +162,18 @@ The documentation website MUST be kept 100% in sync with the plugin. ANY change 
 
 ### Cross-Repo Sync Workflow
 
-The website repo lives alongside the plugin repo on disk. When making plugin changes that affect the website (new rules, version bumps, config changes), Claude Code MUST sync the website in the **same session** — do NOT defer it.
+When making plugin changes that affect the website (new rules, version bumps, config changes), the website repo MUST be updated as part of the same change — do NOT defer it.
 
 **Steps:**
 1. Make plugin changes and commit in the plugin repo
-2. Clone or navigate to the website repo at `../website/` (relative to the plugin repo)
-   - If not cloned yet: `gh repo clone ESLint-Plugin-Code-Style/website ../website`
+2. Clone the website repo if not already on disk: `gh repo clone ESLint-Plugin-Code-Style/website`
 3. Make corresponding website updates (rules.ts, config.ts, navigation.ts, pages)
 4. Commit and push the website changes
-5. Return to the plugin repo to continue
-
-**The website repo location:** `../website/` (sibling directory to the plugin repo)
 
 ### Running the Website
 
 ```bash
-cd ../website
+cd <website-repo-path>
 pnpm dev      # Development server at http://localhost:5173
 pnpm build    # Production build
 pnpm preview  # Preview production build
