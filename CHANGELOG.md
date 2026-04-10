@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [3.1.0] - 2026-04-10
 
+**Version Range:** v3.0.6 → v3.1.0
+
 ### Changed
 
 - **Organization** - Moved repository from `Mohamed-Elhawary/eslint-plugin-code-style` to `ESLint-Plugin-Code-Style/plugin` under a dedicated GitHub organization
@@ -30,6 +32,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - All ESLint errors in the documentation website resolved (plugin's own rules applied as showcase)
 - Removed all stale references to old `docs/website/` structure
 - Removed `validate-sync.js` (redundant with automated sync)
+
+**Full Changelog:** https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v3.0.6...v3.1.0
 
 ---
 
