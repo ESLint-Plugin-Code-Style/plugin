@@ -729,6 +729,14 @@ const componentPropsInlineType = {
                         return;
                     }
 
+                    // Skip Next.js special files where props are dictated by the framework
+                    // (error.tsx, global-error.tsx, not-found.tsx, page.tsx, layout.tsx, template.tsx)
+                    const filename = context.getFilename ? context.getFilename() : context.filename || "";
+                    const nextjsSpecialFiles = ["error.tsx", "global-error.tsx", "not-found.tsx", "page.tsx", "layout.tsx", "template.tsx", "loading.tsx", "default.tsx"];
+                    const baseName = filename.split("/").pop() || "";
+
+                    if (nextjsSpecialFiles.includes(baseName)) return;
+
                     context.report({
                         message: `Component props should use inline type annotation instead of referencing "${typeName}". Define the type inline as "{ prop: type, ... }"`,
                         node: typeAnnotation,
@@ -1294,6 +1302,7 @@ const folderBasedNamingConvention = {
             constants: "Constants",
             contexts: "Context",
             data: "Data",
+            hooks: "",
             layouts: "Layout",
             pages: "Page",
             providers: "Provider",
@@ -1584,6 +1593,19 @@ const folderBasedNamingConvention = {
             const { name, identifierNode } = componentInfo;
 
             const { folder, suffix } = moduleInfo;
+
+            // React hooks (functions named use[A-Z]...) must live in the "hooks" folder
+            if (/^use[A-Z]/.test(name)) {
+                if (folder !== "hooks") {
+                    context.report({
+                        message: `React hook "${name}" must be placed in the "hooks" folder, not "${folder}". Move it to a hooks/ directory.`,
+                        node: identifierNode,
+                    });
+                }
+
+                // Hooks have their own naming convention; don't apply folder-based checks
+                return;
+            }
 
             // For camelCase folders, enforce suffix + near-match prefix check
             if (camelCaseFolders.has(folder)) {

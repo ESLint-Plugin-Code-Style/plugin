@@ -129,7 +129,9 @@ const absoluteImportsOnly = {
 
                 // Check if this is an entry file (main.tsx, main.ts, etc.) - entry files are allowed
                 // to use relative imports for app root and styles (e.g., ./index.css, ./app)
-                const isEntryFile = /\/main\.(js|jsx|ts|tsx)$/.test(normalizedFilename);
+                // Also includes Next.js root layout (app/layout.tsx) which is the framework's entry point
+                const isEntryFile = /\/main\.(js|jsx|ts|tsx)$/.test(normalizedFilename)
+                    || /\/app\/layout\.(js|jsx|ts|tsx)$/.test(normalizedFilename);
 
                 // Detect if the file is inside a module folder at any depth
                 // e.g., data/app.js, data/auth/login/guest.tsx are both inside "data"

@@ -542,6 +542,15 @@ const propNamingConvention = {
             return fixes;
         };
 
+        // Next.js framework-reserved prop names (used in special files like error.tsx, layout.tsx, page.tsx, etc.)
+        // These are dictated by the Next.js framework and cannot be renamed.
+        const nextjsReservedPropNames = [
+            "reset",       // error.tsx — reset error boundary
+            "params",      // page.tsx, layout.tsx — dynamic route params
+            "searchParams", // page.tsx — URL query params
+            "children",    // layout.tsx — slot
+        ];
+
         // Check a property signature (interface/type member) - recursive for nested types
         const checkPropertySignatureHandler = (member) => {
             if (member.type !== "TSPropertySignature") return;
@@ -551,6 +560,9 @@ const propNamingConvention = {
 
             // Skip private properties (starting with _)
             if (propName.startsWith("_")) return;
+
+            // Skip Next.js framework-reserved prop names
+            if (nextjsReservedPropNames.includes(propName)) return;
 
             // Check for nested object types and recursively check their members
             if (isNestedObjectTypeHandler(member.typeAnnotation)) {

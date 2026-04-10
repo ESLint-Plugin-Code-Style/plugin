@@ -7,6 +7,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [3.1.1] - 2026-04-10
+
+**Next.js Framework Support & React Hook Placement Enforcement**
+
+### Enhanced
+
+- **`prop-naming-convention`** - Skip Next.js framework-reserved prop names (`reset`, `params`, `searchParams`, `children`) used in special files like `error.tsx`, `page.tsx`, `layout.tsx`
+- **`component-props-inline-type`** - Skip Next.js special files (`error.tsx`, `global-error.tsx`, `not-found.tsx`, `page.tsx`, `layout.tsx`, `template.tsx`, `loading.tsx`, `default.tsx`) where prop interfaces are dictated by the framework
+- **`folder-based-naming-convention`** - Now detects React hooks (functions matching `use[A-Z]` pattern) placed outside the `hooks/` folder and reports them with a clear "Move to hooks/ directory" message
+- **`folder-based-naming-convention`** - Added `hooks` to the recognized module folders
+- **`absolute-imports-only`** - Allow relative imports in Next.js root layout (`app/layout.tsx`), matching the existing exemption for `main.tsx` entry files
+
+### Fixed
+
+- All ESLint disable comments removed from the website (no rule disabling needed for Next.js framework conventions)
+
+---
+
 ## [3.1.0] - 2026-04-10
 
 **Organization Migration, Automated Website Sync & Context7 Integration**
@@ -2424,6 +2442,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+[3.1.1]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v3.1.0...v3.1.1
 [3.1.0]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v3.0.6...v3.1.0
 [3.0.6]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v3.0.5...v3.0.6
 [3.0.5]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v3.0.4...v3.0.5
