@@ -2418,7 +2418,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-[3.0.6]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v3.0.5...v3.0.6
+[3.1.0]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v3.0.6...v3.1.0
+[3.0.6]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v3.0.5...v3.0.6
 [3.0.5]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v3.0.4...v3.0.5
 [3.0.4]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v3.0.3...v3.0.4
 [3.0.3]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v3.0.2...v3.0.3
