@@ -32,7 +32,10 @@
         "linting",
         "code-quality"
     ],
-    "author": "Mohamed Elhawary",
+    "author": {
+        "name": "Mohamed Elhawary",
+        "url": "https://hawary.dev"
+    },
     "license": "MIT",
     "repository": {
         "type": "git",
