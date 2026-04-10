@@ -542,14 +542,24 @@ const propNamingConvention = {
             return fixes;
         };
 
-        // Next.js framework-reserved prop names (used in special files like error.tsx, layout.tsx, page.tsx, etc.)
-        // These are dictated by the Next.js framework and cannot be renamed.
-        const nextjsReservedPropNames = [
-            "reset",       // error.tsx — reset error boundary
-            "params",      // page.tsx, layout.tsx — dynamic route params
-            "searchParams", // page.tsx — URL query params
-            "children",    // layout.tsx — slot
-        ];
+        // Next.js framework-reserved prop names per file.
+        // These prop names are dictated by the Next.js framework and cannot be renamed.
+        // The skip only applies when checking props inside the corresponding Next.js special file,
+        // not for any component using the same prop name elsewhere.
+        const nextjsReservedPropsByFile = {
+            "default.tsx": ["params"],
+            "error.tsx": ["reset"],
+            "global-error.tsx": ["reset"],
+            "layout.tsx": ["children", "params"],
+            "loading.tsx": [],
+            "not-found.tsx": [],
+            "page.tsx": ["params", "searchParams"],
+            "template.tsx": ["children"],
+        };
+
+        const filename = context.getFilename ? context.getFilename() : context.filename || "";
+        const baseName = filename.split("/").pop() || "";
+        const reservedPropsForThisFile = nextjsReservedPropsByFile[baseName] || [];
 
         // Check a property signature (interface/type member) - recursive for nested types
         const checkPropertySignatureHandler = (member) => {
@@ -561,8 +571,8 @@ const propNamingConvention = {
             // Skip private properties (starting with _)
             if (propName.startsWith("_")) return;
 
-            // Skip Next.js framework-reserved prop names
-            if (nextjsReservedPropNames.includes(propName)) return;
+            // Skip Next.js framework-reserved prop names ONLY in their corresponding Next.js special file
+            if (reservedPropsForThisFile.includes(propName)) return;
 
             // Check for nested object types and recursively check their members
             if (isNestedObjectTypeHandler(member.typeAnnotation)) {

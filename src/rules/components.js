@@ -729,14 +729,6 @@ const componentPropsInlineType = {
                         return;
                     }
 
-                    // Skip Next.js special files where props are dictated by the framework
-                    // (error.tsx, global-error.tsx, not-found.tsx, page.tsx, layout.tsx, template.tsx)
-                    const filename = context.getFilename ? context.getFilename() : context.filename || "";
-                    const nextjsSpecialFiles = ["error.tsx", "global-error.tsx", "not-found.tsx", "page.tsx", "layout.tsx", "template.tsx", "loading.tsx", "default.tsx"];
-                    const baseName = filename.split("/").pop() || "";
-
-                    if (nextjsSpecialFiles.includes(baseName)) return;
-
                     context.report({
                         message: `Component props should use inline type annotation instead of referencing "${typeName}". Define the type inline as "{ prop: type, ... }"`,
                         node: typeAnnotation,
@@ -1497,10 +1489,22 @@ const folderBasedNamingConvention = {
         };
 
         // Detect when a name's suffix belongs to a different folder (wrong placement)
-        // Returns the correct folder name, or null if no mismatch
+        // Returns the correct folder name, or null if no mismatch.
+        // Only flags names following the canonical "{Noun}{Suffix}" 2-word pattern (e.g., ThemeProvider)
+        // to avoid false positives on descriptive multi-word names (e.g., OnThisPage).
         const detectWrongFolderHandler = (name, currentFolder) => {
+            // Split PascalCase name into words
+            const words = name.match(/[A-Z][a-z]*/g) || [];
+
+            // Only flag canonical 2-word names like "ThemeProvider", "AppLayout", "UserContext"
+            // Names with 3+ words (e.g., "OnThisPage", "DashboardSubLayout") are descriptive phrases
+            if (words.length !== 2) return null;
+
+            const lastWord = words[words.length - 1];
+
+            // Find a folder whose suffix exactly equals the last word
             const match = Object.entries(folderSuffixMap)
-                .filter(([f, s]) => f !== currentFolder && s && name.endsWith(s))
+                .filter(([f, s]) => f !== currentFolder && s && s === lastWord)
                 .sort((a, b) => b[1].length - a[1].length)[0];
 
             return match ? match[0] : null;
@@ -1649,22 +1653,24 @@ const folderBasedNamingConvention = {
             // For JSX-required folders, only check functions that return JSX
             if (jsxRequiredFolders.has(folder) && !returnsJsxHandler(node)) return;
 
+            // Check if the name has a suffix that belongs to a different folder
+            // (e.g., ThemeProvider in components/ should be in providers/)
+            const wrongFolderForName = detectWrongFolderHandler(name, folder);
+
+            if (wrongFolderForName) {
+                context.report({
+                    message: `"${name}" belongs in "${wrongFolderForName}/" folder, not "${folder}/". Move it to the correct folder.`,
+                    node: identifierNode,
+                });
+
+                return;
+            }
+
             const expectedName = buildExpectedNameHandler(moduleInfo);
 
             if (!expectedName) return;
 
             if (name !== expectedName) {
-                const correctFolder = detectWrongFolderHandler(name, folder);
-
-                if (correctFolder) {
-                    context.report({
-                        message: `"${name}" belongs in "${correctFolder}/" folder, not "${folder}/". Move it to the correct folder.`,
-                        node: identifierNode,
-                    });
-
-                    return;
-                }
-
                 context.report({
                     fix: createRenameFixer(node, name, expectedName, identifierNode),
                     message: buildMessageHandler(name, folder, suffix, expectedName),
@@ -1731,22 +1737,24 @@ const folderBasedNamingConvention = {
                 return;
             }
 
+            // Check if the name has a suffix that belongs to a different folder
+            // (e.g., ThemeContext in components/ should be in contexts/)
+            const wrongFolderForName = detectWrongFolderHandler(name, folder);
+
+            if (wrongFolderForName) {
+                context.report({
+                    message: `"${name}" belongs in "${wrongFolderForName}/" folder, not "${folder}/". Move it to the correct folder.`,
+                    node: node.id,
+                });
+
+                return;
+            }
+
             const expectedName = buildExpectedNameHandler(moduleInfo);
 
             if (!expectedName) return;
 
             if (name !== expectedName) {
-                const correctFolder = detectWrongFolderHandler(name, folder);
-
-                if (correctFolder) {
-                    context.report({
-                        message: `"${name}" belongs in "${correctFolder}/" folder, not "${folder}/". Move it to the correct folder.`,
-                        node: node.id,
-                    });
-
-                    return;
-                }
-
                 context.report({
                     fix: createRenameFixer(node, name, expectedName, node.id),
                     message: buildMessageHandler(name, folder, suffix, expectedName),
