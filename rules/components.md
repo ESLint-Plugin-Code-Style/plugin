@@ -147,7 +147,7 @@ export const Card = ({ a, b } : { a: string, b: string }) => (
 | `data/` | Data (camelCase) | `authData` |
 | `constants/` | Constants (camelCase) | `apiConstants` |
 | `strings/` | Strings (camelCase) | `loginStrings` |
-| `services/` | Services (camelCase) | `userServices` |
+| `services/` | Services (camelCase) — see note below | `userServices` (object/class) |
 | `atoms/` | *(none)* | `Button` |
 | `components/` | *(none)* | `Card` |
 
@@ -245,6 +245,12 @@ audit-logs/index.tsx        → AuditLogs (plural preserved)
 ```
 
 > **Note:** Module barrel files (e.g., `views/index.ts`) are skipped. Interfaces, enums, and types have their own naming rules (`interface-format`, `enum-format`, `type-format`). Auto-fix renames the identifier and all its references.
+>
+> **Services folder special handling:** Function exports in `services/` are NOT required to carry the `Service` suffix. `function-naming-convention` already enforces the `Handler` suffix, so `getDataHandler` is the canonical name — not `getDataServiceHandler`. Class/object exports (e.g., `export class UserService`, `export const authService = { ... }`) still follow camelCase + `Service` convention.
+>
+> **Local variable exemption:** This rule only checks module-level exports (`export const xxx = ...`). Local `let`/`const` declarations inside function bodies, blocks, or loops are skipped — they don't participate in the public API of a folder.
+>
+> **Plural file + singular suffix dedupe:** When a file name (singularized) matches the folder suffix (singularized) — e.g., `services/services.js`, `data/data.js`, `constants/constants.js` — the file name is dropped from the chain to avoid awkward double endings like `ServicesService` or `DataData`.
 
 ---
 

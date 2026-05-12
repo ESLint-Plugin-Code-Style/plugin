@@ -24,7 +24,7 @@
 
 **A powerful ESLint plugin for enforcing consistent code formatting and style rules in React/JSX projects.**
 
-*81 rules (71 auto-fixable, 20 configurable) to keep your codebase clean and consistent*
+*81 rules (71 auto-fixable, 22 configurable) to keep your codebase clean and consistent*
 
 </div>
 
@@ -32,7 +32,7 @@
 
 ## 🎯 Why This Plugin?
 
-This plugin provides **81 custom rules** (71 auto-fixable, 20 configurable) for code formatting. Built for **ESLint v9+ flat configs** (v9 and v10 supported).
+This plugin provides **81 custom rules** (71 auto-fixable, 22 configurable) for code formatting. Built for **ESLint v9+ flat configs** (v9 and v10 supported).
 
 > **Note:** ESLint [deprecated 79 formatting rules](https://eslint.org/blog/2023/10/deprecating-formatting-rules/) in v8.53.0. Our recommended configs use `@stylistic/eslint-plugin` as the replacement for these deprecated rules.
 
@@ -120,7 +120,7 @@ Configs are organized by ESLint version:
 <td width="50%">
 
 ### 🔧 Auto-Fixable Rules
-**71 rules** support automatic fixing with `eslint --fix`. **20 rules** have configurable options. 10 rules are report-only (require manual changes).
+**71 rules** support automatic fixing with `eslint --fix`. **21 rules** have configurable options. 10 rules are report-only (require manual changes).
 
 </td>
 <td width="50%">
@@ -308,7 +308,7 @@ rules: {
 
 ## 📖 Rules Categories
 
-> **81 rules total** — 71 with auto-fix 🔧, 20 configurable ⚙️, 10 report-only
+> **81 rules total** — 71 with auto-fix 🔧, 22 configurable ⚙️, 10 report-only
 >
 > 📖 **Full documentation with examples:** [www.eslint-plugin-code-style.org](https://www.eslint-plugin-code-style.org/rules) • [Local docs](./rules/)
 >
@@ -357,7 +357,7 @@ rules: {
 | `function-call-spacing` | No space between function name and `(`: `fn()` not `fn ()` 🔧 |
 | `function-declaration-style` | Auto-fix for `func-style`: converts function declarations to arrow expressions 🔧 |
 | `function-naming-convention` | Functions use camelCase, start with verb, end with Handler suffix; handleXxx → xxxHandler 🔧 |
-| `function-object-destructure` | Non-component functions: use typed params (not destructured), destructure in body; report dot notation access 🔧 |
+| `function-object-destructure` | Non-component functions: use typed params (not destructured), destructure in body; report dot notation access. Module imports default to dot notation with JSX exception (configurable: smart/strict-dot/destructure) 🔧 ⚙️ |
 | `function-params-per-line` | When multiline, each param on own line with consistent indentation 🔧 |
 | `no-empty-lines-in-function-params` | No empty lines between parameters or after `(`/before `)` 🔧 |
 | **Hook Rules** | |
@@ -413,7 +413,7 @@ rules: {
 | **String Rules** | |
 | `no-hardcoded-strings` | Enforce importing strings from constants/strings modules instead of hardcoding them ⚙️ |
 | **Variable Rules** | |
-| `variable-naming-convention` | camelCase for all variables and constants, PascalCase for components, `use` prefix for hooks 🔧 |
+| `variable-naming-convention` | camelCase for all variables and constants, PascalCase for components, `use` prefix for hooks. Supports opt-in path-scoped case allowances (e.g., SCREAMING_SNAKE_CASE in Redux types folders) 🔧 ⚙️ |
 
 <br />
 

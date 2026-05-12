@@ -7,6 +7,15 @@ description: Add, edit, or remove an ESLint rule. Includes all required file upd
 
 Complete workflow for adding, editing, or removing a rule from the plugin.
 
+> **CRITICAL — metadata.json sync:** Any change to a rule's description, examples,
+> options, rationale, or fixable/configurable flags MUST be reflected in
+> `metadata.json` in the same commit. The documentation website
+> (eslint-plugin-code-style.org) auto-syncs from `metadata.json` via GitHub Actions
+> — do not manually edit the website repo. If the rule's name/category is added or
+> removed, also bump the top-level counters (`totalRules`, `autoFixableRules`,
+> `configurableRules`, `reportOnlyRules`) and matching count strings in
+> `README.md`, `rules/README.md`, `AGENTS.md`, and per-config READMEs.
+
 ## Operations
 
 ### Adding a New Rule
@@ -28,21 +37,29 @@ Complete workflow for adding, editing, or removing a rule from the plugin.
    - **Rules Summary table** — Add row with description and emoji (🔧 auto-fixable, ⚙️ configurable)
    - **Detailed documentation** — Full section with examples and options
 
-4. **`AGENTS.md`** — Agent instructions
+4. **`rules/<category>.md`** — Per-rule documentation page
+   - Add detailed rule section: description, why, options table, good/bad examples, configuration snippets
+
+5. **`metadata.json`** — Single source of truth for documentation website (CRITICAL)
+   - Add rule entry under the appropriate category with: `name`, `description`, `rationale`, `isFixable`, `isConfigurable`, `isTsOnly`, `goodExample`, `badExample`, `options[]`
+   - Bump top-level counters (`totalRules`, `autoFixableRules`, `configurableRules`, `reportOnlyRules`) as applicable
+   - Website (eslint-plugin-code-style.org) auto-syncs from this file via GitHub Actions — do not edit website repo manually
+
+6. **`AGENTS.md`** — Agent instructions
    - Update rule counts in "Current Counts" table
    - Add rule to appropriate category in "Rule Categories" section
 
-5. **Config files** (alphabetically sorted)
+7. **Config files** (alphabetically sorted)
    - `recommended-configs/react-ts-tw/eslint.config.js`
    - `recommended-configs/react/eslint.config.js` (skip if TypeScript-only)
    - `_tests_/v9/react-ts-tw/eslint.config.js`
    - `_tests_/v9/react/eslint.config.js` (skip if TypeScript-only)
 
-6. **Config READMEs**
+8. **Config READMEs**
    - `recommended-configs/react-ts-tw/README.md`
    - `recommended-configs/react/README.md`
 
-7. **Version bump & CHANGELOG** — MINOR (x.+1.0)
+9. **Version bump & CHANGELOG** — MINOR (x.+1.0)
    - Update `package.json` version
    - Update `CHANGELOG.md` with **release format** (required for MINOR releases):
      ```markdown
@@ -80,6 +97,8 @@ Complete workflow for adding, editing, or removing a rule from the plugin.
 
 **Bug fix (PATCH x.x.+1):**
 - Fix in `src/rules/<category>.js` → Test
+- Update `rules/<category>.md` if behavior/examples changed
+- Update `metadata.json` rule entry if description/examples/rationale changed (website auto-syncs)
 - Update `package.json` version (x.x.+1)
 - Update `CHANGELOG.md` with **simple tag format** (NO title, NO version range, NO full changelog in entry):
   ```markdown
@@ -98,19 +117,24 @@ Complete workflow for adding, editing, or removing a rule from the plugin.
 **Behavior change (PATCH/MINOR):**
 - Update `src/rules/<category>.js` logic and JSDoc
 - Update `README.md` rule documentation section (examples, description)
+- Update `rules/<category>.md` per-rule docs
+- Update `metadata.json` rule entry (`description`, `rationale`, `goodExample`, `badExample` — website auto-syncs)
 - Test with `npm run lint` and `npm run lint:fix`
 
 **Adding options (MINOR x.+1.0):**
 - Add to `schema` in rule's `meta` object
 - Handle in `create()` with default value
 - Update JSDoc Options section
-- Update README.md options table
+- Update README.md options table + add ⚙️ emoji in Rules Summary row
+- Update `rules/<category>.md` per-rule docs — add options table + configuration example
+- Update `metadata.json`: set `isConfigurable: true`, add option(s) to `options[]` array with `name/type/default/description`, bump `configurableRules` counter (and rule row in count strings everywhere if rule was previously non-configurable)
 
 **Adding auto-fix (MINOR x.+1.0):**
 - Add `fixable: "code"` or `fixable: "whitespace"` to `meta`
 - Add `fix()` function in `context.report()`
 - Add 🔧 emoji in README Rules Summary table
 - Update auto-fixable counts in ALL docs (must be uniform everywhere)
+- Update `metadata.json`: set `isFixable: true`, bump `autoFixableRules` counter (website auto-syncs)
 - Update AGENTS.md "Current Counts" breakdown (code vs whitespace counts)
 
 **Changing defaults (MAJOR +1.0.0):**

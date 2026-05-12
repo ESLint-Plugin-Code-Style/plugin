@@ -242,7 +242,7 @@ const functionNamingConvention = {
         const verbPrefixes = [
             // CRUD & Data operations
             "get", "set", "fetch", "load", "save", "create", "update", "delete", "remove", "add",
-            "insert", "append", "prepend", "push", "pop", "shift", "unshift", "put", "patch",
+            "insert", "append", "prepend", "push", "pop", "shift", "unshift", "put", "patch", "post",
             // Boolean checks
             "is", "has", "can", "should", "will", "did", "was", "were", "does", "do",
             // Validation
@@ -1607,10 +1607,30 @@ const noEmptyLinesInFunctionParams = {
  * ───────────────────────────────────────────────────────────────
  *
  * Description:
- *   Enforces that when a function parameter (object) is accessed via dot notation
- *   in the function body, it should be destructured at the top of the function.
- *   Also enforces that non-component functions should NOT destructure params in
- *   the function signature - use simple typed params instead.
+ *   Two responsibilities:
+ *   1. When a function parameter (object) is accessed via dot notation in the
+ *      function body, it should be destructured at the top of the function. Also
+ *      enforces that non-component functions should NOT destructure params in the
+ *      function signature — use a typed parameter instead.
+ *   2. Module imports (from folders like api/services/utils/etc.) default to dot
+ *      notation rather than destructure, with a JSX-element exception. Behavior
+ *      is configurable via the `moduleImportStyle` option.
+ *
+ * Options:
+ *   { moduleImportStyle: "smart" | "strict-dot" | "destructure" } (default: "smart")
+ *
+ *     - "smart" (default)
+ *         Flag destructure of module imports → autofix to dot notation.
+ *         Exception: a destructured prop used only as a JSX element name is kept
+ *         in the destructure (preserves `<Button />` over `<ui.Button />`).
+ *         Mixed-use destructures are partially rewritten — JSX-only props stay,
+ *         regular props become dot notation.
+ *     - "strict-dot"
+ *         Pure dot notation. JSX components become `<ui.Button />`. No JSX exception.
+ *     - "destructure"
+ *         Opposite direction. Flag dot-notation access of module imports and
+ *         autofix to destructure — inserts `const { X, Y } = module;` at top of
+ *         the containing scope and replaces all `module.X` / `<module.X />` uses.
  *
  * ✓ Good (Non-component function):
  *   const createHandler = async (data: FormInterface) => {
@@ -1618,19 +1638,43 @@ const noEmptyLinesInFunctionParams = {
  *       console.log(firstName, lastName);
  *   }
  *
+ * ✓ Good (Module import — dot notation):
+ *   import { api } from "@/api";
+ *   const user = api.getUser(id);
+ *
+ * ✓ Good (JSX exception in "smart" mode — destructure kept):
+ *   import { ui } from "@/utils";
+ *   const { Button, Card } = ui;
+ *   const View = () => <Card><Button>Click</Button></Card>;
+ *
+ * ✓ Good (Nested destructure handled correctly — flattened):
+ *   // const { photographers: { activate: x } } = apisUrls; → x() becomes
+ *   apisUrls.photographers.activate();
+ *
  * ✗ Bad (Non-component function):
  *   const createHandler = async (data: FormInterface) => {
  *       console.log(data.firstName);  // Should destructure
  *   }
  *
- * ✗ Bad (Non-component function):
- *   const createHandler = async ({ firstName }: FormInterface) => {  // No destructure in signature
+ * ✗ Bad (Non-component function destructure in signature):
+ *   const createHandler = async ({ firstName }: FormInterface) => {
  *       ...
  *   }
+ *
+ * ✗ Bad (Destructure of module imports for non-JSX use — smart/strict-dot):
+ *   import { utils } from "@/utils";
+ *   const { formatDate, validateEmail } = utils;
+ *   const today = formatDate(new Date());   // Should be utils.formatDate(new Date())
  */
 const functionObjectDestructure = {
     create(context) {
         const sourceCode = context.sourceCode || context.getSourceCode();
+        const options = context.options[0] || {};
+        // moduleImportStyle:
+        //   "smart"       — default — flag destructure, autofix to dot notation, BUT keep destructure when used only as JSX element
+        //   "strict-dot"  — always flag destructure, autofix to dot notation including JSX (<ui.Button />)
+        //   "destructure" — opposite direction — flag dot notation `ui.X`, autofix to destructure
+        const moduleImportStyle = options.moduleImportStyle || "smart";
 
         // Track imports from module paths that should use dot notation, not destructure
         // This improves searchability: api.loginHandler is easier to find than loginHandler
@@ -1687,15 +1731,16 @@ const functionObjectDestructure = {
                 // Skip the declaration itself
                 if (n === declNode) return;
 
-                // Found a reference
-                if (n.type === "Identifier" && n.name === varName) {
+                // Found a reference — match both Identifier (regular code) and JSXIdentifier (JSX elements)
+                if ((n.type === "Identifier" || n.type === "JSXIdentifier") && n.name === varName) {
                     // Make sure it's not a property key or part of a member expression property
                     const isMemberProp = parent && parent.type === "MemberExpression" && parent.property === n && !parent.computed;
                     const isObjectKey = parent && parent.type === "Property" && parent.key === n && !parent.computed;
-                    const isShorthandValue = parent && parent.type === "Property" && parent.shorthand && parent.value === n;
+                    // JSX member expression property (e.g., `Foo.Bar` in <Foo.Bar />) — only the object identifier counts as a reference
+                    const isJSXMemberProp = parent && parent.type === "JSXMemberExpression" && parent.property === n;
 
                     // Include shorthand properties as references (they use the variable)
-                    if (!isMemberProp && !isObjectKey) {
+                    if (!isMemberProp && !isObjectKey && !isJSXMemberProp) {
                         references.push(n);
                     }
                 }
@@ -1718,105 +1763,325 @@ const functionObjectDestructure = {
             return references;
         };
 
-        // Check for destructuring of module imports (not allowed)
+        // P1: Recursively flatten ObjectPattern into leaf identifiers with their full key paths.
+        // Example: { photographers: { activate: alias } } → [{ keyPath: ["photographers", "activate"], local: "alias" }]
+        const flattenDestructureHandler = (objectPattern, pathPrefix = []) => {
+            const results = [];
+
+            for (const prop of objectPattern.properties) {
+                if (prop.type !== "Property" || !prop.key) continue;
+
+                const keyName = prop.key.name
+                    || (prop.key.type === "Literal" && String(prop.key.value));
+                if (!keyName) continue;
+
+                const keyPath = [...pathPrefix, keyName];
+                let value = prop.value;
+
+                // Strip default-value wrapper: { x = 1 } → x
+                if (value && value.type === "AssignmentPattern") {
+                    value = value.left;
+                }
+
+                if (!value) continue;
+
+                if (value.type === "Identifier") {
+                    results.push({ keyPath, local: value.name });
+                } else if (value.type === "ObjectPattern") {
+                    results.push(...flattenDestructureHandler(value, keyPath));
+                }
+                // ArrayPattern/RestElement nested — skip, cannot be rewritten to dot notation
+            }
+
+            return results;
+        };
+
+        // P3: Classify a reference as JSX (element name) or regular (code/expression).
+        const isJsxRefHandler = (ref) => {
+            if (!ref || ref.type !== "JSXIdentifier") return false;
+
+            const parent = ref.parent;
+
+            if (!parent) return false;
+
+            // <Foo />, <Foo>...</Foo>, <Foo.Bar /> (Foo is the object)
+            return (parent.type === "JSXOpeningElement" && parent.name === ref)
+                || (parent.type === "JSXClosingElement" && parent.name === ref)
+                || (parent.type === "JSXMemberExpression" && parent.object === ref);
+        };
+
+        // P4: Build a destructure ObjectPattern source string for the props to keep.
+        // Only used for FLAT destructure (no nested aliasing) — falls back to full replace for nested mixed cases.
+        const buildPartialDestructureHandler = (decl, keepLocals, sourceText) => {
+            const propsToKeep = decl.id.properties.filter((prop) => {
+                if (prop.type !== "Property") return false;
+                const local = prop.value && prop.value.type === "Identifier"
+                    ? prop.value.name
+                    : (prop.key && prop.key.name);
+
+                return keepLocals.has(local);
+            });
+
+            if (propsToKeep.length === 0) return null;
+
+            const propTexts = propsToKeep.map((p) => sourceCode.getText(p));
+            const kind = decl.parent && decl.parent.kind ? decl.parent.kind : "const";
+
+            return `${kind} { ${propTexts.join(", ")} } = ${sourceText};`;
+        };
+
+        // Check for destructuring of module imports.
+        // Behavior depends on moduleImportStyle option:
+        //   "smart"      — flag destructure → autofix to dot notation, keep JSX-only props in destructure
+        //   "strict-dot" — flag destructure → autofix to dot notation (no JSX exception)
+        //   "destructure" — skip this check (handled by P6 Program:exit)
         const checkVariableDeclarationHandler = (node) => {
+            if (moduleImportStyle === "destructure") return; // P6 handles the opposite direction
+
             for (const decl of node.declarations) {
-                // Check for ObjectPattern destructuring
-                if (decl.id.type === "ObjectPattern" && decl.init) {
-                    let sourceVarName = null;
+                if (decl.id.type !== "ObjectPattern" || !decl.init) continue;
 
-                    // Direct destructuring: const { x } = moduleImport
-                    if (decl.init.type === "Identifier") {
-                        sourceVarName = decl.init.name;
+                let sourceVarName = null;
+
+                if (decl.init.type === "Identifier") {
+                    sourceVarName = decl.init.name;
+                } else if (decl.init.type === "MemberExpression") {
+                    let obj = decl.init;
+
+                    while (obj.type === "MemberExpression") {
+                        obj = obj.object;
                     }
 
-                    // Nested destructuring: const { x } = moduleImport.nested
-                    if (decl.init.type === "MemberExpression") {
-                        let obj = decl.init;
+                    if (obj.type === "Identifier") sourceVarName = obj.name;
+                }
 
-                        while (obj.type === "MemberExpression") {
-                            obj = obj.object;
-                        }
+                if (!sourceVarName || !moduleImports.has(sourceVarName)) continue;
 
-                        if (obj.type === "Identifier") {
-                            sourceVarName = obj.name;
-                        }
+                // P1: flatten nested destructure (handles { photographers: { activate: x } } correctly)
+                const flatProps = flattenDestructureHandler(decl.id);
+
+                // P7: bail-out if nothing actionable
+                if (flatProps.length === 0) continue;
+
+                const sourceText = sourceCode.getText(decl.init);
+                const isFlatDestructure = flatProps.every((p) => p.keyPath.length === 1);
+
+                // Find the containing function/program to search for references
+                let scope = node.parent;
+
+                while (scope && scope.type !== "BlockStatement" && scope.type !== "Program") {
+                    scope = scope.parent;
+                }
+
+                if (!scope) continue;
+
+                // P3: classify each prop based on its references
+                // - "keep"    → all refs are JSX → preserve in destructure (smart mode only)
+                // - "replace" → has regular refs → must be replaced with dot notation
+                // - "noop"    → no refs at all → can be safely removed without replacement
+                const propClassifications = flatProps.map((prop) => {
+                    const refs = findAllReferencesHandler(scope, prop.local, decl);
+                    const jsxRefs = refs.filter(isJsxRefHandler);
+                    const regularRefs = refs.filter((r) => !isJsxRefHandler(r));
+
+                    let classification;
+                    if (refs.length === 0) {
+                        classification = "noop";
+                    } else if (moduleImportStyle === "smart" && regularRefs.length === 0 && jsxRefs.length > 0 && isFlatDestructure) {
+                        // Smart mode + flat destructure + JSX-only usage → keep in destructure
+                        classification = "keep";
+                    } else {
+                        classification = "replace";
                     }
 
-                    if (sourceVarName && moduleImports.has(sourceVarName)) {
-                        // Get destructured properties with their local names
-                        const destructuredProps = decl.id.properties
-                            .filter((p) => p.type === "Property" && p.key && p.key.name)
-                            .map((p) => ({
-                                key: p.key.name,
-                                local: p.value && p.value.type === "Identifier" ? p.value.name : p.key.name,
-                            }));
+                    return { ...prop, refs, classification };
+                });
 
-                        const sourceText = sourceCode.getText(decl.init);
+                const propsToKeep = propClassifications.filter((p) => p.classification === "keep");
+                const propsToReplace = propClassifications.filter((p) => p.classification === "replace");
 
-                        // Find the containing function/program to search for references
-                        let scope = node.parent;
+                // P7: if ALL props are "keep" or "noop" → nothing to do, skip report entirely
+                if (propsToReplace.length === 0 && propsToKeep.length > 0) continue;
+                if (propsToReplace.length === 0 && propClassifications.every((p) => p.classification === "noop")) continue;
 
-                        while (scope && scope.type !== "BlockStatement" && scope.type !== "Program") {
-                            scope = scope.parent;
-                        }
+                // First replaceable prop drives error message
+                const firstReplaceable = propsToReplace[0] || propClassifications[0];
+                const firstDotPath = `${sourceText}.${firstReplaceable.keyPath.join(".")}`;
 
-                        context.report({
-                            fix: scope
-                                ? (fixer) => {
-                                    const fixes = [];
+                context.report({
+                    fix: (fixer) => {
+                        const fixes = [];
 
-                                    // Replace all references with dot notation
-                                    destructuredProps.forEach(({ key, local }) => {
-                                        const refs = findAllReferencesHandler(scope, local, decl);
+                        // Replace refs for "replace" props with dot notation
+                        propsToReplace.forEach((prop) => {
+                            const dotPath = `${sourceText}.${prop.keyPath.join(".")}`;
 
-                                        refs.forEach((ref) => {
-                                            fixes.push(fixer.replaceText(ref, `${sourceText}.${key}`));
-                                        });
-                                    });
-
-                                    // Remove the entire declaration statement
-                                    // If it's the only declaration in the statement, remove the whole statement
-                                    if (node.declarations.length === 1) {
-                                        // Find the full statement including newline
-                                        const tokenBefore = sourceCode.getTokenBefore(node);
-                                        const tokenAfter = sourceCode.getTokenAfter(node);
-                                        let start = node.range[0];
-                                        let end = node.range[1];
-
-                                        // Include leading whitespace/newline
-                                        if (tokenBefore) {
-                                            const textBetween = sourceCode.text.slice(tokenBefore.range[1], node.range[0]);
-                                            const newlineIndex = textBetween.lastIndexOf("\n");
-
-                                            if (newlineIndex !== -1) {
-                                                start = tokenBefore.range[1] + newlineIndex;
-                                            }
-                                        }
-
-                                        // Include trailing newline
-                                        if (tokenAfter) {
-                                            const textBetween = sourceCode.text.slice(node.range[1], tokenAfter.range[0]);
-                                            const newlineIndex = textBetween.indexOf("\n");
-
-                                            if (newlineIndex !== -1) {
-                                                end = node.range[1] + newlineIndex + 1;
-                                            }
-                                        }
-
-                                        fixes.push(fixer.removeRange([start, end]));
-                                    } else {
-                                        // Remove just this declarator
-                                        fixes.push(fixer.remove(decl));
-                                    }
-
-                                    return fixes;
-                                }
-                                : undefined,
-                            message: `Do not destructure module imports. Use dot notation for searchability: "${sourceText}.${destructuredProps[0].key}" instead of destructuring`,
-                            node: decl.id,
+                            prop.refs.forEach((ref) => {
+                                fixes.push(fixer.replaceText(ref, dotPath));
+                            });
                         });
-                    }
+
+                        // Decide what happens to the declaration itself
+                        if (propsToKeep.length > 0 && isFlatDestructure) {
+                            // P4: partial rewrite — keep only "keep" props in destructure
+                            const keepLocals = new Set(propsToKeep.map((p) => p.local));
+                            const newDeclText = buildPartialDestructureHandler(decl, keepLocals, sourceText);
+
+                            if (newDeclText && node.declarations.length === 1) {
+                                fixes.push(fixer.replaceText(node, newDeclText));
+                            } else {
+                                // Fallback: full replace if can't rebuild cleanly
+                                fixes.push(...removeEntireDeclarationFixes(fixer, node, decl));
+                            }
+                        } else {
+                            // No JSX-only props to keep — remove the entire declaration
+                            fixes.push(...removeEntireDeclarationFixes(fixer, node, decl));
+                        }
+
+                        return fixes;
+                    },
+                    message: `Do not destructure module imports. Use dot notation for searchability: "${firstDotPath}" instead of destructuring`,
+                    node: decl.id,
+                });
+            }
+        };
+
+        // Helper: build fixer ops to remove an entire declaration (or just one declarator from a multi-declarator statement).
+        const removeEntireDeclarationFixes = (fixer, node, decl) => {
+            const fixes = [];
+
+            if (node.declarations.length === 1) {
+                const tokenBefore = sourceCode.getTokenBefore(node);
+                const tokenAfter = sourceCode.getTokenAfter(node);
+                let start = node.range[0];
+                let end = node.range[1];
+
+                if (tokenBefore) {
+                    const textBetween = sourceCode.text.slice(tokenBefore.range[1], node.range[0]);
+                    const newlineIndex = textBetween.lastIndexOf("\n");
+
+                    if (newlineIndex !== -1) start = tokenBefore.range[1] + newlineIndex;
+                }
+
+                if (tokenAfter) {
+                    const textBetween = sourceCode.text.slice(node.range[1], tokenAfter.range[0]);
+                    const newlineIndex = textBetween.indexOf("\n");
+
+                    if (newlineIndex !== -1) end = node.range[1] + newlineIndex + 1;
+                }
+
+                fixes.push(fixer.removeRange([start, end]));
+            } else {
+                fixes.push(fixer.remove(decl));
+            }
+
+            return fixes;
+        };
+
+        // P6: When moduleImportStyle === "destructure", flag dot-notation access of module imports and autofix to destructure.
+        // Groups uses by (scope, moduleVar). Inserts one destructure per group, replaces all uses.
+        const checkProgramExitHandler = (programNode) => {
+            if (moduleImportStyle !== "destructure") return;
+            if (moduleImports.size === 0) return;
+
+            // Map: scope node → Map: moduleVar → Array<{ node, key, isJsx }>
+            const scopeUses = new Map();
+
+            const findScopeHandler = (n) => {
+                let s = n.parent;
+
+                while (s && s.type !== "BlockStatement" && s.type !== "Program") {
+                    s = s.parent;
+                }
+
+                return s;
+            };
+
+            const recordHandler = (refNode, moduleVar, key, isJsx) => {
+                const scope = findScopeHandler(refNode);
+
+                if (!scope) return;
+                if (!scopeUses.has(scope)) scopeUses.set(scope, new Map());
+
+                const moduleMap = scopeUses.get(scope);
+
+                if (!moduleMap.has(moduleVar)) moduleMap.set(moduleVar, []);
+
+                moduleMap.get(moduleVar).push({ isJsx, key, node: refNode });
+            };
+
+            const visit = (n) => {
+                if (!n || typeof n !== "object") return;
+
+                // `module.X` non-computed member access
+                if (n.type === "MemberExpression" && !n.computed
+                    && n.object && n.object.type === "Identifier" && moduleImports.has(n.object.name)
+                    && n.property && n.property.type === "Identifier") {
+                    recordHandler(n, n.object.name, n.property.name, false);
+                }
+
+                // `<module.X />` JSX member expression — only when `.object` is the root identifier (not nested chains)
+                if (n.type === "JSXMemberExpression"
+                    && n.object && n.object.type === "JSXIdentifier" && moduleImports.has(n.object.name)
+                    && n.property && n.property.type === "JSXIdentifier") {
+                    recordHandler(n, n.object.name, n.property.name, true);
+                }
+
+                for (const key of Object.keys(n)) {
+                    if (key === "parent" || key === "range" || key === "loc") continue;
+
+                    const child = n[key];
+
+                    if (Array.isArray(child)) child.forEach(visit);
+                    else if (child && typeof child === "object" && child.type) visit(child);
+                }
+            };
+
+            visit(programNode);
+
+            for (const [scope, moduleMap] of scopeUses) {
+                for (const [moduleVar, accesses] of moduleMap) {
+                    const keys = [...new Set(accesses.map((a) => a.key))].sort();
+                    const destructureLine = `const { ${keys.join(", ")} } = ${moduleVar};`;
+
+                    context.report({
+                        fix: (fixer) => {
+                            const fixes = [];
+
+                            // Replace each `module.X` with `X`, `<module.X>` with `<X>`
+                            accesses.forEach((a) => {
+                                fixes.push(fixer.replaceText(a.node, a.key));
+                            });
+
+                            // Insert destructure at top of scope
+                            if (scope.type === "Program") {
+                                // After last import declaration, before first non-import statement
+                                let lastImport = null;
+
+                                for (const stmt of scope.body) {
+                                    if (stmt.type === "ImportDeclaration") lastImport = stmt;
+                                    else break;
+                                }
+
+                                if (lastImport) {
+                                    fixes.push(fixer.insertTextAfter(lastImport, `\n\n${destructureLine}`));
+                                } else if (scope.body[0]) {
+                                    fixes.push(fixer.insertTextBefore(scope.body[0], `${destructureLine}\n\n`));
+                                }
+                            } else if (scope.body && scope.body[0]) {
+                                // BlockStatement — insert at top with matching indent
+                                const firstStmt = scope.body[0];
+                                const lineText = sourceCode.lines[firstStmt.loc.start.line - 1] || "";
+                                const indent = lineText.match(/^\s*/)[0];
+
+                                fixes.push(fixer.insertTextBefore(firstStmt, `${destructureLine}\n${indent}`));
+                            }
+
+                            return fixes;
+                        },
+                        message: `Use destructure for module "${moduleVar}" import: ${destructureLine}`,
+                        node: accesses[0].node,
+                    });
                 }
             }
         };
@@ -2552,13 +2817,26 @@ const functionObjectDestructure = {
             FunctionDeclaration: checkFunctionHandler,
             FunctionExpression: checkFunctionHandler,
             ImportDeclaration: checkImportHandler,
+            "Program:exit": checkProgramExitHandler,
             VariableDeclaration: checkVariableDeclarationHandler,
         };
     },
     meta: {
-        docs: { description: "Enforce object parameters to be destructured in function body, not accessed via dot notation. Also prevent destructuring of data imports." },
+        docs: { description: "Enforce object parameters to be destructured in function body, not accessed via dot notation. Module imports default to dot notation (configurable via moduleImportStyle option)." },
         fixable: "code",
-        schema: [],
+        schema: [
+            {
+                additionalProperties: false,
+                properties: {
+                    moduleImportStyle: {
+                        description: "How to handle module imports. 'smart' (default) — enforce dot notation but keep destructure when used only as JSX elements. 'strict-dot' — pure dot notation even for JSX. 'destructure' — opposite direction, enforce destructure of module imports.",
+                        enum: ["smart", "strict-dot", "destructure"],
+                        type: "string",
+                    },
+                },
+                type: "object",
+            },
+        ],
         type: "suggestion",
     },
 };

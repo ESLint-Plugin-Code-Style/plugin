@@ -7,6 +7,67 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [3.2.0] - 2026-05-12
+
+**Community Issue Sweep — 7 Open Issues Resolved (Config + Behavior + New Options)**
+
+**Version Range:** v3.1.1 → v3.2.0
+
+### Added
+
+**New Options (3 rules)**
+
+- **`no-hardcoded-strings`** — Two new options:
+  - `cssInJsTags: string[]` — additional tagged-template tag names treated as CSS-in-JS (extends defaults: `styled`, `css`, `keyframes`, `createGlobalStyle`, `Global`, `globalStyle`, `globalCss`, `tw`). Use for custom CSS-in-JS factories (vanilla-extract, panda-css, etc.) ⚙️
+  - `extraBreakpointKeys: string[]` — additional responsive breakpoint object keys (extends defaults: `xs`, `sm`, `md`, `lg`, `xl`, `2xl`, `base`, `default`) ⚙️
+- **`variable-naming-convention`** — New option `allowedCases: Array<{ paths: string[], cases: CaseName[] }>` — path-scoped allowed naming cases. Opt-in only (empty by default). Lets teams allow SCREAMING_SNAKE_CASE in Redux types folders, PascalCase in constants folders, etc. ⚙️
+- **`function-object-destructure`** — New option `moduleImportStyle: "smart" | "strict-dot" | "destructure"` (default `"smart"`). Controls how module imports are handled — smart enforces dot notation but keeps JSX-only destructure, strict-dot enforces pure dot notation everywhere, destructure flips the direction and enforces destructure of module imports ⚙️
+
+**New Built-in Skips for `no-hardcoded-strings`**
+
+- CSS keyword value patterns added to default ignore regex: `row`/`column`/`bold`/`caption`/`flex-start`/`flex-end`/`center`/`baseline`/`uppercase`/`underline`/MUI variant slots (`contained`, `outlined`, `primary`, `secondary`, etc.) and many more — values flagged previously despite being style keywords
+- CSS-style attribute names merged into default ignore list (~140 props): `fontWeight`, `flexDirection`, `sx`, `variant`, `bgcolor`, `padding`, `margin`, `display`, `position`, etc.
+- Tagged-template CSS-in-JS detection — strings inside `` styled.div`...` ``, `` styled(X)`...` ``, `` css`...` ``, `` keyframes`...` `` and similar are skipped
+- Responsive-breakpoint object detection — `flexDirection={{ sm: "row", xs: "column" }}` recognized as responsive style
+
+**Test File Globals**
+
+- All 8 recommended configs (`recommended-configs/v9|v10/*`) now declare jest/vitest/mocha/jasmine globals for test files matching `**/*.{test,spec}.{js,jsx,ts,tsx}`, `**/__tests__/**`, `**/tests/**`. Mirrored into 4 internal test app configs for parity
+
+### Fixed
+
+- **`ternary-condition-multiline`** — Stop collapsing ternaries whose branches span multiple lines (destructured params, multiline object literals, multi-arg calls). Previously collided with `array-callback-destructure`/`object-property-per-line`/`function-arguments-format` producing broken indentation. Fixes [#10](https://github.com/ESLint-Plugin-Code-Style/plugin/issues/10)
+- **`no-hardcoded-strings`** — JSX attributes like `flexDirection={{ sm: "row" }}`, `fontWeight="bold"`, `variant="caption"`, `sx={{ display: "flex" }}` no longer flagged. Styled-component tagged template content no longer flagged. Fixes [#4](https://github.com/ESLint-Plugin-Code-Style/plugin/issues/4) and [#9](https://github.com/ESLint-Plugin-Code-Style/plugin/issues/9)
+- **Recommended configs** — Add test globals so `describe`, `it`, `expect`, `jest`, `vi`, `beforeEach`, `afterEach` etc. are recognized in test files. Fixes [#8](https://github.com/ESLint-Plugin-Code-Style/plugin/issues/8)
+- **`variable-naming-convention`** — Module-level SCREAMING_SNAKE_CASE constants in Redux types/actions/constants/enums folders can now be allowed via the new `allowedCases` option (opt-in). Fixes [#7](https://github.com/ESLint-Plugin-Code-Style/plugin/issues/7)
+- **`folder-based-naming-convention`** — Three fixes for component name auto-fix:
+  1. Dedupe singular file name vs singular suffix — `services/services.js` no longer requires `ServicesService` chain (now `Service`)
+  2. Skip non-export VariableDeclarators in camelCase folders — local `let fullApiUrl` inside arrow functions no longer renamed
+  3. Drop `Service` suffix requirement for function exports in `services/` folder — `function-naming-convention`'s `Handler` suffix already conveys callability. `getDataHandler` instead of `getDataServiceHandler`
+- **`function-naming-convention`** — Added `post` to recognized HTTP verb prefixes alongside `put`, `patch`, `delete`. `postData` now recognized as a verb-prefixed function and auto-fixable
+- **`function-object-destructure`** — Three fixes for module-import destructure handling:
+  1. Recursively flatten nested ObjectPattern with aliases — `const { photographers: { activate: alias } } = apisUrls; alias()` correctly autofixes to `apisUrls.photographers.activate()` instead of removing the declaration and leaving dangling references
+  2. JSX element name detection — `<Button />` (JSXIdentifier) now matched as a reference for destructured locals
+  3. JSX-only exception in smart mode — destructured props used only as JSX elements are kept in destructure (preserves `<Button />` over `<ui.Button />`)
+- Combined fixes for [#5](https://github.com/ESLint-Plugin-Code-Style/plugin/issues/5) and [#6](https://github.com/ESLint-Plugin-Code-Style/plugin/issues/6)
+
+### Documentation
+
+- `metadata.json` updated with new options, descriptions, rationales, and examples for all three configurable rules (website auto-syncs)
+- `rules/strings.md`, `rules/variables.md`, `rules/functions.md`, `rules/components.md` — added option tables, examples, and per-rule notes for new behaviors
+- `.skills/manage-rule/skill.md` — added CRITICAL note that `metadata.json` must be updated alongside any rule change (website auto-syncs via GitHub Actions). Added explicit steps for `rules/<category>.md` and `metadata.json` updates in all four edit-rule workflows (bug fix, behavior change, adding options, adding auto-fix)
+
+### Stats
+
+- Total Rules: 81 (unchanged)
+- Auto-fixable: 71 rules 🔧 (unchanged)
+- Configurable: 22 rules ⚙️ (was 20 — `variable-naming-convention` and `function-object-destructure` are now configurable)
+- Report-only: 10 rules
+
+**Full Changelog:** [v3.1.1...v3.2.0](https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v3.1.1...v3.2.0)
+
+---
+
 ## [3.1.1] - 2026-04-10
 
 **Next.js Framework Support & React Hook Placement Enforcement**
@@ -2442,6 +2503,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+[3.2.0]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v3.1.1...v3.2.0
 [3.1.1]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v3.1.0...v3.1.1
 [3.1.0]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v3.0.6...v3.1.0
 [3.0.6]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v3.0.5...v3.0.6

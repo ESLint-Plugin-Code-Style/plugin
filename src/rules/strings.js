@@ -33,6 +33,8 @@
  *   { ignoreAttributes: ["className", "id", ...] } - JSX attributes to ignore (replaces defaults)
  *   { extraIgnoreAttributes: ["tooltip", ...] } - Additional JSX attributes to ignore (extends defaults)
  *   { ignorePatterns: [/^[A-Z_]+$/, ...] } - Regex patterns for strings to ignore
+ *   { cssInJsTags: ["myStyled", ...] } - Tagged-template tag names treated as CSS-in-JS (extends defaults: styled, css, keyframes, createGlobalStyle, Global, globalStyle, globalCss, tw)
+ *   { extraBreakpointKeys: ["mobile", ...] } - Additional responsive breakpoint object keys (extends defaults: xs, sm, md, lg, xl, 2xl, base, default)
  *
  * ✓ Good:
  *   import { BUTTON_LABEL, ERROR_MESSAGE } from "@/constants";
@@ -293,10 +295,66 @@ const noHardcodedStrings = {
             "rotate", // text rotate
             "lengthAdjust",
             "textLength",
+            // CSS-style props (MUI/Chakra/styled-system/theme-ui). Values like "row", "bold", "center"
+            // are responsive/style values, not user-facing strings.
+            "alignContent", "alignItems", "alignSelf", "alignment",
+            "animation", "animationDelay", "animationDirection", "animationDuration",
+            "animationFillMode", "animationIterationCount", "animationName",
+            "animationPlayState", "animationTimingFunction",
+            "backdropFilter",
+            "backgroundAttachment", "backgroundClip", "backgroundColor", "backgroundImage",
+            "backgroundOrigin", "backgroundPosition", "backgroundRepeat", "backgroundSize",
+            "bg", "bgColor", "bgcolor",
+            "borderBottom", "borderBottomLeftRadius", "borderBottomRightRadius",
+            "borderCollapse", "borderColor", "borderLeft", "borderRadius", "borderRight",
+            "borderSpacing", "borderStyle", "borderTop", "borderTopLeftRadius",
+            "borderTopRightRadius", "borderWidth",
+            "bottom", "boxShadow", "boxSizing",
+            "captionSide", "clear",
+            "columnGap",
+            "direction", "display",
+            "elevation", "emptyCells",
+            "flex", "flexBasis", "flexDirection", "flexFlow", "flexGrow", "flexShrink", "flexWrap",
+            "float", "font", "fontFamily", "fontSize", "fontStyle", "fontVariant", "fontWeight",
+            "gap", "gridArea", "gridAutoColumns", "gridAutoFlow", "gridAutoRows",
+            "gridColumn", "gridRow", "gridTemplate", "gridTemplateAreas",
+            "gridTemplateColumns", "gridTemplateRows",
+            "justifyContent", "justifyItems", "justifySelf",
+            "left", "letterSpacing", "lineHeight", "listStyle", "listStyleImage",
+            "listStylePosition", "listStyleType",
+            "m", "margin", "marginBottom", "marginLeft", "marginRight", "marginTop",
+            "marginX", "marginY", "mb", "minHeight", "minWidth", "ml", "mr", "mt", "mx", "my",
+            "objectFit", "objectPosition", "opacity", "order", "orientation",
+            "outlineColor", "outlineOffset", "outlineStyle", "outlineWidth", "overflowOverflow",
+            "overflowWrap", "overflowX", "overflowY",
+            "p", "padding", "paddingBottom", "paddingLeft", "paddingRight", "paddingTop",
+            "paddingX", "paddingY", "pb", "pl", "placeContent", "placeItems", "placeSelf",
+            "placement", "pointerEvents", "pr", "pt", "px", "py",
+            "resize", "right", "rowGap",
+            "self-end", "self-start", "severity", "size", "spacing", "sx",
+            "tableLayout", "textAlign", "textDecorationColor", "textDecorationLine",
+            "textDecorationStyle", "textDecorationThickness", "textIndent", "textShadow",
+            "textTransform", "top", "touchAction", "transition", "transitionDelay",
+            "transitionDuration", "transitionProperty", "transitionTimingFunction",
+            "userSelect",
+            "variant", "verticalAlign", "visibility",
+            "whiteSpace", "wordBreak", "wordSpacing", "writingMode",
+            "zIndex",
         ];
 
         const ignoreAttributes = options.ignoreAttributes
             || [...defaultIgnoreAttributes, ...(options.extraIgnoreAttributes || [])];
+
+        // Tagged-template tag names treated as CSS-in-JS (styled-components, emotion, vanilla-extract, etc.)
+        const defaultCssInJsTags = [
+            "Global", "createGlobalStyle", "css", "globalCss", "globalStyle",
+            "keyframes", "styled", "tw",
+        ];
+        const cssInJsTags = new Set([...defaultCssInJsTags, ...(options.cssInJsTags || [])]);
+
+        // Responsive breakpoint object keys (MUI, Chakra, theme-ui, custom design systems)
+        const defaultBreakpointKeys = ["2xl", "base", "default", "lg", "md", "sm", "xl", "xs"];
+        const breakpointKeys = new Set([...defaultBreakpointKeys, ...(options.extraBreakpointKeys || [])]);
 
         // Patterns for strings that are likely technical/non-translatable
         const technicalPatterns = [
@@ -404,6 +462,43 @@ const noHardcodedStrings = {
             /^clamp\(.+\)$/,
             // CSS min/max functions
             /^(min|max)\(.+\)$/,
+            // CSS keyword values (attr-agnostic — common across all CSS-in-JS libs)
+            // Flex / grid direction
+            /^(row|column|row-reverse|column-reverse)$/,
+            // Flex / grid alignment
+            /^(flex-start|flex-end|space-between|space-around|space-evenly|stretch|baseline|self-start|self-end)$/,
+            // Font weight / style keywords
+            /^(bold|bolder|lighter|italic|oblique)$/,
+            // Text transform
+            /^(uppercase|lowercase|capitalize)$/,
+            // Text align (extends position values already covered above)
+            /^(justify|justify-all|match-parent)$/,
+            // White space + word break
+            /^(nowrap|pre|pre-wrap|pre-line|break-spaces|break-word|break-all|keep-all)$/,
+            // Vertical align
+            /^(middle|super|sub|text-top|text-bottom)$/,
+            // Box sizing
+            /^(border-box|content-box|padding-box)$/,
+            // Border style
+            /^(dashed|dotted|double|groove|ridge|inset|outset)$/,
+            // Text decoration line / style
+            /^(underline|overline|line-through|wavy|currentColor)$/,
+            // System font / variant keywords
+            /^(caption|icon|menu|message-box|small-caption|status-bar)$/,
+            // Generic font sizes / weights
+            /^(thin|medium|thick|tiny|small|large|huge)$/,
+            // Object-fit
+            /^(contain|cover|fill|scale-down)$/,
+            // Background-repeat
+            /^(repeat|space|no-repeat|repeat-x|repeat-y)$/,
+            // Transition / animation timing
+            /^(ease|ease-in|ease-out|ease-in-out|step-start|step-end)$/,
+            // Animation iteration / direction / fill / play
+            /^(infinite|alternate|alternate-reverse|forwards|backwards|paused|running)$/,
+            // Common MUI variant / size enum values
+            /^(contained|outlined|standard|filled|determinate|indeterminate|temporary|persistent|permanent)$/,
+            // Common MUI severity / color slots
+            /^(primary|secondary|success|warning|info|disabled)$/,
         ];
 
         const extraIgnorePatterns = (options.ignorePatterns || []).map((p) => {
@@ -511,25 +606,106 @@ const noHardcodedStrings = {
         // Check if string is an HTML input type
         const isHtmlInputTypeHandler = (str) => htmlInputTypes.has(str.toLowerCase());
 
-        // Check if node is inside a style object expression (style={{ ... }})
+        // Check if node is inside an object value of a style-like JSX attribute.
+        // Covers `style={{ ... }}`, `sx={{ ... }}`, `flexDirection={{ sm: "row" }}`, etc.
+        // Walks up Property → ObjectExpression → (optional ArrayExpression for sx={[...]}) → JSXExpressionContainer → JSXAttribute.
         const isInsideStyleObjectHandler = (node) => {
             let current = node.parent;
 
             while (current) {
-                // Check if we're in a Property inside an ObjectExpression inside a JSXAttribute named "style"
                 if (current.type === "Property" && current.parent && current.parent.type === "ObjectExpression") {
-                    const objExpr = current.parent;
+                    let container = current.parent.parent;
 
-                    if (objExpr.parent && objExpr.parent.type === "JSXExpressionContainer") {
-                        const jsxExprContainer = objExpr.parent;
+                    // Allow sx={[{ ... }, condition && { ... }]} shape — climb past arrays/logical/conditional wrappers
+                    while (container && (
+                        container.type === "ArrayExpression"
+                        || container.type === "LogicalExpression"
+                        || container.type === "ConditionalExpression"
+                    )) {
+                        container = container.parent;
+                    }
 
-                        if (jsxExprContainer.parent && jsxExprContainer.parent.type === "JSXAttribute") {
-                            const attrName = jsxExprContainer.parent.name && jsxExprContainer.parent.name.name;
+                    if (container && container.type === "JSXExpressionContainer"
+                        && container.parent && container.parent.type === "JSXAttribute") {
+                        const attrName = container.parent.name && container.parent.name.name;
 
-                            if (attrName === "style") return true;
-                        }
+                        if (attrName && ignoreAttributes.includes(attrName)) return true;
                     }
                 }
+
+                current = current.parent;
+            }
+
+            return false;
+        };
+
+        // Detect tagged-template tag for CSS-in-JS libraries (styled-components, emotion, etc.)
+        const isStyledTagHandler = (tag) => {
+            if (!tag) return false;
+
+            if (tag.type === "Identifier") return cssInJsTags.has(tag.name);
+
+            if (tag.type === "MemberExpression" && tag.object) {
+                // styled.div, tw.button, css.global, etc.
+                if (tag.object.type === "Identifier" && cssInJsTags.has(tag.object.name)) return true;
+
+                // styled(Component).attrs(...) → tag is MemberExpression whose object is CallExpression
+                if (tag.object.type === "CallExpression" && tag.object.callee
+                    && tag.object.callee.type === "Identifier" && cssInJsTags.has(tag.object.callee.name)) return true;
+            }
+
+            if (tag.type === "CallExpression" && tag.callee) {
+                // styled(Component)`...`, css(props)`...`
+                if (tag.callee.type === "Identifier" && cssInJsTags.has(tag.callee.name)) return true;
+
+                // styled(Component).attrs(...)`...` — tag.callee is MemberExpression, walk one level
+                if (tag.callee.type === "MemberExpression" && tag.callee.object
+                    && tag.callee.object.type === "Identifier" && cssInJsTags.has(tag.callee.object.name)) return true;
+
+                if (tag.callee.type === "MemberExpression" && tag.callee.object
+                    && tag.callee.object.type === "CallExpression" && tag.callee.object.callee
+                    && tag.callee.object.callee.type === "Identifier"
+                    && cssInJsTags.has(tag.callee.object.callee.name)) return true;
+            }
+
+            return false;
+        };
+
+        // Walk ancestors checking for any TaggedTemplateExpression with a CSS-in-JS tag
+        const isInsideStyledTemplateHandler = (node) => {
+            let current = node.parent;
+
+            while (current) {
+                if (current.type === "TaggedTemplateExpression" && isStyledTagHandler(current.tag)) return true;
+                current = current.parent;
+            }
+
+            return false;
+        };
+
+        // Detect responsive-breakpoint object: { xs: "...", sm: "...", md: "..." }
+        // If a string is a value inside an ObjectExpression whose keys are ALL breakpoint keys, skip it.
+        const isInsideBreakpointObjectHandler = (node) => {
+            let current = node.parent;
+
+            while (current) {
+                if (current.type === "ObjectExpression") {
+                    const literalKeys = current.properties
+                        .filter((p) => p.type === "Property" && !p.computed)
+                        .map((p) => {
+                            if (p.key.type === "Identifier") return p.key.name;
+                            if (p.key.type === "Literal") return String(p.key.value);
+
+                            return null;
+                        })
+                        .filter(Boolean);
+
+                    if (literalKeys.length > 0 && literalKeys.every((k) => breakpointKeys.has(k))) return true;
+                }
+
+                // Stop walking once we leave the immediate value chain (hit JSXAttribute or function)
+                if (current.type === "JSXAttribute" || current.type === "FunctionDeclaration"
+                    || current.type === "FunctionExpression" || current.type === "ArrowFunctionExpression") return false;
 
                 current = current.parent;
             }
@@ -1023,8 +1199,14 @@ const noHardcodedStrings = {
 
                 const str = node.value;
 
-                // Skip if inside a style object (style={{ transform: "..." }})
+                // Skip if inside a style object (style={{...}}, sx={{...}}, flexDirection={{ sm: "row" }})
                 if (isInsideStyleObjectHandler(node)) return;
+
+                // Skip if inside a CSS-in-JS tagged template (styled.div`...`, css`...`, etc.)
+                if (isInsideStyledTemplateHandler(node)) return;
+
+                // Skip if inside a responsive-breakpoint object ({ xs: "...", sm: "..." })
+                if (isInsideBreakpointObjectHandler(node)) return;
 
                 // Check for exported hardcoded strings (e.g., export const tokenKey = "auth_token")
                 // These should be flagged even at module level, regardless of whether the value
@@ -1076,6 +1258,14 @@ const noHardcodedStrings = {
                 // Skip if inside a style object (style={{ background: `...` }})
                 if (isInsideStyleObjectHandler(node)) return;
 
+                // Skip if inside a CSS-in-JS tagged template (covers styled-components/emotion/etc.)
+                if (node.parent && node.parent.type === "TaggedTemplateExpression"
+                    && isStyledTagHandler(node.parent.tag)) return;
+                if (isInsideStyledTemplateHandler(node)) return;
+
+                // Skip if inside a responsive-breakpoint object
+                if (isInsideBreakpointObjectHandler(node)) return;
+
                 // Skip if assigned to a style-related variable with CSS value
                 // e.g., const lineGradient = `linear-gradient(...)`
                 if (isStyleVariableAssignmentHandler(node)) {
@@ -1122,6 +1312,16 @@ const noHardcodedStrings = {
             {
                 additionalProperties: false,
                 properties: {
+                    cssInJsTags: {
+                        description: "Tagged-template tag names treated as CSS-in-JS (extends defaults: styled, css, keyframes, createGlobalStyle, Global, globalStyle, globalCss, tw)",
+                        items: { type: "string" },
+                        type: "array",
+                    },
+                    extraBreakpointKeys: {
+                        description: "Additional responsive breakpoint object keys (extends defaults: xs, sm, md, lg, xl, 2xl, base, default)",
+                        items: { type: "string" },
+                        type: "array",
+                    },
                     extraIgnoreAttributes: {
                         description: "Additional JSX attributes to ignore (extends defaults)",
                         items: { type: "string" },

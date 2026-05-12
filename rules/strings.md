@@ -22,10 +22,18 @@
 | `ignoreAttributes` | `string[]` | See below | JSX attributes to ignore (replaces defaults) |
 | `extraIgnoreAttributes` | `string[]` | `[]` | Additional JSX attributes to ignore (extends defaults) |
 | `ignorePatterns` | `string[]` | `[]` | Regex patterns for strings to ignore |
+| `cssInJsTags` | `string[]` | `[]` | Additional tagged-template tag names treated as CSS-in-JS (extends defaults: `styled`, `css`, `keyframes`, `createGlobalStyle`, `Global`, `globalStyle`, `globalCss`, `tw`) |
+| `extraBreakpointKeys` | `string[]` | `[]` | Additional responsive breakpoint object keys (extends defaults: `xs`, `sm`, `md`, `lg`, `xl`, `2xl`, `base`, `default`) |
 
-**Default ignored attributes:** `className`, `id`, `type`, `name`, `href`, `src`, `alt`, `role`, `style`, `key`, `data-*`, `aria-*`, and many more HTML/SVG attributes.
+**Default ignored attributes:** `className`, `id`, `type`, `name`, `href`, `src`, `alt`, `role`, `style`, `key`, `data-*`, `aria-*`, all HTML/SVG attributes, plus CSS-style props for MUI/Chakra/styled-system/theme-ui (`fontWeight`, `flexDirection`, `sx`, `variant`, `bgcolor`, `padding`, `margin`, ~140 props total).
 
-**Default ignored patterns:** Empty strings, single characters, CSS units (`px`, `em`, `%`), colors, URLs, paths, file extensions, MIME types, UUIDs, dates, camelCase/snake_case identifiers, HTTP methods, and other technical strings.
+**Default ignored patterns:** Empty strings, single characters, CSS units (`px`, `em`, `%`), colors, URLs, paths, file extensions, MIME types, UUIDs, dates, camelCase/snake_case identifiers, HTTP methods, CSS keyword values (`row`, `column`, `bold`, `caption`, `flex-start`, etc.), MUI variant/severity slots (`primary`, `secondary`, `contained`, `outlined`, etc.), and other technical strings.
+
+**Built-in skips for style contexts:**
+- Strings inside CSS-in-JS tagged templates: `` styled.div`...` ``, `` styled(X)`...` ``, `` css`...` ``, `` keyframes`...` ``, `` tw`...` ``
+- Strings inside responsive-breakpoint objects: `flexDirection={{ sm: "row", xs: "column" }}`
+- Strings inside style-attr object values: `style={{ ... }}`, `sx={{ ... }}`, `flexDirection={{ ... }}`, etc.
+- Strings inside class utility calls: `cn(...)`, `cva(...)`, `clsx(...)`, `twMerge(...)`, `classnames(...)`, `cx(...)`, `tv(...)`, `twJoin(...)`
 
 ```javascript
 // Good — strings imported from constants
@@ -69,8 +77,14 @@ if (role === "admin") { ... }
 ```javascript
 // Allow more attributes, add custom ignore patterns
 "code-style/no-hardcoded-strings": ["error", {
-    extraIgnoreAttributes: ["tooltip", "placeholder"],
-    ignorePatterns: ["^TODO:", "^FIXME:"]
+    extraIgnoreAttributes: ["tooltip", "placeholder", "myCustomBg"],
+    ignorePatterns: ["^TODO:", "^FIXME:"],
+
+    // Custom CSS-in-JS factory for vanilla-extract / panda-css / etc.
+    cssInJsTags: ["myStyled", "vanillaStyle"],
+
+    // Custom design system breakpoint keys
+    extraBreakpointKeys: ["mobile", "tablet", "desktop"]
 }]
 ```
 

@@ -1542,7 +1542,12 @@ const folderBasedNamingConvention = {
         const checkCamelCaseHandler = (name, folder, suffix, identifierNode, scopeNode, moduleInfo) => {
             // Build the required chain: fileNamePascal + folderChainPascal
             const isIndex = moduleInfo.fileName === "index";
-            const fileNamePascal = isIndex ? "" : toPascalCaseHandler(moduleInfo.fileName);
+            // Dedupe: when file name (singularized) matches suffix (singularized), drop file name from chain.
+            // Prevents "ServicesService" for `services/services.js`, "DataData" for `data/data.js`, etc.
+            const fileNameSingular = isIndex ? "" : singularizeHandler(moduleInfo.fileName).toLowerCase();
+            const suffixSingular = singularizeHandler(suffix).toLowerCase();
+            const fileNameMatchesSuffix = !isIndex && fileNameSingular === suffixSingular;
+            const fileNamePascal = (isIndex || fileNameMatchesSuffix) ? "" : toPascalCaseHandler(moduleInfo.fileName);
             const meaningfulFolders = moduleInfo.intermediateFolders.filter((f) => !groupingFolders.has(f));
             // Singularize folders for named files, keep plural for index files
             const processedFolders = isIndex ? meaningfulFolders : meaningfulFolders.map(singularizeHandler);
@@ -1614,6 +1619,12 @@ const folderBasedNamingConvention = {
             // For camelCase folders, enforce suffix + near-match prefix check
             if (camelCaseFolders.has(folder)) {
                 if (!suffix) return;
+
+                // For function exports in folders where Handler suffix is the convention (e.g., services),
+                // drop the folder-suffix requirement and let function-naming-convention enforce "Handler".
+                // Avoids redundant "getDataServiceHandler" — just "getDataHandler" is enough.
+                const dropFolderSuffixForFunctions = new Set(["services"]);
+                if (dropFolderSuffixForFunctions.has(folder)) return;
 
                 if (isCamelCaseHandler(name)) {
                     checkCamelCaseHandler(name, folder, suffix, identifierNode, node, moduleInfo);
@@ -1701,6 +1712,11 @@ const folderBasedNamingConvention = {
             // For camelCase folders, enforce suffix + near-match prefix check
             if (camelCaseFolders.has(folder)) {
                 if (!suffix) return;
+
+                // Only check module-level exports — local/private vars don't follow folder convention
+                const isExported = node.parent && node.parent.parent
+                    && node.parent.parent.type === "ExportNamedDeclaration";
+                if (!isExported) return;
 
                 if (isCamelCaseHandler(name)) {
                     checkCamelCaseHandler(name, folder, suffix, node.id, node, moduleInfo);

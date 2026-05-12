@@ -1527,6 +1527,13 @@ const ternaryConditionMultiline = {
         // Check if branches contain JSX (should stay multiline)
         const hasJsxBranchesHandler = (node) => containsJsxHandler(node.consequent) || containsJsxHandler(node.alternate);
 
+        // Check if either branch spans multiple lines (e.g. destructured params, multiline object literal, multi-arg call)
+        // When a branch is structurally multiline, collapsing the ternary fights other formatting rules
+        // (object-property-per-line, function-arguments-format, array-callback-destructure) and produces broken output
+        const hasMultilineBranchHandler = (node) =>
+            node.consequent.loc.start.line !== node.consequent.loc.end.line
+            || node.alternate.loc.start.line !== node.alternate.loc.end.line;
+
         // Check if a nested ternary has complex condition (>maxOperands)
         const hasComplexNestedTernaryHandler = (node) => {
             const checkBranch = (branch) => {
@@ -1580,6 +1587,11 @@ const ternaryConditionMultiline = {
 
             // Skip ternaries with JSX branches (should stay multiline for readability)
             if (hasJsxBranchesHandler(node)) {
+                return false;
+            }
+
+            // Skip when branch is structurally multiline (destructured params, multiline object/array, etc.)
+            if (hasMultilineBranchHandler(node)) {
                 return false;
             }
 
@@ -1762,6 +1774,11 @@ const ternaryConditionMultiline = {
 
                 // Skip ternaries with JSX branches (should stay multiline for readability)
                 if (hasJsxBranchesHandler(node)) {
+                    return;
+                }
+
+                // Skip when branch is structurally multiline (destructured params, multiline object/array, etc.)
+                if (hasMultilineBranchHandler(node)) {
                     return;
                 }
 

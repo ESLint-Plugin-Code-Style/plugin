@@ -306,4 +306,19 @@ export default [ // eslint-disable-line
             },
         },
     },
+    {
+        files: [
+            "**/*.{test,spec}.{js,jsx,ts,tsx}",
+            "**/__tests__/**/*.{js,jsx,ts,tsx}",
+            "**/tests/**/*.{js,jsx,ts,tsx}",
+        ],
+        languageOptions: {
+            globals: {
+                ...globals.jest,
+                ...globals.vitest,
+                ...globals.mocha,
+                ...globals.jasmine,
+            },
+        },
+    },
 ];

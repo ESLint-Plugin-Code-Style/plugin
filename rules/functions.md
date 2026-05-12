@@ -67,7 +67,7 @@ function isAuthenticated(): boolean {
 
 **What it does:** Enforces naming conventions for functions:
 - **camelCase** required
-- **Verb prefix** required (get, set, fetch, is, has, can, should, click, submit, etc.)
+- **Verb prefix** required (get, set, fetch, post, put, patch, delete, is, has, can, should, click, submit, etc.)
 - **Handler suffix** required (all functions must end with `Handler`)
 - **Auto-fixes** `handleXxx` to `xxxHandler` (avoids redundant `handleClickHandler`)
 - **Auto-fixes** PascalCase to camelCase for verb-prefixed functions
@@ -104,9 +104,27 @@ function FetchStatus() {}    // → fetchStatusHandler
 
 ### `function-object-destructure`
 
-**What it does:** Enforces that non-component functions should not destructure parameters in the function signature. Instead, use a typed parameter and destructure at the top of the function body. Also reports when parameters are accessed via dot notation (suggesting destructuring).
+**What it does:** Two responsibilities:
+1. Enforces that non-component functions should not destructure parameters in the function signature — use a typed parameter and destructure at the top of the function body. Also reports dot-notation access of object params (suggests destructuring).
+2. Enforces a configurable style for module imports — by default, module imports (e.g., `api`, `utils`, `services`) are accessed via dot notation rather than destructured, but JSX usage is exempted. Behavior is controlled by the `moduleImportStyle` option.
 
-**Why use it:** Keeping function signatures clean and short improves readability. Destructuring in the body makes it clear what properties are being used. For React components, this rule does NOT apply — components should destructure props in the signature.
+**Why use it:** Keeping function signatures clean improves readability. Dot notation for module imports (e.g., `api.getUser()` instead of `const { getUser } = api`) improves searchability across the codebase and prevents naming collisions. JSX usage stays as destructure since `<Button />` reads cleaner than `<ui.Button />`.
+
+**Configurable options:**
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `moduleImportStyle` | `"smart" \| "strict-dot" \| "destructure"` | `"smart"` | How to handle module imports — see modes below |
+
+**Modes:**
+
+| Mode | Behavior |
+|------|----------|
+| `"smart"` (default) | Flag destructure of module imports → autofix to dot notation. **Exception:** if a destructured prop is used **only** as a JSX element, it is kept in the destructure (no error). Mixed-use destructures are partially rewritten — JSX-only props stay, regular props become dot notation. |
+| `"strict-dot"` | Pure dot notation. JSX components become `<ui.Button />` instead of `<Button />`. No exceptions. |
+| `"destructure"` | Opposite direction — flag dot notation `ui.X` and autofix to destructure. Inserts `const { X, Y } = ui;` at top of containing scope and replaces all uses. |
+
+**Nested destructure with aliases is fully supported** — the rule recursively flattens `const { photographers: { activate: x } } = apisUrls` and replaces `x` references with `apisUrls.photographers.activate`.
 
 ```typescript
 // Good — typed param with destructuring in body
@@ -116,29 +134,37 @@ const createUserHandler = async (data: CreateUserParamsInterface) => {
     // Use age, email, isActive, name...
 };
 
-const updateUserHandler = (params: UpdateParamsInterface) => {
-    const { id, updates } = params;
-
-    // Use id, updates...
-};
-
 // Good — React components CAN destructure in signature
 const UserCard = ({
     name,
     email,
-} : {
+}: {
     name: string,
     email: string,
 }) => (
     <div>{name} - {email}</div>
 );
 
+// Good — module import uses dot notation (smart/strict-dot)
+import { api } from "@/api";
+
+const user = api.getUser(id);
+
+// Good — JSX-only destructure preserved in smart mode (default)
+import { ui } from "@/utils";
+
+const { Button, Card } = ui;
+
+const View = () => (
+    <Card>
+        <Button>Click</Button>
+    </Card>
+);
+
 // Bad — non-component function destructures in signature
 const createUserHandler = async ({
     age,
     email,
-    isActive,
-    name,
 }: CreateUserParamsInterface) => {
     // ...
 };
@@ -146,10 +172,30 @@ const createUserHandler = async ({
 // Bad — accessing param via dot notation (should destructure)
 const processDataHandler = (data: DataInterface) => {
     console.log(data.id);      // Bad: use destructuring
-    console.log(data.name);    // Bad: use destructuring
     return data.value * 2;     // Bad: use destructuring
 };
+
+// Bad — destructuring module imports for regular (non-JSX) code
+import { utils } from "@/utils";
+
+const { formatDate, validateEmail } = utils;   // Bad
+const today = formatDate(new Date());          // Will be autofixed to utils.formatDate(...)
 ```
+
+**Configuration examples:**
+
+```javascript
+// Default — smart mode (JSX exception)
+"code-style/function-object-destructure": "error",
+
+// Strict dot notation everywhere, no JSX exception
+"code-style/function-object-destructure": ["error", { moduleImportStyle: "strict-dot" }],
+
+// Opposite direction — enforce destructure of module imports
+"code-style/function-object-destructure": ["error", { moduleImportStyle: "destructure" }],
+```
+
+> **Note:** Modules tracked are imports from paths matching: `api`, `apis`, `config`, `configs`, `constants`, `data`, `helpers`, `lib`, `routes`, `services`, `utils`, `utilities`. Imports from other paths are not affected.
 
 ---
 

@@ -8,14 +8,27 @@
  *   for regular variables and PascalCase for React components.
  *   Auto-fixes SCREAMING_SNAKE_CASE and snake_case to camelCase.
  *
+ *   Supports opt-in path-scoped case allowances via the `allowedCases`
+ *   option, so conventions like Redux action types (SCREAMING_SNAKE_CASE
+ *   in **\/types/**) can opt out of the camelCase requirement.
+ *   No defaults — users must explicitly configure exceptions per project.
+ *
+ * Options:
+ *   { allowedCases: [{ paths: ["**\/types\/**"], cases: ["SCREAMING_SNAKE_CASE"] }] }
+ *     - Path-scoped allowed cases. Empty by default — camelCase enforced
+ *       everywhere until the consumer opts in.
+ *
  * ✓ Good:
  *   const userName = "John";
  *   const maxRetries = 3;
- *   const codeLength = 8;
  *   const UserProfile = () => <div />;
  *   const useCustomHook = () => {};
  *
- * ✗ Bad (auto-fixed):
+ *   // With allowedCases: [{ paths: ["**\/types\/**"], cases: ["SCREAMING_SNAKE_CASE"] }]
+ *   // src/types/user.ts
+ *   export const FETCH_USER_REQUEST = "FETCH_USER_REQUEST";
+ *
+ * ✗ Bad (auto-fixed when not in an allowed path):
  *   const user_name = "John";     // → userName
  *   const CODE_LENGTH = 8;        // → codeLength
  *   const MAX_RETRIES = 3;        // → maxRetries
@@ -23,6 +36,7 @@
 const variableNamingConvention = {
     create(context) {
         const sourceCode = context.sourceCode || context.getSourceCode();
+        const options = context.options[0] || {};
 
         const camelCaseRegex = /^[a-z][a-zA-Z0-9]*$/;
 
@@ -31,6 +45,55 @@ const variableNamingConvention = {
         const hookRegex = /^use[A-Z][a-zA-Z0-9]*$/;
 
         const constantRegex = /^[A-Z][A-Z0-9_]*$/;
+
+        // Map of allowed naming cases — regex per case name (matches schema enum)
+        const allowedCaseRegexMap = {
+            "camelCase":            /^[a-z][a-zA-Z0-9]*$/,
+            "PascalCase":           /^[A-Z][a-zA-Z0-9]*$/,
+            "SCREAMING_SNAKE_CASE": /^[A-Z][A-Z0-9_]*$/,
+            "snake_case":           /^[a-z][a-z0-9_]*$/,
+            "kebab-case":           /^[a-z][a-z0-9-]*$/,
+        };
+
+        // Path-scoped allowed cases. No defaults — opt-in only.
+        // Users decide per project whether to allow SCREAMING_SNAKE_CASE / PascalCase / etc. in specific paths.
+        const allowedCasesConfig = options.allowedCases || [];
+
+        // Convert simple glob (`*`, `**`) to RegExp anchored to full filename.
+        const globToRegexHandler = (glob) => {
+            const escaped = glob.replace(/[.+^${}()|[\]\\]/g, "\\$&");
+            const regexStr = escaped
+                .replace(/\*\*\//g, "__DSTAR_SLASH__")
+                .replace(/\*\*/g, "__DSTAR__")
+                .replace(/\*/g, "[^/]*")
+                .replace(/__DSTAR_SLASH__/g, "(?:.*/)?")
+                .replace(/__DSTAR__/g, ".*");
+
+            return new RegExp(`^${regexStr}$`);
+        };
+
+        const normalizedFilename = (context.filename || (context.getFilename && context.getFilename()) || "")
+            .replace(/\\/g, "/");
+
+        // Resolve cases allowed for this file once per lint run
+        const allowedCasesForFile = new Set();
+
+        for (const entry of allowedCasesConfig) {
+            if (!entry || !Array.isArray(entry.paths) || !Array.isArray(entry.cases)) continue;
+            if (entry.paths.some((p) => globToRegexHandler(p).test(normalizedFilename))) {
+                entry.cases.forEach((c) => allowedCasesForFile.add(c));
+            }
+        }
+
+        const isAllowedCaseInPathHandler = (name) => {
+            for (const caseName of allowedCasesForFile) {
+                const re = allowedCaseRegexMap[caseName];
+
+                if (re && re.test(name)) return true;
+            }
+
+            return false;
+        };
 
         // Convert any naming convention to camelCase
         const toCamelCaseHandler = (name) => {
@@ -190,6 +253,9 @@ const variableNamingConvention = {
                 // Allow component property names when destructuring (e.g., { Icon } from map callback)
                 if (componentPropertyNames.includes(name)) return;
 
+                // Allow names matching any case configured for this file path
+                if (isAllowedCaseInPathHandler(name)) return;
+
                 if (!camelCaseRegex.test(name)) {
                     context.report({
                         message: `${typeLabel} "${name}" should be camelCase`,
@@ -245,6 +311,9 @@ const variableNamingConvention = {
             }
 
             const name = node.id.name;
+
+            // Allow names matching any case configured for this file path (e.g., SCREAMING_SNAKE_CASE in types/actions/constants/enums)
+            if (isAllowedCaseInPathHandler(name)) return;
 
             // Enforce PascalCase for styled components: const StyledCard = styled(Card)(...)
             if (isStyledComponentHandler(node.init)) {
@@ -368,6 +437,9 @@ const variableNamingConvention = {
                     // Allow component property names as arguments (e.g., Icon, Component)
                     if (componentPropertyNames.includes(name)) return;
 
+                    // Allow names matching any case configured for this file path
+                    if (isAllowedCaseInPathHandler(name)) return;
+
                     // Skip PascalCase that doesn't look like a misnamed function
                     // (function-naming-convention handles verb-prefixed PascalCase)
                     if (pascalCaseRegex.test(name)) return;
@@ -415,9 +487,39 @@ const variableNamingConvention = {
         };
     },
     meta: {
-        docs: { description: "Enforce naming conventions: camelCase for variables/properties/params/arguments, PascalCase for components, useXxx for hooks" },
+        docs: { description: "Enforce naming conventions: camelCase for variables/properties/params/arguments, PascalCase for components, useXxx for hooks. Supports opt-in path-scoped case allowances via the `allowedCases` option (e.g., SCREAMING_SNAKE_CASE in types/actions folders for Redux conventions)." },
         fixable: "code",
-        schema: [],
+        schema: [
+            {
+                additionalProperties: false,
+                properties: {
+                    allowedCases: {
+                        description: "Path-scoped allowed naming cases. Empty by default (camelCase enforced everywhere). Provide entries to opt-in path-based exceptions, e.g. `[{ paths: ['**/types/**'], cases: ['SCREAMING_SNAKE_CASE'] }]`.",
+                        items: {
+                            additionalProperties: false,
+                            properties: {
+                                cases: {
+                                    items: {
+                                        enum: ["camelCase", "PascalCase", "SCREAMING_SNAKE_CASE", "snake_case", "kebab-case"],
+                                    },
+                                    minItems: 1,
+                                    type: "array",
+                                },
+                                paths: {
+                                    items: { type: "string" },
+                                    minItems: 1,
+                                    type: "array",
+                                },
+                            },
+                            required: ["paths", "cases"],
+                            type: "object",
+                        },
+                        type: "array",
+                    },
+                },
+                type: "object",
+            },
+        ],
         type: "suggestion",
     },
 };
