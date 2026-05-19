@@ -896,58 +896,9 @@ Rules are organized in these categories (alphabetically sorted in src/index.js a
 
 ## Rule Count Locations
 
-**IMPORTANT:** When adding/removing rules, update the rule counts in ALL these locations:
+The complete list of files (and line numbers) that mention rule counts, plus the current totals and verification commands, lives in the **`audit-docs`** skill. Consult it whenever rules are added/removed and counts must be re-synced.
 
-### Current Counts (update these when changing rules)
-- **Total rules:** 81
-- **Auto-fixable:** 71
-- **Configurable:** 21 (rules with ⚙️ that have options)
-- **Report-only:** 10
-
-**IMPORTANT:** All counts must be uniform across ALL files. When updating:
-- Total rules, auto-fixable count, configurable count, and report-only count must match everywhere
-- The auto-fixable breakdown (code vs whitespace) in this section must match actual `grep` counts
-- Use the Quick Verification Commands below to verify counts before committing
-
-### Files & Line Numbers to Update
-
-| File | Line(s) | What to Update |
-|------|---------|----------------|
-| `README.md` | ~22 | `*81 rules (71 auto-fixable, 22 configurable)*` |
-| `README.md` | ~30 | `**81 custom rules** (71 auto-fixable, 22 configurable)` |
-| `README.md` | ~39 | `71 of 81 rules support auto-fix` |
-| `README.md` | ~100 | `**71 rules** support automatic fixing... **20 rules** have configurable options. 10 rules are report-only` |
-| `README.md` | ~272 | `**81 rules total** — 71 with auto-fix, 22 configurable` |
-| `README.md` | ~409 | `71 of 81 rules support auto-fixing` |
-| `rules/README.md` | ~3 | `**81 rules total** — 71 with auto-fix, 22 configurable` |
-| `AGENTS.md` | ~7 | `81 custom formatting rules (71 auto-fixable, 22 configurable, 10 report-only)` |
-| `AGENTS.md` | ~37 | `(72 rules in JS projects, 81 in TS projects)` |
-| `AGENTS.md` | ~675 | `all 81 rules` |
-| `AGENTS.md` | ~733 | `71 auto-fixable rules, 22 configurable rules, 10 report-only` |
-| `AGENTS.md` | Rule Count Locations section | Current Counts table |
-| `recommended-configs/react/README.md` | ~286 | `**71 auto-fixable rules** (81 total, 22 configurable, 10 report-only)` |
-| `recommended-configs/react-ts/README.md` | ~361 | `**71 auto-fixable rules** (81 total, 22 configurable, 10 report-only)` |
-| `recommended-configs/react-tw/README.md` | ~321 | `**71 auto-fixable rules** (72 JavaScript-compatible rules out of 81 total)` |
-| `recommended-configs/react-ts-tw/README.md` | ~396 | `**71 auto-fixable rules** (81 total, 22 configurable, 10 report-only)` |
-
-### Quick Verification Commands
-
-```bash
-# Count total rules
-grep -rc "^const [a-zA-Z]* = {$" src/rules/
-
-# Count auto-fixable (code)
-grep -rc 'fixable: "code"' src/rules/
-
-# Count auto-fixable (whitespace)
-grep -rc 'fixable: "whitespace"' src/rules/
-
-# Count configurable rules (rules with ⚙️ in README table)
-grep "| \`" README.md | grep -c "⚙️"
-
-# Find all rule count mentions (excluding CHANGELOG)
-grep -rn "[0-9][0-9] rules\|[0-9][0-9] auto" --include="*.md" | grep -v CHANGELOG
-```
+**Current counts:** 81 total · 71 auto-fixable 🔧 · 22 configurable ⚙️ · 10 report-only.
 
 ---
 
@@ -1410,143 +1361,12 @@ This project includes reusable skills in the `.skills/` directory following the 
 
 | Skill | Description |
 |-------|-------------|
-| `audit-docs` | Verify documentation accuracy across all files |
+| `audit-docs` | Verify documentation accuracy + rule-count locations across all files |
 | `manage-rule` | Add, edit, or remove an ESLint rule with all required file updates |
+| `release-workflow` | Versioning (SemVer), CHANGELOG, tagging, GitHub Releases |
 | `review-config` | Review a recommended ESLint configuration |
 | `test-rule` | Test an ESLint rule after creating or modifying it |
 | `validate-types` | Verify TypeScript definitions match rules in src/index.js |
 
-See `.skills/*/skill.md` for detailed instructions.
+See `.skills/*/skill.md` for detailed instructions. Each skill is self-contained — pull just the one matching your task. Skills supersede the workflow sections that previously lived in this file.
 
----
-
-## Workflows
-
-Reusable workflows for common tasks. Any AI agent should follow these when performing the specified task.
-
----
-
-### Workflow: Test Rule
-
-Test an ESLint rule to verify it works correctly.
-
-**When to use:** After creating or modifying a rule.
-
-**Steps:**
-
-1. **Find the rule** in `src/rules/<category>.js` and understand what it checks
-2. **Identify test app** — Use `_tests_/v9/react/` for JS rules or `_tests_/v9/react-ts-tw/` for TS rules
-3. **Create test cases** in the test app:
-   - Add code that should PASS (no violations)
-   - Add code that should FAIL (triggers violations)
-4. **Run the linter:**
-   ```bash
-   cd _tests_/<config-name>
-   npm run lint        # Check for violations
-   npm run lint:fix    # Verify auto-fix works
-   ```
-5. **Verify results:**
-   - Valid code produces no errors
-   - Invalid code triggers the expected error message
-   - Auto-fix transforms code correctly
-
----
-
-### Workflow: Validate Types
-
-Verify TypeScript definitions match the rules in `src/index.js`.
-
-**When to use:** After adding new rules or before releases.
-
-**Steps:**
-
-1. **Count rules in src/:**
-   ```bash
-   grep -rc "^const .* = {$" src/rules/
-   ```
-   Or count entries in the `rules` export object.
-
-2. **Check index.d.ts:**
-   - Verify `RuleNames` type includes all rule names (alphabetically sorted)
-   - Verify `PluginRules` interface includes all rules
-
-3. **Look for mismatches:**
-   - Rules in `src/index.js` missing from `index.d.ts`?
-   - Rules in `index.d.ts` that don't exist in `src/index.js`?
-
-4. **Report:**
-   - Total rules: X
-   - Types match: Yes/No
-   - Missing types: [list]
-   - Extra types: [list]
-
----
-
-### Workflow: Review Config
-
-Review a recommended ESLint configuration for consistency.
-
-**When to use:** After adding rules or modifying configs.
-
-**Arguments:** `<config-name>` (e.g., `react`, `react-ts-tw`)
-
-**Steps:**
-
-1. **Check config file:** `recommended-configs/<config-name>/eslint.config.js`
-   - Does it import the plugin correctly?
-   - Are rules set to `"error"` (not `"off"`)?
-   - Are rule options valid per the rule's schema?
-
-2. **Compare with test config:** `_tests_/<config-name>/eslint.config.js`
-   - Should have the same rules enabled
-   - Test config may have additional test-specific settings
-
-3. **Test the config:**
-   ```bash
-   cd _tests_/<config-name>
-   npm run lint
-   ```
-
-4. **Check README:** `recommended-configs/<config-name>/README.md`
-   - Does it list all enabled rules?
-   - Are rule counts accurate?
-
-5. **Report:**
-   - Config valid: Yes/No
-   - Rules enabled: X
-   - Issues found: [list]
-
----
-
-### Workflow: Audit Docs
-
-Verify documentation accuracy across all files.
-
-**When to use:** Before releases or after adding rules.
-
-**Steps:**
-
-1. **Count actual rules:**
-   ```bash
-   grep -rc "^const .* = {$" src/rules/
-   ```
-
-2. **Check rule count references:**
-   - `AGENTS.md`: "61 custom auto-fixable formatting rules"
-   - `README.md`: Multiple mentions of rule count
-   - `recommended-configs/*/README.md`: Any rule count mentions
-
-3. **Verify version consistency:**
-   - `package.json` version matches latest tag
-   - No outdated version references in docs
-
-4. **Check links:**
-   - Config paths in README exist
-   - Test app paths exist
-   - Internal markdown links work
-
-5. **Report:**
-   - Actual rule count: X
-   - Documented counts match: Yes/No
-   - Outdated references: [list]
-   - Broken links: [list]

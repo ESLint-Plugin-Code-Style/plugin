@@ -21,10 +21,53 @@ Verify documentation is accurate and consistent across all files.
 
 2. **Check rule count references (must be uniform across ALL files)**
 
-   Files that mention rule count (see AGENTS.md "Rule Count Locations" section for complete list):
-   - `AGENTS.md`: Multiple locations (see below)
-   - `README.md`: Multiple mentions in badges, features, headings
-   - `recommended-configs/*/README.md`: May mention rule counts
+   When adding/removing rules, update counts in every location below. All counts (total rules, auto-fixable, configurable, report-only) must match everywhere.
+
+   **Current Counts (update these values when changing rules):**
+   - Total rules: 81
+   - Auto-fixable: 71
+   - Configurable: 22 (rules with ⚙️ that have options)
+   - Report-only: 10
+
+   **Files & approximate line locations to update:**
+
+   | File | Line(s) | What to update |
+   |------|---------|----------------|
+   | `README.md` | ~22 | `*81 rules (71 auto-fixable, 22 configurable)*` |
+   | `README.md` | ~30 | `**81 custom rules** (71 auto-fixable, 22 configurable)` |
+   | `README.md` | ~39 | `71 of 81 rules support auto-fix` |
+   | `README.md` | ~100 | `**71 rules** support automatic fixing... **22 rules** have configurable options. 10 rules are report-only` |
+   | `README.md` | ~272 | `**81 rules total** — 71 with auto-fix, 22 configurable` |
+   | `README.md` | ~409 | `71 of 81 rules support auto-fixing` |
+   | `rules/README.md` | ~3 | `**81 rules total** — 71 with auto-fix, 22 configurable` |
+   | `AGENTS.md` | ~7 | `81 custom formatting rules (71 auto-fixable, 22 configurable, 10 report-only)` |
+   | `AGENTS.md` | ~37 | `(72 rules in JS projects, 81 in TS projects)` |
+   | `AGENTS.md` | ~675 | `all 81 rules` |
+   | `AGENTS.md` | ~733 | `71 auto-fixable rules, 22 configurable rules, 10 report-only` |
+   | `recommended-configs/react/README.md` | ~286 | `**71 auto-fixable rules** (81 total, 22 configurable, 10 report-only)` |
+   | `recommended-configs/react-ts/README.md` | ~361 | same shape |
+   | `recommended-configs/react-tw/README.md` | ~321 | `**71 auto-fixable rules** (72 JavaScript-compatible rules out of 81 total)` |
+   | `recommended-configs/react-ts-tw/README.md` | ~396 | same shape as `react/` |
+   | `metadata.json` | top | `"totalRules": 81, "autoFixableRules": 71, "configurableRules": 22, "reportOnlyRules": 10` |
+
+   **Quick Verification Commands:**
+
+   ```bash
+   # Count total rules
+   grep -rc "^const [a-zA-Z]* = {$" src/rules/
+
+   # Count auto-fixable (code)
+   grep -rc 'fixable: "code"' src/rules/
+
+   # Count auto-fixable (whitespace)
+   grep -rc 'fixable: "whitespace"' src/rules/
+
+   # Count configurable rules (rules with ⚙️ in README table)
+   grep "| \`" README.md | grep -c "⚙️"
+
+   # Find all rule count mentions (excluding CHANGELOG)
+   grep -rn "[0-9][0-9] rules\|[0-9][0-9] auto" --include="*.md" | grep -v CHANGELOG
+   ```
 
 3. **Verify version consistency**
    ```bash
