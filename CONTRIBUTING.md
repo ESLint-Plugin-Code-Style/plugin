@@ -79,6 +79,7 @@ Most contributor workflows live as **skills** in `.skills/`. Pick the one matchi
 | `.skills/review-config/SKILL.md` | Reviewing a recommended config for consistency |
 | `.skills/test-rule/SKILL.md` | Smoke-testing an existing rule |
 | `.skills/validate-types/SKILL.md` | Confirming `index.d.ts` matches the rules in `src/index.js` |
+| `.skills/website-sync/SKILL.md` | Understanding the `metadata.json` → docs website sync pipeline, debugging the auto-sync, or making changes that require manual website edits |
 
 Skills supersede the workflow sections that previously lived in `AGENTS.md`. If your task does not match a skill, `AGENTS.md` still holds project-wide orientation, conventions, and invariants.
 
