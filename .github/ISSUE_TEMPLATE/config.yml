@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 📖 Documentation
+    url: https://www.eslint-plugin-code-style.org
+    about: Browse the full rules reference, examples, options tables, and configuration guide.
+  - name: 💬 Questions / Usage Help
+    url: https://github.com/ESLint-Plugin-Code-Style/plugin/discussions
+    about: Ask questions about how to use the plugin (not bug reports or feature proposals).

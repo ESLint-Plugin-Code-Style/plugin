@@ -1,0 +1,76 @@
+name: ✨ Feature Request
+description: Propose a new rule, a new option for an existing rule, or an enhancement to an existing behavior.
+title: "[Feature]: "
+type: "Feature"
+labels: ["enhancement"]
+assignees:
+  - Mohamed-Elhawary
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to propose a feature. Please describe the problem and the proposed solution clearly so we can evaluate scope and fit.
+
+  - type: dropdown
+    id: kind
+    attributes:
+      label: Kind of feature
+      options:
+        - New rule
+        - New option for an existing rule
+        - Enhancement to an existing rule's behavior
+        - Improvement to docs or developer experience
+        - Other
+    validations:
+      required: true
+
+  - type: input
+    id: rule
+    attributes:
+      label: Rule involved (if any)
+      description: The `code-style/...` rule this affects, if applicable. Leave blank for brand-new rules.
+      placeholder: "code-style/no-hardcoded-strings"
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What problem are you trying to solve? What code shape is currently flagged (or not flagged) where it should not be?
+      placeholder: |
+        Example: `no-hardcoded-strings` flags CSS keyword values like "row" inside MUI `sx` props as if they were UI strings.
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed solution
+      description: Describe the rule, option, or behavior change you have in mind. Include shape of the option, default, and acceptance examples.
+      placeholder: |
+        Example: add an `extraIgnoreAttributes: string[]` option that extends the default ignored JSX attribute list.
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Workarounds you have tried, or other rule designs you considered and rejected.
+
+  - type: textarea
+    id: examples
+    attributes:
+      label: Code examples
+      description: Good / bad examples that the rule should accept and reject.
+      render: javascript
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Pre-submission checklist
+      options:
+        - label: I have searched [existing issues](https://github.com/ESLint-Plugin-Code-Style/plugin/issues?q=is%3Aissue) and this is not a duplicate
+          required: true
+        - label: I have explained the problem (not just the proposed fix)
+          required: true

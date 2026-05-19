@@ -1,0 +1,93 @@
+name: 🐞 Bug Report
+description: Report a bug in a rule, an auto-fix that produces wrong output, a false positive, or a false negative.
+title: "[Bug]: "
+type: "Bug"
+labels: ["bug"]
+assignees:
+  - Mohamed-Elhawary
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting a bug. Please fill in every section below so we can reproduce and fix it quickly.
+
+  - type: input
+    id: plugin-version
+    attributes:
+      label: Plugin version
+      description: Output of `npm ls eslint-plugin-code-style`
+      placeholder: "3.2.1"
+    validations:
+      required: true
+
+  - type: input
+    id: eslint-version
+    attributes:
+      label: ESLint version
+      description: Output of `npx eslint --version`
+      placeholder: "9.39.2"
+    validations:
+      required: true
+
+  - type: input
+    id: rule
+    attributes:
+      label: Rule (or rules) involved
+      description: The `code-style/...` rule name. Multiple rules if a conflict.
+      placeholder: "code-style/folder-based-naming-convention"
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Minimal reproduction
+      description: Smallest code snippet that triggers the bug. Include the file path if it matters (some rules depend on folder name).
+      render: javascript
+      placeholder: |
+        // src/services/services.js
+        export const getData = async () => { /* ... */ };
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+      description: What the rule (or auto-fix) should do.
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+      description: What the rule (or auto-fix) actually does. Quote the error message exactly if applicable.
+    validations:
+      required: true
+
+  - type: textarea
+    id: screenshot
+    attributes:
+      label: Screenshot (optional)
+      description: Drag-and-drop an editor / terminal screenshot if it helps clarify.
+
+  - type: textarea
+    id: config
+    attributes:
+      label: Relevant ESLint config (optional)
+      description: Paste the rule configuration from your `eslint.config.js`. Only the parts relevant to the bug.
+      render: javascript
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Pre-submission checklist
+      options:
+        - label: I am on the latest plugin version (or have noted the version above)
+          required: true
+        - label: I have searched [existing issues](https://github.com/ESLint-Plugin-Code-Style/plugin/issues?q=is%3Aissue) and this is not a duplicate
+          required: true
+        - label: I have included a minimal reproduction
+          required: true
