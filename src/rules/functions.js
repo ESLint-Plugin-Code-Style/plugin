@@ -237,12 +237,10 @@ const functionNamingConvention = {
 
         const hookRegex = /^use[A-Z]/;
 
-        /*
-         * Folders where the Handler suffix is NOT required because another folder-based
-         * convention takes precedence. For files in these folders, `folder-based-naming-convention`
-         * enforces the canonical suffix (e.g., Reducer in reducers/) and this rule yields to it
-         * to avoid producing ugly compound names like `xxxReducerHandler`.
-         */
+        // Folders where the Handler suffix is NOT required because another folder-based
+        // convention takes precedence. For files in these folders, `folder-based-naming-convention`
+        // enforces the canonical suffix (e.g., Reducer in reducers/) and this rule yields to it
+        // to avoid producing ugly compound names like `xxxReducerHandler`.
         const dropHandlerSuffixFolders = new Set(["reducers"]);
 
         const normalizedFilenameForHandlerSkip = (context.filename
@@ -471,15 +469,13 @@ const functionNamingConvention = {
                 return;
             }
 
-            /*
-             * Skip Handler suffix / verb prefix checks for functions in reducers folder.
-             * Reducer files follow the `<name>Reducer` convention enforced by
-             * folder-based-naming-convention — Handler suffix would produce
-             * ugly compound names like `authReducerHandler`, and reducers are
-             * typically named with nouns rather than verb prefixes.
-             * camelCase is still enforced via the PascalCase block above and
-             * via the separate variable-naming-convention + folder-based-naming-convention rules.
-             */
+            // Skip Handler suffix / verb prefix checks for functions in reducers folder.
+            // Reducer files follow the `<name>Reducer` convention enforced by
+            // folder-based-naming-convention — Handler suffix would produce
+            // ugly compound names like `authReducerHandler`, and reducers are
+            // typically named with nouns rather than verb prefixes.
+            // camelCase is still enforced via the PascalCase block above and
+            // via the separate variable-naming-convention + folder-based-naming-convention rules.
             if (isInDropHandlerFolderHandler()) return;
 
             const hasVerbPrefix = startsWithVerbHandler(name);

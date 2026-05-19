@@ -192,3 +192,69 @@ All counts should match. Use `audit-docs` skill to verify documentation consiste
 - Bug fix: `fix: description of fix in rule-name`
 - Options: `feat: add optionName option to rule-name`
 - Remove: `feat!: remove rule-name rule`
+
+---
+
+## Comment Style
+
+The codebase uses two distinct comment styles depending on location and purpose. Follow them when authoring or editing rule files for consistency.
+
+### File-top rule JSDoc — `/** ... */` block
+
+Every rule definition has a JSDoc block at the top describing the rule. Always use the block form, never consecutive `//`.
+
+```js
+/**
+ * ───────────────────────────────────────────────────────────────
+ * Rule: My Rule Name
+ * ───────────────────────────────────────────────────────────────
+ *
+ * Description:
+ *   What the rule enforces.
+ *
+ * Options:
+ *   { myOption: "value" } (default: "value")
+ *
+ * ✓ Good:
+ *   // example
+ *
+ * ✗ Bad:
+ *   // example
+ */
+const myRule = { create(context) { ... }, meta: { ... } };
+```
+
+### Inline comments — `//` per line
+
+For all inline comments inside the rule body — whether single-line or multi-line — use consecutive `//` lines. Do NOT use `/* ... */` block style for inline comments. This matches the dominant codebase convention (47+ multi-line `//` blocks across `src/rules/`, only ~3 outliers).
+
+**Good (preferred — `//` consecutive):**
+
+```js
+// Skip Handler suffix / verb prefix checks for functions in reducers folder.
+// Reducer files follow the `<name>Reducer` convention enforced by
+// folder-based-naming-convention — Handler suffix would produce
+// ugly compound names like `authReducerHandler`.
+if (isInDropHandlerFolderHandler()) return;
+```
+
+**Avoid (inline block style — only for top-of-rule JSDoc):**
+
+```js
+/*
+ * Skip Handler suffix / verb prefix checks for functions in reducers folder.
+ * ...
+ */
+if (isInDropHandlerFolderHandler()) return;
+```
+
+### Why this split
+
+| Comment type | Style | Reasoning |
+|--------------|-------|-----------|
+| File-top rule docs | `/** */` | JSDoc-compatible — extracted by tooling, picked up by IDE hover, parsed for website docs |
+| Inline (single + multi-line) | `//` | Codebase tradition; adding/removing lines requires no star-prefix maintenance; works naturally for inline code examples mixed with prose |
+
+### Single-line `/* foo */` is auto-converted
+
+The `code-style/comment-format` rule auto-fixes single-line block comments to `//`. Don't write single-line `/* foo */` — it will be rewritten on save. ESLint directive comments (`/* eslint-disable */`) are exempt.
