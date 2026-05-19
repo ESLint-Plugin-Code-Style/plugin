@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [3.2.1] - 2026-05-19
+
+### Fixed
+
+- **`index-exports-only`** — Treat `redux/` as an umbrella folder so each immediate subfolder (`types/`, `actions/`, `reducers/`, `store/`, `thunks/`, etc.) is recognized as its own module root. `redux/types/index.ts` and `redux/actions/index.ts` are now allowed to be barrel files (re-exports only) without firing "should contain component code". Non-redux subfolder indexes still require code.
+- **`function-naming-convention`** — Exempt functions in `reducers/` folder from verb-prefix and Handler-suffix checks. `folder-based-naming-convention` enforces the `<name>Reducer` convention there — combining both rules previously produced naming conflicts (`authReducer` flagged for missing Handler; auto-fix would yield ugly `authReducerHandler`). Fixes [#11](https://github.com/ESLint-Plugin-Code-Style/plugin/issues/11).
+
+---
+
 ## [3.2.0] - 2026-05-12
 
 **Community Issue Sweep — 7 Open Issues Resolved (Config + Behavior + New Options)**
@@ -2503,6 +2512,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+[3.2.1]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v3.2.0...v3.2.1
 [3.2.0]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v3.1.1...v3.2.0
 [3.1.1]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v3.1.0...v3.1.1
 [3.1.0]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v3.0.6...v3.1.0

@@ -268,22 +268,35 @@ export {
 
 ### `index-exports-only`
 
-**What it does:** Index files (`index.ts`, `index.tsx`, `index.js`, `index.jsx`) should only contain imports and re-exports, not any code definitions. All definitions (types, interfaces, functions, variables, classes) should be moved to separate files.
+**What it does:** Index files (`index.ts`, `index.tsx`, `index.js`, `index.jsx`) have two distinct roles:
 
-**Why use it:** Index files should be "barrels" that aggregate exports from a module. Mixing definitions with re-exports makes the codebase harder to navigate and can cause circular dependency issues.
+1. **Module root index** (e.g., `views/index.ts`, `redux/types/index.ts`) — must be barrel-only. Imports and re-exports only, no code definitions.
+2. **Subfolder index** (e.g., `views/dashboard/index.tsx`) — must contain component/module code, not just re-exports. Only one barrel per module hierarchy.
+
+**Redux umbrella exception:** The `redux/` folder is an umbrella — each immediate subfolder (`types/`, `actions/`, `reducers/`, `store/`, `thunks/`, etc.) is treated as its own root module. So `redux/types/index.ts` and `redux/actions/index.ts` are root barrels (re-exports allowed), not subfolder indexes.
+
+**Why use it:** Index files should be "barrels" that aggregate exports from a module. Mixing definitions with re-exports makes the codebase harder to navigate and can cause circular dependency issues. Restricting deep subfolders from being barrels keeps the export surface predictable.
 
 ```javascript
-// Good — index.ts with only imports and re-exports
+// Good — root index.ts with only imports and re-exports
 export { Button } from "./Button";
 export { helper } from "./utils";
 export type { ButtonProps } from "./types";
 export * from "./constants";
 
-// Bad — index.ts with code definitions
+// Good — redux subfolder root barrel (umbrella exception)
+// src/redux/types/index.ts
+export * from "./auth";
+export * from "./user";
+
+// Bad — root index.ts with code definitions
 export type ButtonVariant = "primary" | "secondary";  // Move to types.ts
-export interface ButtonProps { ... }                  // Move to types.ts
 export const CONSTANT = "value";                      // Move to constants.ts
 export function helper() { ... }                      // Move to utils.ts
+
+// Bad — non-redux subfolder index acting as a barrel
+// src/views/dashboard/index.tsx
+export * from "./header";                             // Should contain component code
 ```
 
 ---

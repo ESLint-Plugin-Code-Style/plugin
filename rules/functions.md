@@ -72,6 +72,8 @@ function isAuthenticated(): boolean {
 - **Auto-fixes** `handleXxx` to `xxxHandler` (avoids redundant `handleClickHandler`)
 - **Auto-fixes** PascalCase to camelCase for verb-prefixed functions
 
+**Folder exemption:** Functions defined in `reducers/` folder are exempted from verb-prefix and Handler-suffix checks. `folder-based-naming-convention` enforces the `<name>Reducer` convention there — combining Handler would produce ugly compound names like `authReducerHandler`, and reducers are conventionally named with nouns (e.g., `authReducer`) rather than verb-prefixed actions.
+
 **Why use it:** Function names should describe actions. Verb prefixes make the purpose immediately clear, and consistent Handler suffix makes event handlers easy to identify.
 
 ```javascript

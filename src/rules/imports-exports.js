@@ -1565,6 +1565,15 @@ const indexExportsOnly = {
 
         for (let i = 0; i < indexPos; i++) {
             if (moduleFolders.includes(parts[i])) {
+                // Special case: `redux` is an umbrella folder. Each immediate subfolder
+                // (types, actions, reducers, store, thunks, etc.) is its own module —
+                // its index file is a root barrel, not a subfolder index.
+                if (parts[i] === "redux" && i + 1 < indexPos && moduleFolders.includes(parts[i + 1])) {
+                    if (indexPos - (i + 1) >= 2) isSubfolderIndex = true;
+
+                    break;
+                }
+
                 if (indexPos - i >= 2) isSubfolderIndex = true;
 
                 break;

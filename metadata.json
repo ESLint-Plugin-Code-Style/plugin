@@ -490,8 +490,8 @@
                 },
                 {
                     "name": "function-naming-convention",
-                    "description": "Functions use camelCase, start with verb (get/set/fetch/post/put/patch/delete/...), end with Handler suffix",
-                    "rationale": "Function names should describe actions clearly. Verb prefix communicates intent; Handler suffix marks callables consistently.",
+                    "description": "Functions use camelCase, start with verb (get/set/fetch/post/put/patch/delete/...), end with Handler suffix. Functions in reducers/ folder are exempted (folder-based-naming-convention enforces Reducer suffix there instead).",
+                    "rationale": "Function names should describe actions clearly. Verb prefix communicates intent; Handler suffix marks callables consistently. Reducers follow the `<name>Reducer` convention — combining Handler with Reducer would produce ugly compound names like `authReducerHandler`.",
                     "isFixable": true,
                     "isConfigurable": false,
                     "isTsOnly": false,
@@ -719,13 +719,13 @@
                 },
                 {
                     "name": "index-exports-only",
-                    "description": "Index files should only contain imports and re-exports, not code definitions",
-                    "rationale": "Index files should be barrels that aggregate exports",
+                    "description": "Index files should only contain imports and re-exports, not code definitions. Subfolder indexes must contain component code (not barrel) — except for redux subfolders (types/, actions/, reducers/, etc.), which are each treated as their own module root.",
+                    "rationale": "Index files should be barrels that aggregate exports. Redux is an umbrella folder — each subfolder (types, actions, reducers) is conventionally its own module with its own root barrel.",
                     "isFixable": false,
                     "isConfigurable": false,
                     "isTsOnly": false,
-                    "goodExample": "export { Button } from \"./Button\";\nexport { helper } from \"./utils\";",
-                    "badExample": "export const CONSTANT = \"value\";\nexport function helper() {}",
+                    "goodExample": "// src/views/index.ts — root barrel\nexport { Button } from \"./Button\";\nexport { helper } from \"./utils\";\n\n// src/redux/types/index.ts — redux subfolder, barrel allowed\nexport * from \"./auth\";\nexport * from \"./user\";",
+                    "badExample": "// Root index with inline code\nexport const CONSTANT = \"value\";\nexport function helper() {}\n\n// Non-redux subfolder index that's a barrel (e.g., views/dashboard/index)\nexport * from \"./header\";",
                     "options": []
                 },
                 {
