@@ -1,0 +1,377 @@
+---
+name: release-workflow
+description: Complete release workflow for the plugin — versioning (SemVer), CHANGELOG entries (release vs tag format), git tagging, GitHub Releases, and commit-message conventions. Use whenever shipping a new version (PATCH, MINOR, or MAJOR) or backfilling a release entry.
+---
+
+# Release Workflow
+
+End-to-end workflow for publishing a new version of `eslint-plugin-code-style`. Covers SemVer decisions, version bumps, CHANGELOG formatting (release vs tag), commit messages, annotated tags, GitHub Releases, and the `metadata.json` sync requirement.
+
+> **CRITICAL — metadata.json sync:** Every release MUST include any rule-related `metadata.json` updates in the same commit/tag. The documentation website (eslint-plugin-code-style.org) auto-syncs from `metadata.json` via GitHub Actions. See the `manage-rule` skill for per-rule field updates.
+
+---
+
+## Versioning (SemVer)
+
+Format: `MAJOR.MINOR.PATCH` (e.g., `1.2.8`).
+
+| Change Type | Version Bump | Examples |
+|-------------|--------------|----------|
+| **PATCH** | `x.x.+1` | Bug fixes, typo corrections, doc updates |
+| **MINOR** | `x.+1.0` | New rules, new features, new options, new auto-fix |
+| **MAJOR** | `+1.0.0` | Breaking changes, removed/renamed rules, changed defaults |
+
+**Decision guide:**
+
+- New rule → MINOR
+- Auto-fix added to existing rule → MINOR
+- New option added → MINOR
+- Bug fix → PATCH
+- Doc-only update → PATCH
+- Change default values → MAJOR (breaking)
+- Rename/remove rule → MAJOR (breaking)
+
+| Change Type | Version Bump | Example | GitHub Release? |
+|-------------|--------------|---------|-----------------|
+| Bug fix | PATCH | 1.5.2 → 1.5.3 | No |
+| Enhancement to existing rule | PATCH | 1.5.3 → 1.5.4 | No |
+| New rule | MINOR | 1.5.4 → 1.6.0 | **Yes** |
+| Breaking change | MAJOR | 1.6.0 → 2.0.0 | **Yes** |
+| Docs only | PATCH | 1.5.2 → 1.5.3 | No |
+
+---
+
+## Commit Message Format
+
+Follow [Conventional Commits](https://www.conventionalcommits.org/) specification:
+
+```
+<type>: <subject>
+
+[optional body]
+```
+
+**Types:**
+
+- `feat` — new feature or rule
+- `fix` — bug fix
+- `docs` — documentation only
+- `refactor` — code change that neither fixes a bug nor adds a feature
+- `chore` — maintenance (deps, configs, releases)
+
+**Subject line rules:**
+
+- Lowercase (except proper nouns)
+- No trailing period
+- Maximum 72 characters
+- Imperative mood ("add" not "added")
+
+**Version-bump commit subject:**
+
+```
+chore: release vX.Y.Z - brief description of changes
+```
+
+**Good:**
+
+```
+chore: release v1.7.2 - fix double comma bug in enum/interface format
+chore: release v1.7.1 - multiple rule fixes for destructuring and ternaries
+chore: release v1.6.0 - add 3 new rules and enhance ternary formatting
+```
+
+**Avoid:**
+
+```
+chore: bump version to 1.7.2
+chore: version bump
+chore: v1.7.2
+```
+
+---
+
+## End-to-End Release Steps
+
+1. **Make and commit your code changes** (`feat:`, `fix:`, etc.).
+2. **Bump version in `package.json`** per SemVer guide above.
+3. **Update `metadata.json`** if rule descriptions/examples/options/flags changed (website auto-syncs).
+4. **Update `CHANGELOG.md`**:
+   - Add new entry at top in the appropriate format (release vs tag — see below).
+   - Add comparison-link reference at bottom: `[X.Y.Z]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/vPREV...vX.Y.Z`
+5. **For MINOR/MAJOR:** update the **Current releases** list in `AGENTS.md`.
+6. **Build the plugin:** `npm run build` (regenerates `dist/index.js` with new version banner).
+7. **Commit the release bundle** with a descriptive subject:
+   ```bash
+   git add package.json package-lock.json dist/ CHANGELOG.md metadata.json AGENTS.md
+   git commit -m "chore: release vX.Y.Z - brief description"
+   ```
+   For releases that bundle the bug-fix commit and the release-bump together, prefer a single descriptive commit (`feat:` or `fix:` style) so the tagged commit is self-explanatory.
+8. **Create the annotated tag:**
+   ```bash
+   git tag -a vX.Y.Z -m "vX.Y.Z - Brief Title
+
+   - Bullet summary 1
+   - Bullet summary 2"
+   ```
+9. **Push (requires explicit user approval per CLAUDE.md):**
+   ```bash
+   git push https://github.com/ESLint-Plugin-Code-Style/plugin.git main
+   git push https://github.com/ESLint-Plugin-Code-Style/plugin.git vX.Y.Z
+   ```
+10. **For MINOR/MAJOR:** create the GitHub Release (see section below).
+11. **Optional — publish to npm** (requires explicit user approval): `npm publish`.
+
+---
+
+## CHANGELOG.md Formats
+
+CHANGELOG follows [Keep a Changelog 1.1.0](https://keepachangelog.com/en/1.1.0/). It must list **ALL** version tags. Two distinct entry shapes depending on whether the version is a release or a patch tag.
+
+### Tag/PATCH format (no GitHub Release)
+
+Simpler — no title, no version range, no Full Changelog inside the entry body.
+
+```markdown
+## [1.11.2] - 2026-02-04
+
+### Fixed
+
+- **`rule-name`** - What was fixed
+- **`another-rule`** - Another fix
+
+---
+```
+
+Version bumps with no changes:
+
+```markdown
+## [1.0.19] - 2026-01-11
+
+- Version bump
+
+---
+```
+
+**Still required:** comparison-link reference at the bottom of `CHANGELOG.md`:
+
+```markdown
+[1.11.2]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.11.1...v1.11.2
+[1.11.1]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.11.0...v1.11.1
+```
+
+### Release format (MINOR/MAJOR — published to GitHub Releases)
+
+Full release entry. Title, version range, consolidated changes since the immediately preceding tag, stats, Full Changelog link.
+
+**IMPORTANT:** The Version Range and Full Changelog link compare against the **immediately preceding version** (last published tag), NOT the previous MINOR/MAJOR release. Example: shipping v1.7.0 when the last tag was v1.6.6 → Version Range: `v1.6.6 → v1.7.0`, compare: `v1.6.6...v1.7.0`.
+
+```markdown
+## [X.Y.0] - YYYY-MM-DD
+
+**Release Title (Brief Description of Main Features)**
+
+**Version Range:** vImmediatelyPrecedingTag → vCurrent
+
+### Added
+
+**New Rules (N)**
+- `rule-name` - Description 🔧
+
+### Enhanced
+
+- **`rule-name`** - What was enhanced (consolidate all enhancements since last release)
+
+### Fixed
+
+- **`rule-name`** - What was fixed (consolidate all fixes since last release)
+
+### Stats
+
+- Total Rules: XX (was YY)
+- Auto-fixable: ZZ rules 🔧
+- Configurable: NN rules ⚙️
+- Report-only: N rules
+
+**Full Changelog:** [vImmediatelyPrecedingTag...vCurrent](https://github.com/ESLint-Plugin-Code-Style/plugin/compare/vImmediatelyPrecedingTag...vCurrent)
+```
+
+**Required elements for a release entry:**
+
+1. Release title in bold describing the main changes
+2. Version Range showing immediately preceding tag → current version
+3. Consolidated changes from all versions since last release
+4. Stats section with rule counts
+5. Full Changelog link at the end
+
+---
+
+## Section Types in CHANGELOG
+
+| Section | Use for |
+|---------|---------|
+| **Added** | New rules, features, configurations |
+| **Changed** | Breaking changes, behavior changes |
+| **Enhanced** | Improvements to existing functionality |
+| **Fixed** | Bug fixes |
+| **Deprecated** | Features to be removed in a future version |
+| **Removed** | Removed features |
+| **Security** | Security fixes |
+| **Documentation** | Doc-only changes |
+| **Stats** | Rule counts (include for releases) |
+
+---
+
+## GitHub Releases (Grouped Tags)
+
+GitHub Releases group one or more tags into a single release announcement. Use them for milestones (MINOR/MAJOR) — never for routine PATCH tags.
+
+**When to create a GitHub Release:**
+
+- **Every MINOR version** (`x.Y.0`) is a release
+- **Every MAJOR version** (`X.0.0`) is a release
+- Optionally after multiple PATCH tags that accumulate significant changes
+
+All MINOR/MAJOR versions must be added to the **Current releases** list in `AGENTS.md`.
+
+**Release description format:**
+
+```markdown
+## Release Title
+<Short, descriptive title summarizing the main changes>
+
+## Version Range
+vX.X.X → vY.Y.Y
+
+---
+
+## What's New
+
+<Brief intro paragraph mentioning key highlights and rule count change>
+
+### New Rules
+
+| Rule | Description |
+|------|-------------|
+| `rule-name` | What it does |
+
+### Enhancements
+
+| Rule | Enhancement |
+|------|-------------|
+| `rule-name` | What was improved |
+
+### New Features
+
+- Feature 1 description
+- Feature 2 description
+
+### Bug Fixes
+
+- Fix 1 description
+- Fix 2 description
+
+### Documentation
+
+- Doc change 1
+- Doc change 2
+
+## Installation
+
+\`\`\`bash
+npm install eslint-plugin-code-style@Y.Y.Y
+\`\`\`
+
+## Stats
+
+- Total Rules: X (was Y)
+- All rules are auto-fixable with `eslint --fix`
+
+**Full Changelog**: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/vX.X.X...vY.Y.Y
+```
+
+**Steps to create a GitHub Release:**
+
+1. Either use `gh release create vX.Y.Z --title "..." --notes "..."` OR go to repository → Releases → "Draft a new release"
+2. Choose the latest tag (e.g., `vX.Y.Z`)
+3. Set release title (short, descriptive)
+4. Paste the release description following the format above
+5. Confirm `CHANGELOG.md` matches the release description exactly
+6. Publish
+
+---
+
+## Release Checklist (MINOR / MAJOR)
+
+- [ ] All code changes committed and tested (`npm run build` succeeds)
+- [ ] `metadata.json` updated for any rule changes (website auto-syncs)
+- [ ] `package.json` version bumped
+- [ ] `CHANGELOG.md` entry uses release format (title + version range + consolidated changes + stats + Full Changelog link)
+- [ ] Comparison link added at bottom of `CHANGELOG.md`
+- [ ] `AGENTS.md` "Current releases" list updated
+- [ ] Annotated tag created with descriptive message
+- [ ] Pushed main + tag with explicit user approval
+- [ ] GitHub Release created with full description
+- [ ] Verified GitHub Release content matches CHANGELOG entry exactly
+
+## PATCH Checklist
+
+- [ ] Code change committed and tested
+- [ ] `metadata.json` updated if rule description/examples changed
+- [ ] `package.json` version bumped (`x.x.+1`)
+- [ ] `CHANGELOG.md` entry uses simple tag format (no title, no version range, no Full Changelog body)
+- [ ] Comparison link added at bottom of `CHANGELOG.md`
+- [ ] Annotated tag created
+- [ ] Pushed main + tag with explicit user approval
+- [ ] No GitHub Release needed
+
+---
+
+## Verifying CHANGELOG Coverage
+
+CHANGELOG must list every tag. Verify:
+
+```bash
+echo "Tags: $(git tag | wc -l)"
+echo "CHANGELOG: $(grep -c '^## \[' CHANGELOG.md)"
+
+git tag -l | sort -V > /tmp/tags.txt
+grep '^## \[' CHANGELOG.md | sed 's/.*\[\([^]]*\)\].*/v\1/' | sort -V > /tmp/changelog.txt
+diff /tmp/tags.txt /tmp/changelog.txt
+```
+
+---
+
+## Example — End-to-End PATCH
+
+```bash
+# 1. Make changes and commit
+git add src/rules/<file>.js
+git commit -m "fix: handle edge case in rule-name"
+
+# 2. Bump package.json (1.5.2 → 1.5.3)
+# 3. Update CHANGELOG.md (tag format) + comparison link
+# 4. Build
+npm run build
+
+# 5. Stage + commit release bundle with descriptive message
+git add package.json package-lock.json dist/ CHANGELOG.md metadata.json
+git commit -m "chore: release v1.5.3 - fix edge case in rule-name"
+
+# 6. Create annotated tag
+git tag -a v1.5.3 -m "v1.5.3 - Fix Edge Case in rule-name
+
+- Fixed edge case handling in rule-name
+- Improved error messages"
+
+# 7. Push (with user approval)
+git push https://github.com/ESLint-Plugin-Code-Style/plugin.git main
+git push https://github.com/ESLint-Plugin-Code-Style/plugin.git v1.5.3
+```
+
+---
+
+## Cross-References
+
+- **Rule add/edit/remove workflow:** see `manage-rule` skill — covers per-rule file updates (src, README, rules/<cat>.md, metadata.json, index.d.ts, configs)
+- **Documentation accuracy audit:** see `audit-docs` skill — counts and links verification before release
+- **Config consistency:** see `review-config` skill — validate recommended configs before MINOR/MAJOR

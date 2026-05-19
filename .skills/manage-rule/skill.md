@@ -59,32 +59,8 @@ Complete workflow for adding, editing, or removing a rule from the plugin.
    - `recommended-configs/react-ts-tw/README.md`
    - `recommended-configs/react/README.md`
 
-9. **Version bump & CHANGELOG** — MINOR (x.+1.0)
-   - Update `package.json` version
-   - Update `CHANGELOG.md` with **release format** (required for MINOR releases):
-     ```markdown
-     ## [X.Y.0] - YYYY-MM-DD
-
-     **Release Title (Brief Description)**
-
-     **Version Range:** vAfterPreviousRelease → vX.Y.0
-
-     ### Added
-
-     **New Rules (N)**
-     - **`rule-name`** - Description 🔧
-
-     ### Stats
-
-     - Total Rules: XX (was YY)
-     - Auto-fixable: ZZ rules 🔧
-     - Report-only: N rules
-
-     **Full Changelog:** [vAfterPreviousRelease...vX.Y.0](compare-url)
-     ```
-   - Add comparison link at bottom of CHANGELOG.md
-   - Update "Current releases" list in AGENTS.md
-   - Create annotated tag: `git tag -a vX.Y.0 -m "message"`
+9. **Version bump, CHANGELOG, tag, GitHub Release** — MINOR (`x.+1.0`)
+   - See the **`release-workflow`** skill for the complete release procedure (SemVer decisions, CHANGELOG release format, annotated-tag conventions, `AGENTS.md` "Current releases" list update, GitHub Release creation).
 
 **TypeScript-only rules** (only add to `-ts-tw` configs):
 - `component-props-inline-type`, `enum-format`, `enum-type-enforcement`, `interface-format`
@@ -95,24 +71,11 @@ Complete workflow for adding, editing, or removing a rule from the plugin.
 
 ### Editing an Existing Rule
 
-**Bug fix (PATCH x.x.+1):**
+**Bug fix (PATCH `x.x.+1`):**
 - Fix in `src/rules/<category>.js` → Test
 - Update `rules/<category>.md` if behavior/examples changed
 - Update `metadata.json` rule entry if description/examples/rationale changed (website auto-syncs)
-- Update `package.json` version (x.x.+1)
-- Update `CHANGELOG.md` with **simple tag format** (NO title, NO version range, NO full changelog in entry):
-  ```markdown
-  ## [X.Y.Z] - YYYY-MM-DD
-
-  ### Fixed
-
-  - **`rule-name`** - What was fixed
-
-  ---
-  ```
-- Add link reference at bottom of CHANGELOG.md: `[X.Y.Z]: https://github.com/.../compare/vA.B.C...vX.Y.Z`
-- Commit: `fix: description`
-- Create tag: `git tag -a vX.Y.Z -m "message"`
+- For the version bump, CHANGELOG entry (simple tag format), comparison-link reference, commit, and annotated tag — see the **`release-workflow`** skill
 
 **Behavior change (PATCH/MINOR):**
 - Update `src/rules/<category>.js` logic and JSDoc
