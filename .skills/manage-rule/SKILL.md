@@ -15,6 +15,7 @@ Complete workflow for adding, editing, or removing a rule from the plugin.
 > removed, also bump the top-level counters (`totalRules`, `autoFixableRules`,
 > `configurableRules`, `reportOnlyRules`) and matching count strings in
 > `README.md`, `rules/README.md`, `AGENTS.md`, and per-config READMEs.
+> Pipeline architecture, debugging steps, and full `metadata.json` field reference live in the **`website-sync`** skill.
 
 ## Operations
 

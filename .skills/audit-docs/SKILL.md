@@ -50,6 +50,8 @@ Verify documentation is accurate and consistent across all files.
    | `recommended-configs/react-ts-tw/README.md` | ~396 | same shape as `react/` |
    | `metadata.json` | top | `"totalRules": 81, "autoFixableRules": 71, "configurableRules": 22, "reportOnlyRules": 10` |
 
+   The `metadata.json` counters drive the documentation website. See the **`website-sync`** skill for how the auto-sync pipeline propagates these values to https://www.eslint-plugin-code-style.org.
+
    **Quick Verification Commands:**
 
    ```bash

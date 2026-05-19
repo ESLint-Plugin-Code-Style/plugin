@@ -7,7 +7,7 @@ description: Complete release workflow for the plugin — versioning (SemVer), C
 
 End-to-end workflow for publishing a new version of `eslint-plugin-code-style`. Covers SemVer decisions, version bumps, CHANGELOG formatting (release vs tag), commit messages, annotated tags, GitHub Releases, and the `metadata.json` sync requirement.
 
-> **CRITICAL — metadata.json sync:** Every release MUST include any rule-related `metadata.json` updates in the same commit/tag. The documentation website (eslint-plugin-code-style.org) auto-syncs from `metadata.json` via GitHub Actions. See the `manage-rule` skill for per-rule field updates.
+> **CRITICAL — metadata.json sync:** Every release MUST include any rule-related `metadata.json` updates in the same commit/tag. The documentation website (eslint-plugin-code-style.org) auto-syncs from `metadata.json` via GitHub Actions. See the **`manage-rule`** skill for per-rule field updates and the **`website-sync`** skill for the full pipeline architecture and debugging.
 
 ---
 
