@@ -14,12 +14,40 @@ The documentation website lives in a **separate repository**: [`ESLint-Plugin-Co
 ## Sync Pipeline (At a Glance)
 
 ```
-Plugin change → update metadata.json in same commit → push to main
-  → GitHub Action triggers website repo
-  → Website auto-generates rules.ts, config.ts, navigation.ts
-  → Vercel rebuilds and deploys
+Plugin change → update metadata.json + CHANGELOG.md in same commit → push to main
+  → Plugin GitHub Action pings the website repo (repository_dispatch)
+  → Website Action runs scripts/sync-from-plugin.js
+       → fetches metadata.json + CHANGELOG.md from the plugin (remote)
+       → regenerates rules.ts, config.ts, navigation.ts, versions.ts + copies CHANGELOG.md
+  → commits the regenerated files → Vercel rebuilds and deploys
   → Users see the change live
 ```
+
+**Two source files drive everything** (`package.json` is only a trigger, never read by the script):
+
+| Source (plugin) | Generates (website) |
+|-----------------|---------------------|
+| `metadata.json` | `src/data/rules.ts`, `src/data/config.ts`, `src/data/navigation.ts` |
+| `CHANGELOG.md` | `src/data/versions.ts` + a copy at `website/CHANGELOG.md` (rendered by the changelog page) |
+
+---
+
+## Two roles — never competing
+
+The sync has two distinct actors. They run one after the other, not as alternatives:
+
+```
+scripts/sync-from-plugin.js              = the DELIVERY GUY
+  brings plugin data into the website + WRITES committed files
+  (rules.ts, config.ts, navigation.ts, versions.ts, CHANGELOG.md)
+
+src/app/docs/changelog/page.tsx          = the CHEF
+  parseChangelogHandler reads local CHANGELOG.md → renders the changelog page
+src/components/version-selector.tsx
+  imports versions.ts → renders the version dropdown
+```
+
+> The generated files (`rules.ts`, `config.ts`, `navigation.ts`, `versions.ts`, `CHANGELOG.md`) are **permanent, committed files** — NOT temp files. The script overwrites them; they stay in the repo and are read at build/render time. The `// AUTO-GENERATED — do not edit manually` header marks them.
 
 ---
 
@@ -30,8 +58,8 @@ Plugin change → update metadata.json in same commit → push to main
 | New rule | `src/rules/<category>.js`, `metadata.json` (add rule to category), `rules/<category>.md` |
 | Remove rule | `src/rules/<category>.js`, `metadata.json` (remove rule), `rules/<category>.md` |
 | Edit rule (behavior/options/examples) | `src/rules/<category>.js`, `metadata.json` (update description/examples/options) |
-| Version bump | `package.json` (version field), `metadata.json` (version field), `CHANGELOG.md` (new version entry) |
-| Changelog update | `CHANGELOG.md` — website fetches it automatically via the sync script prebuild |
+| Version bump / release | `package.json` (version), `metadata.json` (version — must match), `CHANGELOG.md` (new entry) → then tag + GitHub Release + `npm publish` (see `release-workflow` skill) |
+| Changelog update | `CHANGELOG.md` — the sync script copies it to the website and regenerates `versions.ts` from it |
 | Add/change good or bad examples | `metadata.json` (update goodExample/badExample for the rule) |
 | Add/change rule options | `metadata.json` (update options array for the rule) |
 | Change rule rationale | `metadata.json` (update rationale for the rule) |
@@ -55,17 +83,20 @@ Rare cases — edit the [`ESLint-Plugin-Code-Style/website`](https://github.com/
 
 The plugin and website are two independent repos in the same GitHub org. They do NOT depend on each other being on the same machine. The sync is entirely automated via GitHub Actions.
 
-**The 3 files that power the sync:**
+**The files that power the sync:**
 
 ```
 PLUGIN REPO                              WEBSITE REPO
 ────────────                             ────────────
-metadata.json ─── single source ───►     scripts/sync-from-plugin.js
-                  of truth                     │
-                                               ├──► src/data/rules.ts      (auto-generated)
-.github/workflows/                             ├──► src/data/config.ts     (auto-generated)
-  sync-website.yml                             ├──► src/data/navigation.ts (auto-generated)
-       │                                       └──► CHANGELOG.md           (fetched)
+metadata.json ─── sources ──────────►    scripts/sync-from-plugin.js
+CHANGELOG.md  ───────────────────────►        │
+                                               ├──► src/data/rules.ts      (from metadata.json)
+.github/workflows/                             ├──► src/data/config.ts     (from metadata.json)
+  sync-website.yml                             ├──► src/data/navigation.ts (from metadata.json)
+       │                                       ├──► CHANGELOG.md           (copied from plugin)
+       │  watches: metadata.json,              └──► src/data/versions.ts   (from CHANGELOG.md)
+       │           CHANGELOG.md,
+       │           package.json  (trigger only)
        │  sends "plugin-updated"
        │  event via repository_dispatch   .github/workflows/
        └──────────────────────────────►     sync-from-plugin.yml
@@ -75,33 +106,75 @@ metadata.json ─── single source ───►     scripts/sync-from-plugin.
                                                       Vercel deploys
 ```
 
-**Step-by-step flow:**
+**Step-by-step flow (production):**
 
 ```
-1. Developer changes a rule in the plugin
-   └── Updates metadata.json in the same commit (REQUIRED)
+1. Developer changes a rule / bumps version in the plugin
+   └── Updates metadata.json (+ CHANGELOG.md for releases) in the same commit (REQUIRED)
 
 2. Push to main
-   └── GitHub detects metadata.json changed
+   └── Plugin workflow path-filter detects metadata.json / CHANGELOG.md / package.json changed
 
-3. Plugin workflow (sync-website.yml) runs
+3. Plugin workflow (sync-website.yml) runs — a doorbell, runs no script
    └── Sends "plugin-updated" event to website repo
        (uses WEBSITE_SYNC_TOKEN secret for cross-repo auth)
 
 4. Website workflow (sync-from-plugin.yml) receives the event
    ├── Checks out the website code
-   ├── Runs: node scripts/sync-from-plugin.js
+   ├── Runs: node scripts/sync-from-plugin.js   (NO arg = CI/remote mode)
    │   ├── Fetches metadata.json from GitHub raw URL
-   │   ├── Fetches CHANGELOG.md from GitHub raw URL
    │   ├── Generates rules.ts (all rules with examples, options, descriptions)
    │   ├── Generates config.ts (version, URLs, counts)
    │   ├── Generates navigation.ts (sidebar category links)
-   │   └── Saves CHANGELOG.md to website root
+   │   ├── Fetches CHANGELOG.md from GitHub raw URL  → writes website/CHANGELOG.md
+   │   └── Generates versions.ts FROM the fresh CHANGELOG.md (every version, isMajor flag)
    ├── If any files changed → commits as github-actions[bot]
    └── Pushes to website main
 
-5. Vercel detects the push → builds → deploys
+5. Vercel detects the push → runs `prebuild` (sync script again, safety refresh) → `next build` → deploys
    └── Users see the change live at eslint-plugin-code-style.org
+```
+
+> **Order matters:** the script copies/fetches `CHANGELOG.md` **before** generating `versions.ts`, so the dropdown data always reflects the just-synced changelog (no one-run lag).
+
+---
+
+## Local dev sync (unpushed plugin changes)
+
+In dev, **nobody auto-runs the script** — `pnpm dev` only serves. You trigger it yourself, and you must point it at the **local** plugin so unpushed changes are picked up:
+
+```
+# from the website repo, with the plugin repo as a sibling folder
+pnpm sync:local       # = node scripts/sync-from-plugin.js ../Plugin/metadata.json
+pnpm dev
+```
+
+| Command | Reads from | Use when |
+|---------|-----------|----------|
+| `pnpm sync:local` | **local** sibling plugin (`../Plugin/…`) | plugin changed but **not pushed** yet |
+| `pnpm sync` | **remote** plugin `main` (GitHub raw) | plugin already pushed |
+| `prebuild` (auto before `pnpm build`) | **remote** plugin `main` | every production build |
+
+**How the arg switches mode** (`scripts/sync-from-plugin.js`):
+
+```
+const metadataPath = process.argv[2]
+  present → readFileSync(metadataPath)        ← LOCAL (also copies sibling ../Plugin/CHANGELOG.md)
+  absent  → fetch(GITHUB_RAW_URL)             ← REMOTE
+```
+
+The arg is always the path to **metadata.json**; the script finds `CHANGELOG.md` as its sibling automatically. You never pass the changelog directly.
+
+```
+LOCAL DEV                                  PRODUCTION
+─────────                                  ──────────
+you edit plugin (unpushed)                 you push plugin to main
+   │                                           │
+pnpm sync:local  (arg → local)             Plugin Action pings website
+   │ reads ../Plugin/metadata.json             │
+   │ copies ../Plugin/CHANGELOG.md          Website Action runs sync (no arg → remote)
+   │ regenerates data files                    │ fetches metadata + CHANGELOG from GitHub raw
+pnpm dev → page reads local files          commit → Vercel build (prebuild re-syncs) → deploy
 ```
 
 ---

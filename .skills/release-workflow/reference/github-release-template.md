@@ -1,20 +1,31 @@
 # GitHub Release Description Template
 
-Format for the `gh release create` notes body for MINOR/MAJOR releases. Cited from the `release-workflow` SKILL.md.
+Format for the `gh release create` notes body. Cited from the `release-workflow` SKILL.md.
 
-## GitHub Releases (Grouped Tags)
+## GitHub Releases
 
-GitHub Releases group one or more tags into a single release announcement. Use them for milestones (MINOR/MAJOR) — never for routine PATCH tags.
+**Every version is published as a GitHub Release** — PATCH, MINOR, and MAJOR. The Releases tab is the source of truth for the full version history. Use the template that matches the version type below.
 
-**When to create a GitHub Release:**
+**When to create a GitHub Release:** always — for every PATCH, MINOR, and MAJOR version.
 
-- **Every MINOR version** (`x.Y.0`) is a release
-- **Every MAJOR version** (`X.0.0`) is a release
-- Optionally after multiple PATCH tags that accumulate significant changes
+### PATCH release template
 
-All MINOR/MAJOR versions must be added to the **Current releases** list in `AGENTS.md`.
+Small title + the fix notes. No version range, no stats, no Full Changelog block.
 
-**Release description format:**
+```markdown
+## <Brief fix summary>
+
+### Fixed
+
+- **`rule-name`** - What was fixed
+- **`another-rule`** - Another fix
+```
+
+(Title may simply be `vX.Y.Z` for trivial patches.)
+
+### MINOR / MAJOR release template
+
+Full description:
 
 ```markdown
 ## Release Title
@@ -70,13 +81,13 @@ npm install eslint-plugin-code-style@Y.Y.Y
 **Full Changelog**: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/vX.X.X...vY.Y.Y
 ```
 
-**Steps to create a GitHub Release:**
+**Steps to create a GitHub Release (every version):**
 
 1. Either use `gh release create vX.Y.Z --title "..." --notes "..."` OR go to repository → Releases → "Draft a new release"
-2. Choose the latest tag (e.g., `vX.Y.Z`)
+2. Choose the tag (e.g., `vX.Y.Z`)
 3. Set release title (short, descriptive)
-4. Paste the release description following the format above
-5. Confirm `CHANGELOG.md` matches the release description exactly
+4. Paste the release description following the matching template above (PATCH or MINOR/MAJOR)
+5. Confirm `CHANGELOG.md` matches the release description
 6. Publish
 
 ---

@@ -232,13 +232,13 @@ The complete list of files (and line numbers) that mention rule counts, plus the
 
 ## Git Workflow & Releases
 
-Commit conventions, SemVer rules, CHANGELOG entry formats (release vs PATCH tag), annotated-tag procedure, GitHub Releases process, and verification commands all live in the **`release-workflow`** skill. Invoke it whenever shipping a new version.
+Commit conventions, SemVer rules, CHANGELOG entry formats (PATCH vs MINOR/MAJOR), annotated-tag procedure, GitHub Releases process, and verification commands all live in the **`release-workflow`** skill. Invoke it whenever shipping a new version.
 
-### Current releases (published to GitHub Releases)
+### Releases
 
-When a MINOR or MAJOR release is published, append the version to this list (newest first). PATCH tags do not appear here. The `release-workflow` skill's release checklist includes this update as a step.
+**Every version is published as a GitHub Release AND shipped to npm** — PATCH, MINOR, and MAJOR. Flow per version: `package.json` + `metadata.json` version bump → CHANGELOG entry → tag → GitHub Release → `npm publish`. The [GitHub Releases tab](https://github.com/ESLint-Plugin-Code-Style/plugin/releases) is the source of truth for the full version history; no static list is maintained here. PATCH releases use a small title + fix notes; MINOR/MAJOR use full notes (title + description + version range + stats).
 
-**Current releases:** v3.2.0, v3.1.0, v3.0.0, v2.2.0, v2.1.0, v2.0.0, v1.20.0, v1.19.0, v1.18.0, v1.17.0, v1.16.0, v1.15.0, v1.14.0, v1.13.0, v1.12.0, v1.11.0, v1.10.0, v1.9.0, v1.8.0, v1.7.0, v1.6.0, v1.5.0, v1.4.2, v1.3.0, v1.2.0, v1.1.0, v1.0.16, v1.0.14, v1.0.7, v1.0.6
+> **Releases tab vs npm Versions tab — they differ on purpose.** GitHub Releases = the full history (every tag). npm = only versions actually published (and never unpublished). Some historic versions were tagged but never shipped to npm, so the Releases count exceeds the npm count — expected. Going forward, every release ships to npm, so new versions land in both. Pushing the release's `metadata.json` / `CHANGELOG.md` also auto-syncs the docs website (see the **`website-sync`** skill).
 
 ---
 

@@ -31,13 +31,15 @@ Format: `MAJOR.MINOR.PATCH` (e.g., `1.2.8`).
 - Change default values → MAJOR (breaking)
 - Rename/remove rule → MAJOR (breaking)
 
-| Change Type | Version Bump | Example | GitHub Release? |
-|-------------|--------------|---------|-----------------|
-| Bug fix | PATCH | 1.5.2 → 1.5.3 | No |
-| Enhancement to existing rule | PATCH | 1.5.3 → 1.5.4 | No |
-| New rule | MINOR | 1.5.4 → 1.6.0 | **Yes** |
-| Breaking change | MAJOR | 1.6.0 → 2.0.0 | **Yes** |
-| Docs only | PATCH | 1.5.2 → 1.5.3 | No |
+**Every version is published as a GitHub Release** — PATCH, MINOR, and MAJOR. The Releases tab is the source of truth; nothing is skipped. Only the note *format* differs by type:
+
+| Change Type | Version Bump | Example | GitHub Release | Release format |
+|-------------|--------------|---------|----------------|----------------|
+| Bug fix | PATCH | 1.5.2 → 1.5.3 | **Yes** | small title + fix notes, no version range |
+| Enhancement to existing rule | PATCH | 1.5.3 → 1.5.4 | **Yes** | small title + notes, no version range |
+| New rule | MINOR | 1.5.4 → 1.6.0 | **Yes** | title + description + version range + stats |
+| Breaking change | MAJOR | 1.6.0 → 2.0.0 | **Yes** | title + description + version range + stats |
+| Docs only | PATCH | 1.5.2 → 1.5.3 | **Yes** | small title + notes, no version range |
 
 ---
 
@@ -94,32 +96,34 @@ chore: v1.7.2
 
 1. **Make and commit your code changes** (`feat:`, `fix:`, etc.).
 2. **Bump version in `package.json`** per SemVer guide above.
-3. **Update `metadata.json`** if rule descriptions/examples/options/flags changed (website auto-syncs).
+3. **Bump the `version` field in `metadata.json`** (ALWAYS — it must match `package.json`; the website shows the current version from it) and update any rule descriptions/examples/options/flags that changed (website auto-syncs).
 4. **Update `CHANGELOG.md`**:
-   - Add new entry at top in the appropriate format (release vs tag — see below).
+   - Add new entry at top in the appropriate format (PATCH tag vs MINOR/MAJOR release — see below).
    - Add comparison-link reference at bottom: `[X.Y.Z]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/vPREV...vX.Y.Z`
-5. **For MINOR/MAJOR:** update the **Current releases** list in `AGENTS.md`.
-6. **Build the plugin:** `npm run build` (regenerates `dist/index.js` with new version banner).
-7. **Commit the release bundle** with a descriptive subject:
+5. **Build the plugin:** `npm run build` (regenerates `dist/index.js` with new version banner).
+6. **Commit the release bundle** with a descriptive subject:
    ```bash
-   git add package.json package-lock.json dist/ CHANGELOG.md metadata.json AGENTS.md
+   git add package.json package-lock.json dist/ CHANGELOG.md metadata.json
    git commit -m "chore: release vX.Y.Z - brief description"
    ```
    For releases that bundle the bug-fix commit and the release-bump together, prefer a single descriptive commit (`feat:` or `fix:` style) so the tagged commit is self-explanatory.
-8. **Create the annotated tag:**
+7. **Create the annotated tag:**
    ```bash
    git tag -a vX.Y.Z -m "vX.Y.Z - Brief Title
 
    - Bullet summary 1
    - Bullet summary 2"
    ```
-9. **Push (requires explicit user approval per CLAUDE.md):**
+8. **Push (requires explicit user approval per CLAUDE.md):**
    ```bash
    git push https://github.com/ESLint-Plugin-Code-Style/plugin.git main
    git push https://github.com/ESLint-Plugin-Code-Style/plugin.git vX.Y.Z
    ```
-10. **For MINOR/MAJOR:** create the GitHub Release (see section below).
-11. **Optional — publish to npm** (requires explicit user approval): `npm publish`.
+9. **Create the GitHub Release** (every version — see section below).
+10. **Publish to npm** (requires explicit user approval): `npm publish`.
+    - **Every GitHub Release must be shipped to npm in the same release.** A release that isn't on npm is not installable — keep the two in lockstep: tag → GitHub Release → `npm publish`, all for the same version.
+
+> **GitHub Releases vs npm — expected difference:** the GitHub **Releases** tab is the full version history (every tag). The npm **Versions** tab lists only versions actually published (and never unpublished). Historic versions that were tagged but never shipped (failed/skipped/unpublished) make the Releases count exceed the npm count — that is expected and correct. Going forward, every new release ships to npm, so new versions appear in both.
 
 ---
 
@@ -127,26 +131,29 @@ chore: v1.7.2
 
 Two distinct entry shapes — see **`reference/changelog-formats.md`** for the full templates and field rules:
 
-- **Tag/PATCH format** — simple entry, no title/version-range/full-changelog body, but requires comparison-link reference at bottom of CHANGELOG.md
-- **Release format** (MINOR/MAJOR) — release title + version range + consolidated changes + stats + Full Changelog link
+- **PATCH format** — small title + fix notes, no version range / stats / full-changelog body, but requires comparison-link reference at bottom of CHANGELOG.md
+- **Release format** (MINOR/MAJOR) — release title + description + version range + consolidated changes + stats + Full Changelog link
 
 Section types (Added, Changed, Enhanced, Fixed, Deprecated, Removed, Security, Documentation, Stats) and usage guidance also in `reference/changelog-formats.md`.
 
 ---
 
-## GitHub Releases (Grouped Tags)
+## GitHub Releases
 
-GitHub Releases group one or more tags into a single release announcement. Use them for milestones (MINOR/MAJOR) — never for routine PATCH tags. Every MINOR/MAJOR must be added to the **Current releases** list in `AGENTS.md`.
+**Every version gets a GitHub Release** — PATCH, MINOR, and MAJOR. The Releases tab is the source of truth for the full version history. The note format follows the version type:
 
-**Release description format and template:** see **`reference/github-release-template.md`**. Use it for the `gh release create vX.Y.Z --notes "..."` body or the manual GitHub Releases UI.
+- **PATCH** — small title (e.g. the fix summary, or `vX.Y.Z`) + the CHANGELOG fix notes. No version range, no stats.
+- **MINOR / MAJOR** — release title + description + version range + consolidated changes + stats + Full Changelog link.
 
-**Steps:**
+**Release description format and templates:** see **`reference/github-release-template.md`**. Use it for the `gh release create vX.Y.Z --notes "..."` body or the manual GitHub Releases UI.
+
+**Steps (every version):**
 
 1. Either `gh release create vX.Y.Z --title "..." --notes "..."` OR Releases UI → Draft a new release
-2. Choose the latest tag (`vX.Y.Z`)
+2. Choose the tag (`vX.Y.Z`)
 3. Set a short descriptive release title
-4. Paste the release description per `reference/github-release-template.md`
-5. Confirm `CHANGELOG.md` matches the release description exactly
+4. Paste the release description per `reference/github-release-template.md` (PATCH or MINOR/MAJOR template)
+5. Confirm `CHANGELOG.md` matches the release description
 6. Publish
 
 ---
@@ -154,26 +161,27 @@ GitHub Releases group one or more tags into a single release announcement. Use t
 ## Release Checklist (MINOR / MAJOR)
 
 - [ ] All code changes committed and tested (`npm run build` succeeds)
-- [ ] `metadata.json` updated for any rule changes (website auto-syncs)
+- [ ] `metadata.json` `version` bumped (must match `package.json`) + any rule changes (website auto-syncs)
 - [ ] `package.json` version bumped
-- [ ] `CHANGELOG.md` entry uses release format (title + version range + consolidated changes + stats + Full Changelog link)
+- [ ] `CHANGELOG.md` entry uses release format (title + description + version range + consolidated changes + stats + Full Changelog link)
 - [ ] Comparison link added at bottom of `CHANGELOG.md`
-- [ ] `AGENTS.md` "Current releases" list updated
 - [ ] Annotated tag created with descriptive message
 - [ ] Pushed main + tag with explicit user approval
 - [ ] GitHub Release created with full description
 - [ ] Verified GitHub Release content matches CHANGELOG entry exactly
+- [ ] Published to npm (`npm publish`) — every release ships to npm
 
 ## PATCH Checklist
 
 - [ ] Code change committed and tested
-- [ ] `metadata.json` updated if rule description/examples changed
+- [ ] `metadata.json` `version` bumped (must match `package.json`) + rule changes if any
 - [ ] `package.json` version bumped (`x.x.+1`)
-- [ ] `CHANGELOG.md` entry uses simple tag format (no title, no version range, no Full Changelog body)
+- [ ] `CHANGELOG.md` entry uses PATCH format (small title + fix notes, no version range, no stats, no Full Changelog body)
 - [ ] Comparison link added at bottom of `CHANGELOG.md`
 - [ ] Annotated tag created
 - [ ] Pushed main + tag with explicit user approval
-- [ ] No GitHub Release needed
+- [ ] GitHub Release created (small title + fix notes, no version range)
+- [ ] Published to npm (`npm publish`) — every release ships to npm
 
 ---
 
@@ -199,8 +207,8 @@ diff /tmp/tags.txt /tmp/changelog.txt
 git add src/rules/<file>.js
 git commit -m "fix: handle edge case in rule-name"
 
-# 2. Bump package.json (1.5.2 → 1.5.3)
-# 3. Update CHANGELOG.md (tag format) + comparison link
+# 2. Bump version in package.json AND metadata.json (1.5.2 → 1.5.3, must match)
+# 3. Update CHANGELOG.md (PATCH format: small title + fix notes) + comparison link
 # 4. Build
 npm run build
 
@@ -217,7 +225,36 @@ git tag -a v1.5.3 -m "v1.5.3 - Fix Edge Case in rule-name
 # 7. Push (with user approval)
 git push https://github.com/ESLint-Plugin-Code-Style/plugin.git main
 git push https://github.com/ESLint-Plugin-Code-Style/plugin.git v1.5.3
+
+# 8. Create the GitHub Release (small title + fix notes, no version range)
+gh release create v1.5.3 --repo ESLint-Plugin-Code-Style/plugin \
+  --title "v1.5.3 - Fix Edge Case in rule-name" \
+  --notes "### Fixed
+- Fixed edge case handling in rule-name
+- Improved error messages"
+
+# 9. Publish to npm (every release ships to npm)
+npm publish
 ```
+
+---
+
+## Release lifecycle (at a glance)
+
+```
+code change
+  └─ bump package.json + metadata.json version (match)
+       └─ write CHANGELOG entry (PATCH = title + notes | MINOR/MAJOR = + range + stats)
+            └─ npm run build
+                 └─ commit + annotated tag
+                      └─ push main + tag
+                           ├─ GitHub Release (gh release create)   ← full history (every tag)
+                           └─ npm publish                          ← installable (every release)
+                                └─ push of metadata/CHANGELOG also fires the website sync
+                                     (see the website-sync skill)
+```
+
+Every version flows tag → GitHub Release → npm publish. The Releases tab is the complete history; npm holds the installable subset.
 
 ---
 
@@ -226,3 +263,4 @@ git push https://github.com/ESLint-Plugin-Code-Style/plugin.git v1.5.3
 - **Rule add/edit/remove workflow:** see `manage-rule` skill — covers per-rule file updates (src, README, rules/<cat>.md, metadata.json, index.d.ts, configs)
 - **Documentation accuracy audit:** see `audit-docs` skill — counts and links verification before release
 - **Config consistency:** see `review-config` skill — validate recommended configs before MINOR/MAJOR
+- **Website sync:** see `website-sync` skill — how a release's `metadata.json` / `CHANGELOG.md` push propagates to the docs site

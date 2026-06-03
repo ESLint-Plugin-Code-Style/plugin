@@ -61,7 +61,7 @@ Complete workflow for adding, editing, or removing a rule from the plugin.
    - `recommended-configs/react/README.md`
 
 9. **Version bump, CHANGELOG, tag, GitHub Release** — MINOR (`x.+1.0`)
-   - See the **`release-workflow`** skill for the complete release procedure (SemVer decisions, CHANGELOG release format, annotated-tag conventions, `AGENTS.md` "Current releases" list update, GitHub Release creation).
+   - See the **`release-workflow`** skill for the complete release procedure (SemVer decisions, CHANGELOG release format, annotated-tag conventions, GitHub Release creation). Every version is published as a GitHub Release.
 
 **TypeScript-only rules** (only add to `-ts-tw` configs):
 - `component-props-inline-type`, `enum-format`, `enum-type-enforcement`, `interface-format`
@@ -76,7 +76,7 @@ Complete workflow for adding, editing, or removing a rule from the plugin.
 - Fix in `src/rules/<category>.js` → Test
 - Update `rules/<category>.md` if behavior/examples changed
 - Update `metadata.json` rule entry if description/examples/rationale changed (website auto-syncs)
-- For the version bump, CHANGELOG entry (simple tag format), comparison-link reference, commit, and annotated tag — see the **`release-workflow`** skill
+- For the version bump, CHANGELOG entry (PATCH format), comparison-link reference, commit, annotated tag, and GitHub Release — see the **`release-workflow`** skill
 
 **Behavior change (PATCH/MINOR):**
 - Update `src/rules/<category>.js` logic and JSDoc

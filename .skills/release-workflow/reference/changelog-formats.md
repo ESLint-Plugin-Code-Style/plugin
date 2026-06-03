@@ -1,17 +1,19 @@
 # CHANGELOG.md Entry Formats
 
-Two entry shapes — Tag/PATCH (simple) and Release (MINOR/MAJOR, full). Cited from the `release-workflow` SKILL.md.
+Two entry shapes — PATCH (simple) and Release (MINOR/MAJOR, full). Cited from the `release-workflow` SKILL.md. **Every version is published as a GitHub Release** (see SKILL.md); the two shapes below only differ in note depth, not in whether a Release is created.
 
 ## CHANGELOG.md Formats
 
-CHANGELOG follows [Keep a Changelog 1.1.0](https://keepachangelog.com/en/1.1.0/). It must list **ALL** version tags. Two distinct entry shapes depending on whether the version is a release or a patch tag.
+CHANGELOG follows [Keep a Changelog 1.1.0](https://keepachangelog.com/en/1.1.0/). It must list **ALL** version tags. Two distinct entry shapes depending on the version type.
 
-### Tag/PATCH format (no GitHub Release)
+### PATCH format
 
-Simpler — no title, no version range, no Full Changelog inside the entry body.
+Simpler — a small title, fix notes, no version range, no stats, no Full Changelog inside the entry body. The same content becomes the GitHub Release body (small title + fix notes).
 
 ```markdown
 ## [1.11.2] - 2026-02-04
+
+**Brief fix summary**
 
 ### Fixed
 
@@ -21,7 +23,7 @@ Simpler — no title, no version range, no Full Changelog inside the entry body.
 ---
 ```
 
-Version bumps with no changes:
+The small title is optional for trivial patches; a version bump with no notable changes may use:
 
 ```markdown
 ## [1.0.19] - 2026-01-11
@@ -38,7 +40,7 @@ Version bumps with no changes:
 [1.11.1]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.11.0...v1.11.1
 ```
 
-### Release format (MINOR/MAJOR — published to GitHub Releases)
+### Release format (MINOR/MAJOR)
 
 Full release entry. Title, version range, consolidated changes since the immediately preceding tag, stats, Full Changelog link.
 

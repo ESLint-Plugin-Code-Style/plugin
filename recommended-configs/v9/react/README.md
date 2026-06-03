@@ -183,7 +183,7 @@ These are formatting rules from `@stylistic/eslint-plugin` — the modern replac
 | Rule | Setting | Why This Value |
 |------|---------|----------------|
 | `@stylistic/indent` | `4` | 4-space indentation — more readable than 2, especially in deeply nested JSX |
-| `@stylistic/no-multi-spaces` | `error` | No multiple spaces — keeps alignment from `   =` style (use prettier for that) |
+| `@stylistic/no-multi-spaces` | `error` | No multiple spaces — keeps alignment from `   =` style |
 | `@stylistic/no-multiple-empty-lines` | `max: 1, maxBOF: 0, maxEOF: 0` | Max 1 blank line between code; none at file start/end |
 | `@stylistic/space-in-parens` | default (`never`) | No spaces inside parens: `fn(x)` not `fn( x )` |
 | `@stylistic/space-infix-ops` | `error` | Spaces around operators: `a + b` not `a+b` |
@@ -265,7 +265,7 @@ These are native ESLint rules for code quality and best practices.
 |------|---------|----------------|
 | `max-depth` | `4` | Maximum 4 levels of nesting — beyond this, extract to functions |
 | `max-nested-callbacks` | `4` | Maximum 4 callback levels — beyond this, refactor to async/await or named functions |
-| `max-len` | `off` | No line length limit — let Prettier or your IDE handle wrapping |
+| `max-len` | `off` | No line length limit |
 | `max-lines` | `off` | No file length limit — some files naturally need to be longer |
 | `max-params` | `off` | No parameter count limit — sometimes many params are appropriate |
 | `complexity` | `off` | No cyclomatic complexity limit — can be noisy for legitimate complex functions |

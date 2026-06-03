@@ -139,7 +139,7 @@ The `test-rule` skill describes a more general workflow for smoke-testing an exi
 
 ## Release a New Version
 
-The complete release procedure (SemVer choice, CHANGELOG format, annotated tag, GitHub Release, `Current releases` list) lives in `.skills/release-workflow/SKILL.md`. Follow it end-to-end — releases must update both the npm-shipped files (`dist`, `index.d.ts`, `README.md`) and the website source of truth (`metadata.json`).
+The complete release procedure (SemVer choice, CHANGELOG format, annotated tag, GitHub Release, `npm publish`) lives in `.skills/release-workflow/SKILL.md`. Follow it end-to-end — releases must update both the npm-shipped files (`dist`, `index.d.ts`, `README.md`) and the website source of truth (`metadata.json`). **Every version (PATCH, MINOR, MAJOR) is published as a GitHub Release and shipped to npm** — the [Releases tab](https://github.com/ESLint-Plugin-Code-Style/plugin/releases) is the full-history source of truth (it may list more versions than npm, since some historic tags were never published — see the release-workflow skill).
 
 ## Commit Conventions
 

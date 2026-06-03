@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [3.2.1] - 2026-05-19
 
+**Fix `index-exports-only` Redux Subfolder Handling**
+
 ### Fixed
 
 - **`index-exports-only`** — Treat `redux/` as an umbrella folder so each immediate subfolder (`types/`, `actions/`, `reducers/`, `store/`, `thunks/`, etc.) is recognized as its own module root. `redux/types/index.ts` and `redux/actions/index.ts` are now allowed to be barrel files (re-exports only) without firing "should contain component code". Non-redux subfolder indexes still require code.
@@ -103,7 +105,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- **Organization** - Moved repository from `Mohamed-Elhawary/eslint-plugin-code-style` to `ESLint-Plugin-Code-Style/plugin` under a dedicated GitHub organization
+- **Organization** - Moved repository from `ESLint-Plugin-Code-Style/plugin` to `ESLint-Plugin-Code-Style/plugin` under a dedicated GitHub organization
 - **Website** - Extracted documentation website into a separate repository (`ESLint-Plugin-Code-Style/website`), fully independent with no local cross-repo dependencies
 - **Structure** - Moved `docs/rules/` to `rules/` at the root level, removed `docs/` directory
 - **Sync** - Replaced manual website sync with fully automated pipeline via `metadata.json` and GitHub Actions (`repository_dispatch`)
@@ -129,6 +131,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [3.0.6] - 2026-04-02
 
+**Fix Vercel Deployment & Sync Validation**
+
 ### Fixed
 
 - **Website** - Fix Vercel deployment failure by skipping sync validation on Vercel and adding fallback path resolution for CHANGELOG.md
@@ -136,6 +140,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ---
 
 ## [3.0.5] - 2026-04-01
+
+**Add Changelog Page & Fix Website Text Blocks**
 
 ### Added
 
@@ -159,6 +165,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [3.0.4] - 2026-04-01
 
+**Fix JSX Corruption In Multi-line Callbacks**
+
 ### Fixed
 
 - **`jsx-element-child-new-line`** - Remove duplicate error reporting with `jsx-children-on-new-line` on JSX expression containers like `{children || <Outlet />}`
@@ -168,6 +176,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ---
 
 ## [3.0.3] - 2026-03-26
+
+**Add README Banner & Fix Changelog Links**
 
 ### Added
 
@@ -189,6 +199,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [3.0.2] - 2026-03-26
 
+**Update Domain To eslint-plugin-code-style.org**
+
 ### Changed
 
 - Update website domain from `eslint-plugin-code-style.vercel.app` to `www.eslint-plugin-code-style.org`
@@ -197,6 +209,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ---
 
 ## [3.0.1] - 2026-03-26
+
+**Fix Website Build & Config Install Commands**
 
 ### Fixed
 
@@ -263,11 +277,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Test project paths changed: `_tests_/react/` → `_tests_/v9/react/` (same for all 4 variants)
 - Removed `docs/frontend-guide/` directory
 
-**Full Changelog:** [v2.2.5...v3.0.0](https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v2.2.5...v3.0.0)
+**Full Changelog:** [v2.2.5...v3.0.0](https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v2.2.5...v3.0.0)
 
 ---
 
 ## [2.2.5] - 2026-03-03
+
+**Add Frontend Guide Boilerplate Samples**
 
 ### Documentation
 
@@ -278,6 +294,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [2.2.4] - 2026-03-03
 
+**Add AI Agent Coding Instructions**
+
 ### Documentation
 
 - Add AI agent coding instructions (`docs/frontend-guide/AGENTS.md`) with complete, self-contained conventions for naming, formatting, imports/exports, React components, TypeScript, JSX, hooks, control flow, and string handling
@@ -287,6 +305,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [2.2.3] - 2026-03-03
 
+**Add Frontend Project Standards Guide**
+
 ### Documentation
 
 - Add comprehensive frontend project standards guide (`docs/frontend-standards.md`) covering ESLint setup, naming conventions, import/export rules, Husky pre-commit/pre-push hooks, EditorConfig, React component code order, TypeScript definition organization, and folder structure standards
@@ -295,6 +315,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [2.2.2] - 2026-02-24
 
+**Enhance `interface-format` Verb-First Ordering**
+
 ### Enhanced
 
 - **`interface-format`** — Enforce verb-first ordering in interface names (e.g., `AdminCreateInterface` → `CreateAdminInterface`) 🔧
@@ -302,6 +324,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ---
 
 ## [2.2.1] - 2026-02-24
+
+**Fix `folder-structure-consistency` Module Skip**
 
 ### Fixed
 
@@ -341,11 +365,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Configurable: 20 rules ⚙️ (was 19)
 - Report-only: 10 rules
 
-**Full Changelog:** [v2.1.1...v2.2.0](https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v2.1.1...v2.2.0)
+**Full Changelog:** [v2.1.1...v2.2.0](https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v2.1.1...v2.2.0)
 
 ---
 
 ## [2.1.1] - 2026-02-22
+
+**Enhance `function-object-destructure` Callback & Return Handling**
 
 ### Fixed
 
@@ -402,11 +428,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Configurable: 19 rules ⚙️
 - Report-only: 10 rules (was 9)
 
-**Full Changelog:** [v2.0.18...v2.1.0](https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v2.0.18...v2.1.0)
+**Full Changelog:** [v2.0.18...v2.1.0](https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v2.0.18...v2.1.0)
 
 ---
 
 ## [2.0.18] - 2026-02-15
+
+**Fix `folder-structure-consistency` Nested Subfolder Detection**
 
 ### Fixed
 
@@ -416,6 +444,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [2.0.17] - 2026-02-15
 
+**Fix `no-redundant-folder-suffix` Plural Detection**
+
 ### Fixed
 
 - **`no-redundant-folder-suffix`** — Detect plural folder suffix in file names (e.g., `auth-interfaces.ts` in `interfaces/` folder, `user-actions.ts` in `actions/` folder), not just singular forms
@@ -423,6 +453,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ---
 
 ## [2.0.16] - 2026-02-15
+
+**Enhance Bracket Collapsing For Arrow Callbacks**
 
 ### Enhanced
 
@@ -433,6 +465,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [2.0.15] - 2026-02-13
 
+**Fix `folder-based-naming-convention` PascalCase In CamelCase Folders**
+
 ### Fixed
 
 - **`folder-based-naming-convention`** — Flag PascalCase names in camelCase folders (`data`, `constants`, `schemas`, `services`, `reducers`, `strings`) and auto-fix to camelCase (e.g., `ApisData` → `apisData`, `ButtonsConstants` → `buttonsConstants`)
@@ -440,6 +474,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ---
 
 ## [2.0.14] - 2026-02-13
+
+**Fix `folder-based-naming-convention` Providers Folder Naming**
 
 ### Fixed
 
@@ -449,6 +485,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [2.0.13] - 2026-02-13
 
+**Fix `folder-based-naming-convention` Suffix Folder Detection**
+
 ### Fixed
 
 - **`folder-based-naming-convention`** — Detect exports with suffixes belonging to a different folder (e.g., `AuthProvider` in `contexts/` reports "belongs in `providers/` folder, not `contexts/`" instead of trying to rename)
@@ -456,6 +494,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ---
 
 ## [2.0.12] - 2026-02-13
+
+**Fix `single-argument-on-one-line` Method Chain Formatting**
 
 ### Fixed
 
@@ -465,6 +505,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [2.0.11] - 2026-02-13
 
+**Fix `folder-based-naming-convention` File Name Chain Enforcement**
+
 ### Fixed
 
 - **`folder-based-naming-convention`** — Enforce file name + folder chain in camelCase folder naming: every export must end with `{FileName}{FolderChain}{Suffix}` (e.g., `buttonTypeData` → `buttonTypeAppData` in `data/app.js`, `forgotPasswordSchema` → `forgotPasswordAuthSchema` in `schemas/auth/forgot-password.ts`)
@@ -473,6 +515,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [2.0.10] - 2026-02-12
 
+**Add `schemas` Folder to `folder-based-naming-convention`**
+
 ### Fixed
 
 - **`folder-based-naming-convention`** — Add `schemas` folder with `Schema` suffix and camelCase naming; enforce folder chain segments in camelCase folder naming
@@ -480,6 +524,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ---
 
 ## [2.0.9] - 2026-02-12
+
+**Enhance Method Chain Collapsing & Add Schemas Folder**
 
 ### Fixed
 
@@ -490,6 +536,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [2.0.8] - 2026-02-12
 
+**Fix `no-hardcoded-strings` Tailwind Decimal & Dynamic Utilities**
+
 ### Fixed
 
 - **`no-hardcoded-strings`** — Fix Tailwind class regex to handle decimal values (`py-1.5`, `gap-2.5`, `text-base/7`)
@@ -499,6 +547,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [2.0.7] - 2026-02-12
 
+**Skip Generic Grouping Folders In `component-naming` Chaining**
+
 ### Fixed
 
 - **`component-naming`** — Skip generic grouping folders (`shared`, `common`, `ui`, `base`, `general`, `core`) when chaining folder names into component names (e.g., `components/shared/page-header.tsx` → `PageHeader`, not `PageHeaderShared`)
@@ -506,6 +556,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ---
 
 ## [2.0.6] - 2026-02-12
+
+**Fix JSX Expressions And Template Literal Handling**
 
 ### Fixed
 
@@ -516,6 +568,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ---
 
 ## [2.0.5] - 2026-02-11
+
+**Refine Generic Type Formatting And Template Literals**
 
 ### Fixed
 
@@ -528,6 +582,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [2.0.4] - 2026-02-11
 
+**Fix Nested Type Detection And Union Formatting**
+
 ### Fixed
 
 - **`function-arguments-format`** — Skip single `TemplateLiteral` arguments so `cva(\`...\`)` with multi-line Tailwind classes is not reformatted
@@ -537,6 +593,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ---
 
 ## [2.0.3] - 2026-02-11
+
+**Fix Component Detection And Type Union Formatting**
 
 ### Fixed
 
@@ -550,6 +608,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ---
 
 ## [2.0.2] - 2026-02-11
+
+**Fix Enum Scoping And Component Pattern Recognition**
 
 ### Fixed
 
@@ -565,12 +625,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [2.0.1] - 2026-02-10
 
+**Fix Multiline JSX Collapse And Arrow Spacing**
+
 ### Fixed
 
 - **`arrow-function-simple-jsx`** — Auto-fix now correctly collapses multiline JSX (without parens) by replacing from `=>` token end instead of just the body node
 - **`arrow-function-simple-jsx`** — Detect and fix missing space after `=>` for all arrow functions (e.g., `() =>{` → `() => {`, `() =><h1>` → `() => <h1>`)
 
-### Docs
+### Documentation
 
 - Added `npm run build` step to AGENTS.md bug fix checklist and testing section
 - Added build + test steps to README.md Contributing section
@@ -609,7 +671,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Report-only: 9 rules
 - Unpacked size: ~400 KB (was ~1.26 MB)
 
-**Full Changelog:** [v1.20.0...v2.0.0](https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.20.0...v2.0.0)
+**Full Changelog:** [v1.20.0...v2.0.0](https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.20.0...v2.0.0)
 
 ---
 
@@ -634,7 +696,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **AGENTS.md** — Updated documentation references to reflect new `docs/rules/` structure
 - **package.json** — Added `docs/` to npm `files` array
 
-**Full Changelog:** [v1.19.0...v1.20.0](https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.19.0...v1.20.0)
+**Full Changelog:** [v1.19.0...v1.20.0](https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.19.0...v1.20.0)
 
 ---
 
@@ -656,7 +718,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated Available Configurations table in README.md — React + Tailwind now links to config instead of "Coming Soon"
 - Updated AGENTS.md — React + Tailwind marked as Available with folder paths
 
-**Full Changelog:** [v1.18.0...v1.19.0](https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.18.0...v1.19.0)
+**Full Changelog:** [v1.18.0...v1.19.0](https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.18.0...v1.19.0)
 
 ---
 
@@ -678,11 +740,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated Available Configurations table in README.md — React + TypeScript now links to config instead of "Coming Soon"
 - Updated AGENTS.md — React + TypeScript marked as Available with folder paths
 
-**Full Changelog:** [v1.17.2...v1.18.0](https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.17.2...v1.18.0)
+**Full Changelog:** [v1.17.2...v1.18.0](https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.17.2...v1.18.0)
 
 ---
 
 ## [1.17.2] - 2026-02-09
+
+**Fix `folder-based-naming-convention` Camel Case Naming**
 
 ### Fixed
 
@@ -694,6 +758,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ---
 
 ## [1.17.1] - 2026-02-09
+
+**Fix `index-exports-only` Dual Index Behavior**
 
 ### Fixed
 
@@ -739,7 +805,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Configurable: 19 rules (was 18)
 - Report-only: 9 rules (was 10)
 
-**Full Changelog:** [v1.16.0...v1.17.0](https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.16.0...v1.17.0)
+**Full Changelog:** [v1.16.0...v1.17.0](https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.16.0...v1.17.0)
 
 ---
 
@@ -779,7 +845,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Configurable: 18 rules (was 17)
 - Report-only: 11 rules (was 10)
 
-**Full Changelog:** [v1.15.0...v1.16.0](https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.15.0...v1.16.0)
+**Full Changelog:** [v1.15.0...v1.16.0](https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.15.0...v1.16.0)
 
 ---
 
@@ -812,11 +878,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Configurable: 17 rules ⚙️
 - Report-only: 10 rules (was 9)
 
-**Full Changelog:** [v1.14.4...v1.15.0](https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.14.4...v1.15.0)
+**Full Changelog:** [v1.14.4...v1.15.0](https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.14.4...v1.15.0)
 
 ---
 
 ## [1.14.4] - 2026-02-06
+
+**Add `layouts` Folder Support To `folder-component-suffix`**
 
 ### Enhanced
 
@@ -826,6 +894,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.14.3] - 2026-02-05
 
+**Enhance `type-annotation-spacing` Function Type Collapse**
+
 ### Enhanced
 
 - **`type-annotation-spacing`** - Add auto-fix to collapse function types with 2 or fewer params to one line
@@ -834,6 +904,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ---
 
 ## [1.14.2] - 2026-02-05
+
+**Add Async And Function Type Spacing Rules**
 
 ### Enhanced
 
@@ -846,6 +918,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ---
 
 ## [1.14.1] - 2026-02-05
+
+**Enhance `function-naming-convention` Hook Detection**
 
 ### Enhanced
 
@@ -885,7 +959,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Configurable: 17 rules ⚙️
 - Report-only: 9 rules
 
-**Full Changelog:** [v1.13.0...v1.14.0](https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.13.0...v1.14.0)
+**Full Changelog:** [v1.13.0...v1.14.0](https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.13.0...v1.14.0)
 
 ---
 
@@ -919,11 +993,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Configurable: 17 rules ⚙️
 - Report-only: 9 rules
 
-**Full Changelog:** [v1.12.1...v1.13.0](https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.12.1...v1.13.0)
+**Full Changelog:** [v1.12.1...v1.13.0](https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.12.1...v1.13.0)
 
 ---
 
 ## [1.12.1] - 2026-02-04
+
+**Fix Destructure, Parameters & JSX Children Rules**
 
 ### Fixed
 
@@ -952,11 +1028,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Auto-fixable: 65 rules 🔧
 - Report-only: 9 rules
 
-**Full Changelog:** [v1.11.9...v1.12.0](https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.11.9...v1.12.0)
+**Full Changelog:** [v1.11.9...v1.12.0](https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.11.9...v1.12.0)
 
 ---
 
 ## [1.11.9] - 2026-02-04
+
+**Fix `variable-naming-convention` Property Casing**
 
 ### Fixed
 
@@ -967,6 +1045,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.11.8] - 2026-02-04
 
+**Fix `comment-format` ESLint Directives**
+
 ### Fixed
 
 - **`comment-format`** - Allow `/* */` syntax for ESLint directive comments (`/* eslint-disable ... */`, `/* eslint-enable ... */`, etc.) since these must use block comment syntax
@@ -974,6 +1054,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ---
 
 ## [1.11.7] - 2026-02-04
+
+**Refine `no-hardcoded-strings` UI Component Patterns**
 
 ### Changed
 
@@ -984,6 +1066,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ---
 
 ## [1.11.6] - 2026-02-04
+
+**Flag Type Attributes in `no-hardcoded-strings`**
 
 ### Changed
 
@@ -997,6 +1081,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.11.5] - 2026-02-04
 
+**Fix `no-hardcoded-strings` Default & Ternary Params**
+
 ### Fixed
 
 - **`no-hardcoded-strings`**
@@ -1008,6 +1094,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ---
 
 ## [1.11.4] - 2026-02-04
+
+**Fix JSX Bracket Collapsing & Logical Expressions**
 
 ### Fixed
 
@@ -1023,6 +1111,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ---
 
 ## [1.11.3] - 2026-02-04
+
+**Fix `no-hardcoded-strings` CSS & Keyword Detection**
 
 ### Fixed
 
@@ -1040,6 +1130,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ---
 
 ## [1.11.2] - 2026-02-04
+
+**Fix Hardcoded Strings, Ternaries & Type Unions**
 
 ### Fixed
 
@@ -1060,6 +1152,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ---
 
 ## [1.11.1] - 2026-02-03
+
+**Fix Component Props & Function Parameters Types**
 
 ### Fixed
 
@@ -1097,11 +1191,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Auto-fixable: 65 rules
 - Report-only: 8 rules
 
-**Full Changelog:** [v1.10.3...v1.11.0](https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.10.3...v1.11.0)
+**Full Changelog:** [v1.10.3...v1.11.0](https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.10.3...v1.11.0)
 
 ---
 
 ## [1.10.3] - 2026-02-03
+
+**Fix Template Literals & Trailing Comma Handling**
 
 ### Fixed
 
@@ -1111,6 +1207,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ---
 
 ## [1.10.2] - 2026-02-03
+
+**Fix `no-hardcoded-strings` SVG & CSS Attribute Handling**
 
 ### Fixed
 
@@ -1124,6 +1222,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ---
 
 ## [1.10.1] - 2026-02-03
+
+**Enhance `logical-expression-multiline` Collapse Logic**
 
 ### Fixed
 
@@ -1170,11 +1270,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Auto-fixable: 65 rules 🔧 (was 64)
 - Report-only: 7 rules
 
-**Full Changelog:** [v1.9.7...v1.10.0](https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.9.7...v1.10.0)
+**Full Changelog:** [v1.9.7...v1.10.0](https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.9.7...v1.10.0)
 
 ---
 
 ## [1.9.7] - 2026-02-03
+
+**Fix `no-hardcoded-strings` Tailwind Detection Scope**
 
 ### Fixed
 
@@ -1187,6 +1289,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ---
 
 ## [1.9.6] - 2026-02-03
+
+**Add Tailwind CSS Skip Pattern to `no-hardcoded-strings`**
 
 ### Enhanced
 
@@ -1203,6 +1307,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.9.5] - 2026-02-03
 
+**Fix `no-hardcoded-strings` Exported Component Detection**
+
 ### Fixed
 
 - **`no-hardcoded-strings`** - Fix bug where strings inside exported components were incorrectly skipped:
@@ -1214,6 +1320,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.9.4] - 2026-02-03
 
+**Refine UI Pattern Scope in `no-hardcoded-strings`**
+
 ### Enhanced
 
 - **`no-hardcoded-strings`** - Skip UI component patterns only in JSX attributes:
@@ -1224,6 +1332,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ---
 
 ## [1.9.3] - 2026-02-03
+
+**Expand Special String Detection in `no-hardcoded-strings`**
 
 ### Enhanced
 
@@ -1237,6 +1347,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ---
 
 ## [1.9.2] - 2026-02-03
+
+**Add HTTP & Role String Detection to `no-hardcoded-strings`**
 
 ### Enhanced
 
@@ -1258,6 +1370,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ---
 
 ## [1.9.1] - 2026-02-03
+
+**Add Initial Special String Detection Patterns**
 
 ### Enhanced
 
@@ -1296,11 +1410,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Auto-fixable: 64 rules 🔧 (was 63)
 - Report-only: 7 rules
 
-**Full Changelog:** [v1.8.4...v1.9.0](https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.8.4...v1.9.0)
+**Full Changelog:** [v1.8.4...v1.9.0](https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.8.4...v1.9.0)
 
 ---
 
 ## [1.8.4] - 2026-02-03
+
+**Documentation Fixes and CHANGELOG Links**
 
 ### Documentation
 
@@ -1313,6 +1429,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.8.3] - 2026-02-03
 
+**Fix `class-naming-convention` Reference Renaming**
+
 ### Fixed
 
 - **`class-naming-convention`** - Auto-fix now renames all references to the class (including instantiations like `new ClassName()` and type annotations), not just the class declaration
@@ -1320,6 +1438,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ---
 
 ## [1.8.2] - 2026-02-03
+
+**Simplify Nesting Options in Condition Rules**
 
 ### Changed
 
@@ -1336,6 +1456,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ---
 
 ## [1.8.1] - 2026-02-03
+
+**Enhance `function-naming-convention` Handler Auto-Fix**
 
 ### Changed
 
@@ -1369,11 +1491,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Auto-fixable: 63 rules 🔧
 - Report-only: 7 rules (was 6)
 
-**Full Changelog:** [v1.7.6...v1.8.0](https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.7.6...v1.8.0)
+**Full Changelog:** [v1.7.6...v1.8.0](https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.7.6...v1.8.0)
 
 ---
 
 ## [1.7.6] - 2026-02-02
+
+**Simplify `ternary-condition-multiline` Formatting Logic**
 
 ### Changed
 
@@ -1387,6 +1511,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.7.5] - 2026-02-02
 
+**Fix Ternary Collapse & Type Annotation Detection**
+
 ### Fixed
 
 - **`ternary-condition-multiline`** - For ≤3 operands, always collapse to single line when `?` is on different line than condition end (enforces `condition ? value : value` format for simple ternaries)
@@ -1395,6 +1521,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ---
 
 ## [1.7.4] - 2026-02-02
+
+**Fix Type Annotation & Ternary Formatting Bugs**
 
 ### Fixed
 
@@ -1405,6 +1533,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ---
 
 ## [1.7.3] - 2026-02-02
+
+**Fix Ternary & Function Params Issues**
 
 ### Fixed
 
@@ -1429,6 +1559,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.7.2] - 2026-02-02
 
+**Fix Double Comma in `enum-format` & `interface-format`**
+
 ### Fixed
 
 - **`enum-format`** - Fix double comma bug when auto-fixing trailing comma and closing brace position; check for comma token after member, not just member text
@@ -1437,6 +1569,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ---
 
 ## [1.7.1] - 2026-02-02
+
+**Fix Empty Lines & Intersection Type Detection**
 
 ### Fixed
 
@@ -1479,11 +1613,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Auto-fixable: 63 rules 🔧
 - Report-only: 6 rules
 
-**Full Changelog:** [v1.6.6...v1.7.0](https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.6.6...v1.7.0)
+**Full Changelog:** [v1.6.6...v1.7.0](https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.6.6...v1.7.0)
 
 ---
 
 ## [1.6.6] - 2026-02-01
+
+**Add Auto-Fix for `component-props-destructure`**
 
 ### Fixed
 
@@ -1494,6 +1630,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.6.5] - 2026-02-01
 
+**Add Auto-Fix for `function-object-destructure`**
+
 ### Added
 
 - **`function-object-destructure`** - Add auto-fix: replaces destructured usages with dot notation and removes declaration
@@ -1501,6 +1639,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ---
 
 ## [1.6.4] - 2026-02-01
+
+**Enhance `function-object-destructure` Module Paths**
 
 ### Enhanced
 
@@ -1510,6 +1650,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.6.3] - 2026-02-01
 
+**Fix TypeScript Type Annotation Preservation**
+
 ### Fixed
 
 - **`component-props-destructure`** - Preserve TypeScript type annotation when auto-fixing
@@ -1518,6 +1660,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.6.2] - 2026-02-01
 
+**Expand `function-object-destructure` Module Coverage**
+
 ### Enhanced
 
 - **`function-object-destructure`** - Expand to check more module paths (services, constants, config, api, utils, helpers, lib) for dot notation enforcement
@@ -1525,6 +1669,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ---
 
 ## [1.6.1] - 2026-02-01
+
+**Enhance Callback & JSX Simple Expression Handling**
 
 ### Enhanced
 
@@ -1535,7 +1681,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **`jsx-children-on-new-line`** - Treat simple function calls (0-1 args) as simple expressions
 - **`jsx-element-child-new-line`** - Treat simple function calls (0-1 args) as simple expressions
 
-### Docs
+### Documentation
 
 - Clarify version bump and tag workflow in AGENTS.md
 
@@ -1567,17 +1713,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Auto-fixable: 60 rules 🔧
 - Report-only: 6 rules
 
-**Full Changelog:** [v1.5.2...v1.6.0](https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.5.2...v1.6.0)
+**Full Changelog:** [v1.5.2...v1.6.0](https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.5.2...v1.6.0)
 
 ---
 
 ## [1.5.2] - 2026-02-01
+
+**Maintenance Release**
 
 - Version bump
 
 ---
 
 ## [1.5.1] - 2026-01-30
+
+**Maintenance Release**
 
 - Minor fixes
 
@@ -1609,17 +1759,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Auto-fixable: 59 rules 🔧
 - Report-only: 6 rules
 
-**Full Changelog:** [v1.4.5...v1.5.0](https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.4.5...v1.5.0)
+**Full Changelog:** [v1.4.5...v1.5.0](https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.4.5...v1.5.0)
 
 ---
 
 ## [1.4.5] - 2026-01-30
+
+**Maintenance Release**
 
 - Version bump
 
 ---
 
 ## [1.4.3] - 2026-01-30
+
+**Document `index-exports-only` Rule**
 
 ### Documentation
 
@@ -1630,8 +1784,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.4.2] - 2026-01-30
 
 **New Rules, Enhanced Auto-Fix & Comprehensive Documentation**
-
-**Version Range:** v1.4.1 → v1.4.2
 
 ### Added
 
@@ -1675,17 +1827,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `no-inline-type-definitions` - Requires extracting types to new files
 - `typescript-definition-location` - Requires moving code to folders
 
-### Stats
-
-- Total Rules: 64 (was 61)
-- Auto-fixable: 58 rules 🔧
-- Report-only: 6 rules
-
-**Full Changelog:** [v1.4.1...v1.4.2](https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.4.1...v1.4.2)
-
 ---
 
 ## [1.4.1] - 2026-01-30
+
+**Add Auto-Fix & Customization Labels**
 
 ### Documentation
 
@@ -1722,11 +1868,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Total Rules: 64 (was 61)
 
-**Full Changelog:** [v1.3.11...v1.4.0](https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.3.11...v1.4.0)
+**Full Changelog:** [v1.3.11...v1.4.0](https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.3.11...v1.4.0)
 
 ---
 
 ## [1.3.11] - 2026-01-30
+
+**Add Dependency-Aware Code Ordering**
 
 ### Enhanced
 
@@ -1739,6 +1887,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.3.10] - 2026-01-30
 
+**Fix `function-naming-convention` Component Detection**
+
 ### Fixed
 
 - `function-naming-convention` - Skip React components (PascalCase + returns JSX)
@@ -1748,6 +1898,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.3.9] - 2026-01-29
 
+**Add Auto-Fix to `react-code-order`**
+
 ### Enhanced
 
 - `react-code-order` - Add auto-fix
@@ -1756,6 +1908,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ---
 
 ## [1.3.8] - 2026-01-29
+
+**Fix `variable-naming-convention` Argument Handling**
 
 ### Fixed
 
@@ -1767,6 +1921,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.3.7] - 2026-01-29
 
+**Enforce camelCase for Verb-Prefixed Functions**
+
 ### Enhanced
 
 - `function-naming-convention` - Enforce camelCase for functions with verb prefixes (GetForStatus → getForStatus)
@@ -1777,6 +1933,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.3.6] - 2026-01-29
 
+**Add poll Verb Prefix to `function-naming-convention`**
+
 ### Enhanced
 
 - `function-naming-convention` - Add "poll" as recognized verb prefix
@@ -1785,6 +1943,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ---
 
 ## [1.3.5] - 2026-01-28
+
+**Improve Error Messages with Contextual Examples**
 
 ### Enhanced
 
@@ -1800,6 +1960,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.3.4] - 2026-01-28
 
+**Enhance `classname` Rules with Smart Tailwind Detection**
+
 ### Enhanced
 
 - className rules - Smart detection for objects with Tailwind class values (e.g., variants object)
@@ -1811,6 +1973,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.3.3] - 2026-01-28
 
+**Fix `function-naming-convention` Auto-Fix Overlapping Ranges**
+
 ### Fixed
 
 - `function-naming-convention` - Fix overlapping fixes error in auto-fix
@@ -1819,6 +1983,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ---
 
 ## [1.3.2] - 2026-01-28
+
+**Add Full Changelog Links to All Releases**
 
 ### Documentation
 
@@ -1830,6 +1996,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ---
 
 ## [1.3.1] - 2026-01-28
+
+**Introduce CHANGELOG.md & GitHub Release Documentation**
 
 ### Documentation
 
@@ -1885,11 +2053,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Total Rules: 61 (was 56)
 - All rules are auto-fixable with `eslint --fix`
 
-**Full Changelog:** [v1.2.9...v1.3.0](https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.2.9...v1.3.0)
+**Full Changelog:** [v1.2.9...v1.3.0](https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.2.9...v1.3.0)
 
 ---
 
 ## [1.2.9] - 2026-01-28
+
+**Reorganize Agent & Claude Documentation**
 
 ### Documentation
 
@@ -1901,6 +2071,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ---
 
 ## [1.2.8] - 2026-01-28
+
+**Add `function-declaration-style` Rule & Enhance Auto-Fix**
 
 ### Added
 
@@ -1919,13 +2091,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add function-declaration-style docs with func-style pairing note
 - Change Tailwind CSS badge to >=3.0.0
 
-### Stats
-
-- Total Rules: 61
-
 ---
 
 ## [1.2.7] - 2026-01-27
+
+**Maintenance Release**
 
 - Minor fixes
 
@@ -1933,11 +2103,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.2.6] - 2026-01-27
 
+**Maintenance Release**
+
 - Minor fixes
 
 ---
 
 ## [1.2.5] - 2026-01-27
+
+**Update Requirements for Node.js 20+ and TypeScript 5+**
 
 ### Documentation
 
@@ -1946,6 +2120,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ---
 
 ## [1.2.4] - 2026-01-27
+
+**Sync ESLint Configs & Add `semi-style` Rule**
 
 ### Fixed
 
@@ -1957,6 +2133,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.2.3] - 2026-01-27
 
+**Fix `simple-call-single-line` Optional Chaining Spacing**
+
 ### Fixed
 
 - `simple-call-single-line` - Remove space before ?. when collapsing simple calls to single line
@@ -1964,6 +2142,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ---
 
 ## [1.2.2] - 2026-01-27
+
+**Enhance Variable Naming & Callback Simplification**
 
 ### Enhanced
 
@@ -1974,6 +2154,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ---
 
 ## [1.2.1] - 2026-01-27
+
+**Add `classname-multiline` Formatting Rule**
 
 ### Added
 
@@ -2008,17 +2190,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Total Rules: 56 (was 51)
 
-**Full Changelog:** [v1.1.10...v1.2.0](https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.1.10...v1.2.0)
+**Full Changelog:** [v1.1.10...v1.2.0](https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.1.10...v1.2.0)
 
 ---
 
 ## [1.1.10] - 2026-01-20
+
+**Maintenance Release**
 
 - Minor fixes
 
 ---
 
 ## [1.1.9] - 2026-01-20
+
+**Sync Module Folders & Reorganize Rules**
 
 ### Changed
 
@@ -2029,6 +2215,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.1.8] - 2026-01-20
 
+**Add TypeScript Rules Test Cases**
+
 ### Added
 
 - TypeScript rules test cases in src/interfaces/, src/enums/, src/types/
@@ -2036,6 +2224,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ---
 
 ## [1.1.7] - 2026-01-20
+
+**Include TypeScript Formatting in Configs**
 
 ### Changed
 
@@ -2046,6 +2236,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.1.6] - 2026-01-20
 
+**Add `type-format` Rule**
+
 ### Added
 
 - New rule: `type-format` - Enforce PascalCase with Type suffix, camelCase properties
@@ -2053,6 +2245,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ---
 
 ## [1.1.5] - 2026-01-20
+
+**Add `enum-format` Rule**
 
 ### Added
 
@@ -2062,6 +2256,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.1.4] - 2026-01-20
 
+**Add `interface-format` Rule**
+
 ### Added
 
 - New rule: `interface-format` - Enforce PascalCase with Interface suffix, camelCase properties
@@ -2069,6 +2265,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ---
 
 ## [1.1.3] - 2026-01-20
+
+**Add `typescript-definition-location` Rule**
 
 ### Added
 
@@ -2078,11 +2276,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.1.2] - 2026-01-20
 
+**Maintenance Release**
+
 - Minor fixes
 
 ---
 
 ## [1.1.1] - 2026-01-20
+
+**Maintenance Release**
 
 - Minor fixes
 
@@ -2126,11 +2328,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Total Rules: 51 (was 45)
 - All changes are backward compatible
 
-**Full Changelog:** [v1.0.41...v1.1.0](https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.0.41...v1.1.0)
+**Full Changelog:** [v1.0.41...v1.1.0](https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.0.41...v1.1.0)
 
 ---
 
 ## [1.0.41] - 2026-01-19
+
+**Maintenance Release**
 
 - Minor fixes
 
@@ -2138,11 +2342,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.0.40] - 2026-01-19
 
+**Maintenance Release**
+
 - Minor fixes
 
 ---
 
 ## [1.0.39] - 2026-01-19
+
+**Maintenance Release**
 
 - Minor fixes
 
@@ -2150,11 +2358,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.0.38] - 2026-01-19
 
+**Maintenance Release**
+
 - Minor fixes
 
 ---
 
 ## [1.0.37] - 2026-01-13
+
+**Maintenance Release**
 
 - Minor fixes
 
@@ -2162,11 +2374,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.0.36] - 2026-01-13
 
+**Maintenance Release**
+
 - Minor fixes
 
 ---
 
 ## [1.0.35] - 2026-01-13
+
+**Maintenance Release**
 
 - Minor fixes
 
@@ -2174,11 +2390,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.0.34] - 2026-01-13
 
+**Maintenance Release**
+
 - Minor fixes
 
 ---
 
 ## [1.0.33] - 2026-01-13
+
+**Maintenance Release**
 
 - Minor fixes
 
@@ -2186,11 +2406,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.0.32] - 2026-01-13
 
+**Maintenance Release**
+
 - Minor fixes
 
 ---
 
 ## [1.0.31] - 2026-01-13
+
+**Maintenance Release**
 
 - Minor fixes
 
@@ -2198,17 +2422,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.0.30] - 2026-01-13
 
+**Maintenance Release**
+
 - Minor fixes
 
 ---
 
 ## [1.0.29] - 2026-01-12
 
+**Maintenance Release**
+
 - Minor fixes
 
 ---
 
 ## [1.0.28] - 2026-01-12
+
+**Consolidate `function-arguments-format` Rule**
 
 ### Changed
 
@@ -2220,6 +2450,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.0.27] - 2026-01-12
 
+**Enhance `index-export-style` Export Padding**
+
 ### Enhanced
 
 - `index-export-style` - Handle export padding for all files
@@ -2229,6 +2461,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ---
 
 ## [1.0.26] - 2026-01-12
+
+**Document `index-export-style` Behavior**
 
 ### Documentation
 
@@ -2240,6 +2474,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.0.25] - 2026-01-12
 
+**Enhance `object-property-per-line` Independence**
+
 ### Enhanced
 
 - `object-property-per-line` - Made self-sufficient
@@ -2249,6 +2485,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ---
 
 ## [1.0.24] - 2026-01-12
+
+**Enhance Import/Export Rules Independence**
 
 ### Enhanced
 
@@ -2260,6 +2498,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.0.23] - 2026-01-12
 
+**Migrate To @stylistic Formatting Plugin**
+
 ### Changed
 
 - Migrate to @stylistic/eslint-plugin for formatting rules
@@ -2269,6 +2509,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.0.22] - 2026-01-11
 
+**Add maxOperands Option To `multiline-if-conditions`**
+
 ### Enhanced
 
 - `multiline-if-conditions` - Add maxOperands configuration option (default: 3)
@@ -2276,6 +2518,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ---
 
 ## [1.0.21] - 2026-01-11
+
+**Add maxDeps Option To `hook-deps-per-line`**
 
 ### Enhanced
 
@@ -2285,6 +2529,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.0.20] - 2026-01-11
 
+**Add maxItems Option To `array-items-per-line`**
+
 ### Enhanced
 
 - `array-items-per-line` - Add maxItems configuration option (default: 3)
@@ -2293,11 +2539,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.0.19] - 2026-01-11
 
+**Maintenance Release**
+
 - Version bump
 
 ---
 
 ## [1.0.18] - 2026-01-11
+
+**Add Options To Import/Export Rules**
 
 ### Enhanced
 
@@ -2308,6 +2558,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ---
 
 ## [1.0.17] - 2026-01-11
+
+**Update Rule Count & Config Ignores**
 
 ### Documentation
 
@@ -2320,8 +2572,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 **New Rule: Index Export Style**
 
-**Version Range:** v1.0.15 → v1.0.16
-
 ### Added
 
 **New Rule**
@@ -2332,15 +2582,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Auto-fixable with eslint --fix
 - Detects and reports mixed export styles
 
-### Stats
-
-- Total Rules: 48 (was 47)
-
-**Full Changelog:** [v1.0.15...v1.0.16](https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.0.15...v1.0.16)
-
 ---
 
 ## [1.0.15] - 2026-01-09
+
+**Expand Perfectionist Rules**
 
 ### Added
 
@@ -2356,8 +2602,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.0.14] - 2026-01-06
 
 **Customizable Options, Recommended Configs & Documentation**
-
-**Version Range:** v1.0.13 → v1.0.14
 
 ### Added
 
@@ -2382,15 +2626,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Add comprehensive block comments to all ESLint rules with good/bad examples
 
-### Stats
-
-- Total Rules: 47
-
-**Full Changelog:** [v1.0.13...v1.0.14](https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.0.13...v1.0.14)
-
 ---
 
 ## [1.0.13] - 2026-01-06
+
+**Add React Recommended Config**
 
 ### Added
 
@@ -2401,6 +2641,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.0.12] - 2026-01-06
 
+**Enhance README Documentation**
+
 ### Documentation
 
 - Enhance README with emojis, rules summary table, and introduction section
@@ -2408,6 +2650,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ---
 
 ## [1.0.11] - 2026-01-06
+
+**Document All Rules in README**
 
 ### Documentation
 
@@ -2417,6 +2661,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.0.10] - 2026-01-06
 
+**Update README & TypeScript Types**
+
 ### Documentation
 
 - Update README file and TypeScript rules types
@@ -2424,6 +2670,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ---
 
 ## [1.0.9] - 2026-01-06
+
+**Standardize Helper Function Names**
 
 ### Changed
 
@@ -2433,6 +2681,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ---
 
 ## [1.0.8] - 2026-01-06
+
+**Add Comprehensive Rule Comments**
 
 ### Documentation
 
@@ -2445,8 +2695,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 **TypeScript Type Definitions**
 
-**Version Range:** v1.0.6 → v1.0.7
-
 ### Added
 
 **TypeScript Support**
@@ -2455,19 +2703,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add PluginRules interface mapping rules to Rule.RuleModule
 - Include module augmentation for ESLint's Linter.RulesRecord
 
-### Stats
-
-- Total Rules: 47
-
-**Full Changelog:** [v1.0.6...v1.0.7](https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.0.6...v1.0.7)
-
 ---
 
 ## [1.0.6] - 2026-01-06
 
 **Initial Public Release**
-
-**Version Range:** v1.0.5 → v1.0.6
 
 ### Added
 
@@ -2480,15 +2720,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - ESLint >= 9.0.0
 - Node.js >= 20.0.0
 
-### Stats
-
-- Total Rules: 45+
-
-**Full Changelog:** [v1.0.5...v1.0.6](https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.0.5...v1.0.6)
-
 ---
 
 ## [1.0.5] - 2026-01-06
+
+**Maintenance Release**
 
 - Pre-release version
 
@@ -2496,17 +2732,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.0.4] - 2026-01-06
 
+**Maintenance Release**
+
 - Pre-release version
 
 ---
 
 ## [1.0.3] - 2026-01-06
 
+**Maintenance Release**
+
 - Pre-release version
 
 ---
 
 ## [1.0.2] - 2026-01-06
+
+**Maintenance Release**
 
 - Pre-release version
 
@@ -2517,174 +2759,174 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [3.1.1]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v3.1.0...v3.1.1
 [3.1.0]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v3.0.6...v3.1.0
 [3.0.6]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v3.0.5...v3.0.6
-[3.0.5]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v3.0.4...v3.0.5
-[3.0.4]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v3.0.3...v3.0.4
-[3.0.3]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v3.0.2...v3.0.3
-[3.0.2]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v3.0.1...v3.0.2
-[3.0.1]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v3.0.0...v3.0.1
-[3.0.0]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v2.2.5...v3.0.0
-[2.2.5]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v2.2.4...v2.2.5
-[2.2.4]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v2.2.3...v2.2.4
-[2.2.3]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v2.2.2...v2.2.3
-[2.2.2]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v2.2.1...v2.2.2
-[2.2.1]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v2.2.0...v2.2.1
-[2.2.0]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v2.1.1...v2.2.0
-[2.1.1]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v2.1.0...v2.1.1
-[2.1.0]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v2.0.18...v2.1.0
-[2.0.18]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v2.0.17...v2.0.18
-[2.0.17]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v2.0.16...v2.0.17
-[2.0.16]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v2.0.15...v2.0.16
-[2.0.15]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v2.0.14...v2.0.15
-[2.0.14]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v2.0.13...v2.0.14
-[2.0.13]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v2.0.12...v2.0.13
-[2.0.12]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v2.0.11...v2.0.12
-[2.0.11]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v2.0.10...v2.0.11
-[2.0.10]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v2.0.9...v2.0.10
-[2.0.9]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v2.0.8...v2.0.9
-[2.0.8]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v2.0.7...v2.0.8
-[2.0.7]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v2.0.6...v2.0.7
-[2.0.6]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v2.0.5...v2.0.6
-[2.0.5]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v2.0.4...v2.0.5
-[2.0.4]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v2.0.3...v2.0.4
-[2.0.3]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v2.0.2...v2.0.3
-[2.0.2]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v2.0.1...v2.0.2
-[2.0.1]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v2.0.0...v2.0.1
-[2.0.0]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.20.0...v2.0.0
-[1.20.0]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.19.0...v1.20.0
-[1.19.0]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.18.0...v1.19.0
-[1.18.0]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.17.2...v1.18.0
-[1.17.2]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.17.1...v1.17.2
-[1.17.1]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.17.0...v1.17.1
-[1.17.0]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.16.0...v1.17.0
-[1.16.0]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.15.0...v1.16.0
-[1.15.0]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.14.4...v1.15.0
-[1.14.4]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.14.3...v1.14.4
-[1.14.3]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.14.2...v1.14.3
-[1.14.2]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.14.1...v1.14.2
-[1.14.1]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.14.0...v1.14.1
-[1.14.0]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.13.0...v1.14.0
-[1.13.0]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.12.1...v1.13.0
-[1.12.1]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.12.0...v1.12.1
-[1.12.0]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.11.9...v1.12.0
-[1.11.9]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.11.8...v1.11.9
-[1.11.8]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.11.7...v1.11.8
-[1.11.7]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.11.6...v1.11.7
-[1.11.6]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.11.5...v1.11.6
-[1.11.5]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.11.4...v1.11.5
-[1.11.4]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.11.3...v1.11.4
-[1.11.3]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.11.2...v1.11.3
-[1.11.2]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.11.1...v1.11.2
-[1.11.1]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.11.0...v1.11.1
-[1.11.0]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.10.3...v1.11.0
-[1.10.3]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.10.2...v1.10.3
-[1.10.2]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.10.1...v1.10.2
-[1.10.1]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.10.0...v1.10.1
-[1.10.0]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.9.7...v1.10.0
-[1.9.7]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.9.6...v1.9.7
-[1.9.6]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.9.5...v1.9.6
-[1.9.5]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.9.4...v1.9.5
-[1.9.4]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.9.3...v1.9.4
-[1.9.3]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.9.2...v1.9.3
-[1.9.2]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.9.1...v1.9.2
-[1.9.1]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.9.0...v1.9.1
-[1.9.0]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.8.4...v1.9.0
-[1.8.4]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.8.3...v1.8.4
-[1.8.3]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.8.2...v1.8.3
-[1.8.2]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.8.1...v1.8.2
-[1.8.1]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.8.0...v1.8.1
-[1.8.0]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.7.6...v1.8.0
-[1.7.6]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.7.5...v1.7.6
-[1.7.5]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.7.4...v1.7.5
-[1.7.4]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.7.3...v1.7.4
-[1.7.3]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.7.2...v1.7.3
-[1.7.2]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.7.1...v1.7.2
-[1.7.1]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.7.0...v1.7.1
-[1.7.0]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.6.6...v1.7.0
-[1.6.6]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.6.5...v1.6.6
-[1.6.5]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.6.4...v1.6.5
-[1.6.4]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.6.3...v1.6.4
-[1.6.3]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.6.2...v1.6.3
-[1.6.2]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.6.1...v1.6.2
-[1.6.1]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.6.0...v1.6.1
-[1.6.0]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.5.2...v1.6.0
-[1.5.2]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.5.1...v1.5.2
-[1.5.1]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.5.0...v1.5.1
-[1.5.0]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.4.5...v1.5.0
-[1.4.5]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.4.3...v1.4.5
-[1.4.3]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.4.2...v1.4.3
-[1.4.2]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.4.1...v1.4.2
-[1.4.1]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.4.0...v1.4.1
-[1.4.0]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.3.11...v1.4.0
-[1.3.11]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.3.10...v1.3.11
-[1.3.10]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.3.9...v1.3.10
-[1.3.9]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.3.8...v1.3.9
-[1.3.8]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.3.7...v1.3.8
-[1.3.7]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.3.6...v1.3.7
-[1.3.6]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.3.5...v1.3.6
-[1.3.5]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.3.4...v1.3.5
-[1.3.4]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.3.3...v1.3.4
-[1.3.3]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.3.2...v1.3.3
-[1.3.2]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.3.1...v1.3.2
-[1.3.1]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.3.0...v1.3.1
-[1.3.0]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.2.9...v1.3.0
-[1.2.9]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.2.8...v1.2.9
-[1.2.8]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.2.7...v1.2.8
-[1.2.7]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.2.6...v1.2.7
-[1.2.6]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.2.5...v1.2.6
-[1.2.5]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.2.4...v1.2.5
-[1.2.4]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.2.3...v1.2.4
-[1.2.3]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.2.2...v1.2.3
-[1.2.2]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.2.1...v1.2.2
-[1.2.1]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.2.0...v1.2.1
-[1.2.0]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.1.10...v1.2.0
-[1.1.10]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.1.9...v1.1.10
-[1.1.9]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.1.8...v1.1.9
-[1.1.8]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.1.7...v1.1.8
-[1.1.7]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.1.6...v1.1.7
-[1.1.6]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.1.5...v1.1.6
-[1.1.5]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.1.4...v1.1.5
-[1.1.4]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.1.3...v1.1.4
-[1.1.3]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.1.2...v1.1.3
-[1.1.2]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.1.1...v1.1.2
-[1.1.1]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.1.0...v1.1.1
-[1.1.0]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.0.41...v1.1.0
-[1.0.41]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.0.40...v1.0.41
-[1.0.40]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.0.39...v1.0.40
-[1.0.39]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.0.38...v1.0.39
-[1.0.38]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.0.37...v1.0.38
-[1.0.37]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.0.36...v1.0.37
-[1.0.36]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.0.35...v1.0.36
-[1.0.35]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.0.34...v1.0.35
-[1.0.34]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.0.33...v1.0.34
-[1.0.33]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.0.32...v1.0.33
-[1.0.32]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.0.31...v1.0.32
-[1.0.31]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.0.30...v1.0.31
-[1.0.30]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.0.29...v1.0.30
-[1.0.29]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.0.28...v1.0.29
-[1.0.28]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.0.27...v1.0.28
-[1.0.27]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.0.26...v1.0.27
-[1.0.26]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.0.25...v1.0.26
-[1.0.25]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.0.24...v1.0.25
-[1.0.24]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.0.23...v1.0.24
-[1.0.23]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.0.22...v1.0.23
-[1.0.22]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.0.21...v1.0.22
-[1.0.21]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.0.20...v1.0.21
-[1.0.20]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.0.19...v1.0.20
-[1.0.19]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.0.18...v1.0.19
-[1.0.18]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.0.17...v1.0.18
-[1.0.17]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.0.16...v1.0.17
-[1.0.16]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.0.15...v1.0.16
-[1.0.15]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.0.14...v1.0.15
-[1.0.14]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.0.13...v1.0.14
-[1.0.13]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.0.12...v1.0.13
-[1.0.12]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.0.11...v1.0.12
-[1.0.11]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.0.10...v1.0.11
-[1.0.10]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.0.9...v1.0.10
-[1.0.9]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.0.8...v1.0.9
-[1.0.8]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.0.7...v1.0.8
-[1.0.7]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.0.6...v1.0.7
-[1.0.6]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.0.5...v1.0.6
-[1.0.5]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.0.4...v1.0.5
-[1.0.4]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.0.3...v1.0.4
-[1.0.3]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/compare/v1.0.2...v1.0.3
-[1.0.2]: https://github.com/Mohamed-Elhawary/eslint-plugin-code-style/releases/tag/v1.0.2
+[3.0.5]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v3.0.4...v3.0.5
+[3.0.4]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v3.0.3...v3.0.4
+[3.0.3]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v3.0.2...v3.0.3
+[3.0.2]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v3.0.1...v3.0.2
+[3.0.1]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v3.0.0...v3.0.1
+[3.0.0]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v2.2.5...v3.0.0
+[2.2.5]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v2.2.4...v2.2.5
+[2.2.4]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v2.2.3...v2.2.4
+[2.2.3]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v2.2.2...v2.2.3
+[2.2.2]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v2.2.1...v2.2.2
+[2.2.1]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v2.2.0...v2.2.1
+[2.2.0]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v2.1.1...v2.2.0
+[2.1.1]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v2.1.0...v2.1.1
+[2.1.0]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v2.0.18...v2.1.0
+[2.0.18]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v2.0.17...v2.0.18
+[2.0.17]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v2.0.16...v2.0.17
+[2.0.16]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v2.0.15...v2.0.16
+[2.0.15]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v2.0.14...v2.0.15
+[2.0.14]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v2.0.13...v2.0.14
+[2.0.13]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v2.0.12...v2.0.13
+[2.0.12]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v2.0.11...v2.0.12
+[2.0.11]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v2.0.10...v2.0.11
+[2.0.10]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v2.0.9...v2.0.10
+[2.0.9]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v2.0.8...v2.0.9
+[2.0.8]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v2.0.7...v2.0.8
+[2.0.7]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v2.0.6...v2.0.7
+[2.0.6]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v2.0.5...v2.0.6
+[2.0.5]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v2.0.4...v2.0.5
+[2.0.4]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v2.0.3...v2.0.4
+[2.0.3]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v2.0.2...v2.0.3
+[2.0.2]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v2.0.1...v2.0.2
+[2.0.1]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v2.0.0...v2.0.1
+[2.0.0]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.20.0...v2.0.0
+[1.20.0]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.19.0...v1.20.0
+[1.19.0]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.18.0...v1.19.0
+[1.18.0]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.17.2...v1.18.0
+[1.17.2]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.17.1...v1.17.2
+[1.17.1]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.17.0...v1.17.1
+[1.17.0]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.16.0...v1.17.0
+[1.16.0]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.15.0...v1.16.0
+[1.15.0]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.14.4...v1.15.0
+[1.14.4]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.14.3...v1.14.4
+[1.14.3]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.14.2...v1.14.3
+[1.14.2]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.14.1...v1.14.2
+[1.14.1]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.14.0...v1.14.1
+[1.14.0]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.13.0...v1.14.0
+[1.13.0]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.12.1...v1.13.0
+[1.12.1]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.12.0...v1.12.1
+[1.12.0]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.11.9...v1.12.0
+[1.11.9]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.11.8...v1.11.9
+[1.11.8]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.11.7...v1.11.8
+[1.11.7]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.11.6...v1.11.7
+[1.11.6]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.11.5...v1.11.6
+[1.11.5]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.11.4...v1.11.5
+[1.11.4]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.11.3...v1.11.4
+[1.11.3]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.11.2...v1.11.3
+[1.11.2]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.11.1...v1.11.2
+[1.11.1]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.11.0...v1.11.1
+[1.11.0]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.10.3...v1.11.0
+[1.10.3]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.10.2...v1.10.3
+[1.10.2]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.10.1...v1.10.2
+[1.10.1]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.10.0...v1.10.1
+[1.10.0]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.9.7...v1.10.0
+[1.9.7]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.9.6...v1.9.7
+[1.9.6]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.9.5...v1.9.6
+[1.9.5]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.9.4...v1.9.5
+[1.9.4]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.9.3...v1.9.4
+[1.9.3]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.9.2...v1.9.3
+[1.9.2]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.9.1...v1.9.2
+[1.9.1]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.9.0...v1.9.1
+[1.9.0]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.8.4...v1.9.0
+[1.8.4]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.8.3...v1.8.4
+[1.8.3]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.8.2...v1.8.3
+[1.8.2]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.8.1...v1.8.2
+[1.8.1]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.8.0...v1.8.1
+[1.8.0]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.7.6...v1.8.0
+[1.7.6]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.7.5...v1.7.6
+[1.7.5]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.7.4...v1.7.5
+[1.7.4]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.7.3...v1.7.4
+[1.7.3]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.7.2...v1.7.3
+[1.7.2]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.7.1...v1.7.2
+[1.7.1]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.7.0...v1.7.1
+[1.7.0]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.6.6...v1.7.0
+[1.6.6]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.6.5...v1.6.6
+[1.6.5]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.6.4...v1.6.5
+[1.6.4]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.6.3...v1.6.4
+[1.6.3]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.6.2...v1.6.3
+[1.6.2]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.6.1...v1.6.2
+[1.6.1]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.6.0...v1.6.1
+[1.6.0]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.5.2...v1.6.0
+[1.5.2]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.5.1...v1.5.2
+[1.5.1]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.5.0...v1.5.1
+[1.5.0]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.4.5...v1.5.0
+[1.4.5]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.4.3...v1.4.5
+[1.4.3]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.4.2...v1.4.3
+[1.4.2]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.4.1...v1.4.2
+[1.4.1]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.4.0...v1.4.1
+[1.4.0]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.3.11...v1.4.0
+[1.3.11]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.3.10...v1.3.11
+[1.3.10]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.3.9...v1.3.10
+[1.3.9]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.3.8...v1.3.9
+[1.3.8]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.3.7...v1.3.8
+[1.3.7]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.3.6...v1.3.7
+[1.3.6]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.3.5...v1.3.6
+[1.3.5]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.3.4...v1.3.5
+[1.3.4]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.3.3...v1.3.4
+[1.3.3]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.3.2...v1.3.3
+[1.3.2]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.3.1...v1.3.2
+[1.3.1]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.3.0...v1.3.1
+[1.3.0]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.2.9...v1.3.0
+[1.2.9]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.2.8...v1.2.9
+[1.2.8]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.2.7...v1.2.8
+[1.2.7]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.2.6...v1.2.7
+[1.2.6]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.2.5...v1.2.6
+[1.2.5]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.2.4...v1.2.5
+[1.2.4]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.2.3...v1.2.4
+[1.2.3]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.2.2...v1.2.3
+[1.2.2]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.2.1...v1.2.2
+[1.2.1]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.2.0...v1.2.1
+[1.2.0]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.1.10...v1.2.0
+[1.1.10]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.1.9...v1.1.10
+[1.1.9]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.1.8...v1.1.9
+[1.1.8]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.1.7...v1.1.8
+[1.1.7]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.1.6...v1.1.7
+[1.1.6]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.1.5...v1.1.6
+[1.1.5]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.1.4...v1.1.5
+[1.1.4]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.1.3...v1.1.4
+[1.1.3]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.1.2...v1.1.3
+[1.1.2]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.1.1...v1.1.2
+[1.1.1]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.1.0...v1.1.1
+[1.1.0]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.0.41...v1.1.0
+[1.0.41]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.0.40...v1.0.41
+[1.0.40]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.0.39...v1.0.40
+[1.0.39]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.0.38...v1.0.39
+[1.0.38]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.0.37...v1.0.38
+[1.0.37]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.0.36...v1.0.37
+[1.0.36]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.0.35...v1.0.36
+[1.0.35]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.0.34...v1.0.35
+[1.0.34]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.0.33...v1.0.34
+[1.0.33]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.0.32...v1.0.33
+[1.0.32]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.0.31...v1.0.32
+[1.0.31]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.0.30...v1.0.31
+[1.0.30]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.0.29...v1.0.30
+[1.0.29]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.0.28...v1.0.29
+[1.0.28]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.0.27...v1.0.28
+[1.0.27]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.0.26...v1.0.27
+[1.0.26]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.0.25...v1.0.26
+[1.0.25]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.0.24...v1.0.25
+[1.0.24]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.0.23...v1.0.24
+[1.0.23]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.0.22...v1.0.23
+[1.0.22]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.0.21...v1.0.22
+[1.0.21]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.0.20...v1.0.21
+[1.0.20]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.0.19...v1.0.20
+[1.0.19]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.0.18...v1.0.19
+[1.0.18]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.0.17...v1.0.18
+[1.0.17]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.0.16...v1.0.17
+[1.0.16]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.0.15...v1.0.16
+[1.0.15]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.0.14...v1.0.15
+[1.0.14]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.0.13...v1.0.14
+[1.0.13]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.0.12...v1.0.13
+[1.0.12]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.0.11...v1.0.12
+[1.0.11]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.0.10...v1.0.11
+[1.0.10]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.0.9...v1.0.10
+[1.0.9]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.0.8...v1.0.9
+[1.0.8]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.0.7...v1.0.8
+[1.0.7]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.0.6...v1.0.7
+[1.0.6]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.0.5...v1.0.6
+[1.0.5]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.0.4...v1.0.5
+[1.0.4]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.0.3...v1.0.4
+[1.0.3]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.0.2...v1.0.3
+[1.0.2]: https://github.com/ESLint-Plugin-Code-Style/plugin/releases/tag/v1.0.2

@@ -70,9 +70,9 @@ Closes #
 ### Release (only for changes that ship to npm)
 
 - [ ] Bumped `package.json` version per SemVer (see `.skills/release-workflow/SKILL.md`)
-- [ ] Added CHANGELOG entry (release format for MINOR/MAJOR, simple tag format for PATCH)
+- [ ] Added CHANGELOG entry (release format for MINOR/MAJOR, PATCH format for PATCH)
 - [ ] Added comparison link reference at bottom of `CHANGELOG.md`
-- [ ] For MINOR/MAJOR: updated `Current releases` list in `AGENTS.md`
+- [ ] GitHub Release created (every version — small title + fix notes for PATCH, full notes for MINOR/MAJOR)
 
 ### TypeScript
 

@@ -61,6 +61,27 @@ When combined with ESLint's native rules and other popular plugins, this package
 
 <br />
 
+## 🗂️ Built for Type-Based Folder Structure
+
+This plugin is designed around a **type-based folder structure** — source files grouped by their role, not by feature. It works best, and many rules auto-fix correctly, when your project organizes code into folders like:
+
+```
+src/
+├── components/     ├── hooks/         ├── services/
+├── atoms/          ├── providers/     ├── middlewares/
+├── views/          ├── constants/     ├── helpers/
+├── pages/          ├── data/          └── ...
+```
+
+Several rules **look at the folder a file lives in and build their expectations from it**:
+
+- **`folder-based-naming-convention`** — applies the right suffix per folder (`views/` → `*View`, `layouts/` → `*Layout`, `pages/` → `*Page`, `providers/` → `*Provider`), camelCase for `data/`/`constants/`, and so on.
+- **`folder-structure-consistency`** / **`no-redundant-folder-suffix`** — enforce consistent flat-vs-wrapped module folders and stop redundant `button/button.tsx` style naming.
+- **`hook-file-naming-convention`** / **`index-exports-only`** / **`module-index-exports`** — expect hooks and `index` barrels to follow the module folder they sit in.
+- **`function-naming-convention`** / **`variable-naming-convention`** — path-scoped naming (e.g. component casing under `components/`, verb-first handlers, hook prefixes).
+
+**Recommendation:** adopt this type-based structure (`components`, `atoms`, `views`, `pages`, `hooks`, `providers`, `services`, `middlewares`, …). The closer your project follows it, the more the plugin enforces and fixes automatically. Rules that don't depend on folders (spacing, JSX, imports, formatting) work the same in any layout.
+
 ## 📁 Recommended Configurations
 
 We provide **ready-to-use ESLint flat configuration files** that combine `eslint-plugin-code-style` with carefully selected third-party plugins and ESLint built-in rules. These configurations represent our battle-tested setup that reduces code-style differences by ~95%.
