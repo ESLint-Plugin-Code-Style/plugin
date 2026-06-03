@@ -48,7 +48,8 @@
   <!-- Text "eslint-plugin-code-style" ~380px wide. Logo 48px + 10px gap = 58px offset. -->
   <!-- Visual group center: shift text right by 29px (half of 58) so logo+text centers at 640 -->
   <rect x="411" y="40" width="48" height="48" rx="11" fill="url(#accent)"/>
-  <text x="435" y="72" text-anchor="middle" font-family="'Courier New', monospace" font-size="24" font-weight="700" fill="white">CS</text>
+  <path d="M418.5 70 Q423 63.25 427.5 70 T436.5 70 T442.5 70" fill="none" stroke="#ffffff" stroke-width="3.3" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M438.75 67.75 l4.5 4.5 l9 -11.25" fill="none" stroke="#4ade80" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round"/>
   <text x="669" y="72" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="30" font-weight="800" fill="white" letter-spacing="-0.5">eslint-plugin-code-style</text>
 
   <!-- Tagline (centered at same visual midpoint) -->
