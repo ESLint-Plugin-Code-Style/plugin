@@ -76,8 +76,6 @@ eslint src/ --fix
 
 ---
 
-## Third-Party Plugins
-
 ### eslint-plugin-react
 
 **Purpose:** React-specific linting rules for JSX and React patterns.
@@ -119,21 +117,12 @@ eslint src/ --fix
 | Rule | Setting | Why This Value |
 |------|---------|----------------|
 | `import-x/no-default-export` | `error` | Named exports are more refactor-friendly and provide better IDE autocomplete |
-| `import-x/no-cycle` | `off` | Circular dependencies sometimes needed; this check is slow on large codebases |
-| `import-x/no-unresolved` | `off` | Path aliases like `@/` cause false positives; rely on TypeScript/bundler for this |
 
 ---
 
 ### eslint-plugin-jsx-a11y
 
 **Purpose:** Accessibility linting rules for JSX elements.
-
-| Rule | Setting | Why This Value |
-|------|---------|----------------|
-| `jsx-a11y/anchor-is-valid` | `off` | React Router's `<Link>` and SPA navigation patterns cause false positives |
-| `jsx-a11y/click-events-have-key-events` | `off` | Sometimes div clicks are intentional (modals, overlays); enable if strict a11y needed |
-| `jsx-a11y/no-static-element-interactions` | `off` | Same as above — enable for strict accessibility requirements |
-| `jsx-a11y/label-has-associated-control` | `off` | Custom form components may not match the expected pattern |
 
 > **Note:** These rules are disabled for flexibility. Enable them if you need strict WCAG compliance.
 
@@ -226,8 +215,6 @@ These are formatting rules from `@stylistic/eslint-plugin` — the modern replac
 |------|---------|----------------|
 | `@stylistic/nonblock-statement-body-position` | default (`beside`) | Single-line if body beside keyword: `if (x) return;` |
 | `@stylistic/multiline-comment-style` | `starred-block` (default) | Multi-line comments use `/* */` with leading `*` on each line |
-| `@stylistic/function-paren-newline` | `off` | Let other rules handle function formatting |
-| `@stylistic/linebreak-style` | `off` | Don't enforce LF vs CRLF — let git handle line endings |
 
 ### Statement Padding
 
@@ -281,25 +268,8 @@ These are native ESLint rules for code quality and best practices.
 |------|---------|----------------|
 | `max-depth` | `4` | Maximum 4 levels of nesting — beyond this, extract to functions |
 | `max-nested-callbacks` | `4` | Maximum 4 callback levels — beyond this, refactor to async/await or named functions |
-| `max-len` | `off` | No line length limit |
-| `max-lines` | `off` | No file length limit — some files naturally need to be longer |
-| `max-params` | `off` | No parameter count limit — sometimes many params are appropriate |
-| `complexity` | `off` | No cyclomatic complexity limit — can be noisy for legitimate complex functions |
-
-### Disabled by Default
-
-| Rule | Setting | Why This Value |
-|------|---------|----------------|
-| `array-callback-return` | `off` | Sometimes intentionally returning undefined from map/filter |
-| `consistent-return` | `off` | Sometimes functions legitimately return different types |
-| `default-case` | `off` | Not all switches need a default case |
-| `no-nested-ternary` | `off` | Nested ternaries can be readable when formatted properly |
-| `no-return-assign` | `off` | Assignments in return are sometimes useful (refs, etc.) |
-| `camelcase` | `off` | API responses often use snake_case |
 
 ---
-
-## TypeScript-Specific Rules
 
 ### @typescript-eslint/eslint-plugin
 
@@ -364,8 +334,6 @@ export enum Status {           // Missing Enum suffix
 ```
 
 ---
-
-## Tailwind CSS Rules
 
 ### eslint-plugin-tailwindcss
 

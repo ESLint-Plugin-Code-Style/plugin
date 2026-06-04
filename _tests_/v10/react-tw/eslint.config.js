@@ -76,11 +76,9 @@ export default [ // eslint-disable-line
             "@stylistic/comma-dangle": ["error", "always-multiline"],
             "@stylistic/comma-spacing": "error",
             "@stylistic/dot-location": "error",
-            "@stylistic/function-paren-newline": "off",
             "@stylistic/indent": ["error", 4],
             "@stylistic/jsx-quotes": "error",
             "@stylistic/key-spacing": "error",
-            "@stylistic/linebreak-style": "off",
             "@stylistic/multiline-comment-style": "error",
             "@stylistic/no-extra-semi": "error",
             "@stylistic/no-multi-spaces": "error",
@@ -126,9 +124,7 @@ export default [ // eslint-disable-line
             "@stylistic/space-infix-ops": "error",
 
             // Base ESLint rules
-            "array-callback-return": "off",
             "arrow-body-style": ["error", "as-needed"],
-            camelcase: "off",
             "capitalized-comments": ["error"],
 
             // Check file rules
@@ -217,30 +213,17 @@ export default [ // eslint-disable-line
             "code-style/variable-naming-convention": "error",
 
             // General rules
-            complexity: "off",
-            "consistent-return": "off",
             curly: ["error", "multi-or-nest"],
-            "default-case": "off",
-            "default-param-last": 0,
             "dot-notation": ["error", { allowKeywords: false }],
             eqeqeq: "error",
             "func-style": ["error", "expression"],
 
             // Import rules
-            "import-x/no-cycle": 0,
             "import-x/no-default-export": "error",
-            "import-x/no-named-as-default": 0,
-            "import-x/no-named-as-default-member": 0,
-            "import-x/no-unresolved": 0,
-            "import-x/prefer-default-export": 0,
 
             // Complexity rules
             "max-depth": ["error", 4],
-            "max-len": "off",
-            "max-lines": "off",
-            "max-lines-per-function": "off",
             "max-nested-callbacks": ["error", 4],
-            "max-params": "off",
 
             // Error prevention rules
             "no-alert": "error",
@@ -253,10 +236,7 @@ export default [ // eslint-disable-line
             "no-irregular-whitespace": "error",
             "no-lone-blocks": "error",
             "no-lonely-if": "error",
-            "no-nested-ternary": "off",
-            "no-plusplus": "off",
             "no-redeclare": "error",
-            "no-return-assign": "off",
             "no-self-compare": "error",
             "no-unexpected-multiline": "error",
             "no-unused-vars": "error",
@@ -309,13 +289,9 @@ export default [ // eslint-disable-line
                 },
             ],
 
-            radix: 0,
-
             // Import sort rules
             "simple-import-sort/exports": "error",
             "simple-import-sort/imports": "error",
-
-            "sort-keys": "off",
 
             // Tailwind rules
             "tailwindcss/classnames-order": "error",
