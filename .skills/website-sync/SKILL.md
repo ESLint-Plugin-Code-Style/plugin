@@ -163,21 +163,33 @@ npm dependency on the plugin.
 
 The website also depends on `eslint-plugin-code-style` in its own `package.json`
 to **lint its own source**. That is a normal npm dependency and is **never** bumped
-by the sync pipeline or `prebuild`. After publishing a new plugin version, if you
-want the website's self-lint to use the new rules (and drop any scoped overrides
-that a plugin fix made unnecessary), bump it **manually**:
+by the sync pipeline or `prebuild`. Two ways to bump it after a plugin publish:
 
-```bash
-pnpm update eslint-plugin-code-style     # → newest matching the ^range, updates lockfile
-pnpm lint && pnpm tsc --noEmit           # then re-fix / drop now-redundant overrides
-# commit package.json + pnpm-lock.yaml
-```
+- **Dependabot (automatic, ≤daily, PR-gated)** — `.github/dependabot.yml` in the
+  website watches npm and opens a `chore(deps): bump eslint-plugin-code-style …`
+  PR when a newer version exists. It **polls on a schedule** (daily — the finest
+  interval; not event-driven, so up to ~24 h after a publish). Use the Dependabot
+  tab's **"Check for updates"** button to force an immediate run. Review/merge the
+  PR, then `git pull`. The PR title shows the **manifest** floor (e.g. `from 3.1.1`,
+  the `^3.1.1` range base), not the lockfile version — that is expected.
+- **Manual (immediate)** — when you don't want to wait for the daily poll:
+
+  ```bash
+  pnpm update eslint-plugin-code-style   # → newest matching the ^range, updates lockfile
+  pnpm lint && pnpm tsc --noEmit         # then re-fix / drop now-redundant overrides
+  # commit package.json + pnpm-lock.yaml
+  ```
+
+Neither path drops scoped overrides or runs `eslint --fix` for you — that stays a
+human step (only you know which override a plugin fix made redundant).
 
 **Post-publish website checklist:**
 
 1. `git pull` first — the plugin push already fired the bot data-sync, so remote
-   `main` may have a `chore(auto-sync)` commit. Don't re-run `sync:local` over it.
-2. `pnpm update eslint-plugin-code-style` (manual — pipeline never does this).
+   `main` may have a `chore: auto-sync from plugin metadata` commit. Don't re-run
+   `sync:local` over it.
+2. Bump the dep: merge the **Dependabot PR** (wait ≤daily or hit "Check for
+   updates"), OR run `pnpm update eslint-plugin-code-style` manually for immediate.
 3. Re-add any rules / drop any overrides that were deferred until the plugin shipped.
 4. `pnpm lint && pnpm tsc --noEmit`, commit, push.
 
