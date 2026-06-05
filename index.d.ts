@@ -64,6 +64,7 @@ export type RuleNames =
     | "code-style/nested-call-closing-brackets"
     | "code-style/no-inline-type-definitions"
     | "code-style/no-redundant-folder-suffix"
+    | "code-style/no-empty-lines-in-arrays"
     | "code-style/no-empty-lines-in-function-calls"
     | "code-style/no-empty-lines-in-function-params"
     | "code-style/no-empty-lines-in-jsx"
@@ -166,6 +167,7 @@ interface PluginRules {
     "nested-call-closing-brackets": Rule.RuleModule;
     "no-inline-type-definitions": Rule.RuleModule;
     "no-redundant-folder-suffix": Rule.RuleModule;
+    "no-empty-lines-in-arrays": Rule.RuleModule;
     "no-empty-lines-in-function-calls": Rule.RuleModule;
     "no-empty-lines-in-function-params": Rule.RuleModule;
     "no-empty-lines-in-jsx": Rule.RuleModule;

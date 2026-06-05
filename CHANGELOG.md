@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [3.3.1] - 2026-06-05
+
+**Add `no-empty-lines-in-arrays` to the TypeScript definitions**
+
+### Fixed
+
+- **`index.d.ts`** — the `no-empty-lines-in-arrays` rule (added in 3.3.0) was missing from the shipped TypeScript definitions, so typed flat configs could not reference `"code-style/no-empty-lines-in-arrays"`. Added it to both the `RuleNames` union and the `PluginRules` interface. Runtime behavior was unaffected.
+
+---
+
 ## [3.3.0] - 2026-06-04
 
 **New `no-empty-lines-in-arrays` Rule + Blank-Line/Assignment Spacing + Prose-Safe className Detection**

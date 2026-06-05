@@ -149,9 +149,21 @@ rm src/test-file.tsx
 grep -rc "^const .* = {$" src/rules/
 grep -c 'code-style/' index.d.ts
 grep -c '"code-style/' recommended-configs/react-ts-tw/eslint.config.js
+
+# PRESENCE CHECK (run for the rule you added/removed). Set NEW_RULE=<rule-name>.
+# Every line below MUST report the rule present (or absent, for removals).
+# index.d.ts is shipped to npm and easy to forget — this catches that.
+NEW_RULE="no-empty-lines-in-arrays"
+for f in src/index.js index.d.ts metadata.json README.md "rules/<category>.md" \
+  recommended-configs/v9/react-ts-tw/eslint.config.js \
+  _tests_/v9/react-ts-tw/eslint.config.js; do
+  printf "%-60s %s\n" "$f" "$(grep -c "$NEW_RULE" "$f")"
+done
 ```
 
-All counts should match. Use `audit-docs` skill to verify documentation consistency.
+All counts should match and the presence check must be non-zero in every file
+(`index.d.ts` needs it in **both** the `RuleNames` union AND the `PluginRules`
+interface — expect a count of 2). Use `audit-docs` to verify doc consistency.
 
 ## Commit Message Format
 
