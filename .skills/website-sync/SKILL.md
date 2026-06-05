@@ -155,6 +155,37 @@ pnpm dev
 | `pnpm sync` | **remote** plugin `main` (GitHub raw) | plugin already pushed |
 | `prebuild` (auto before `pnpm build`) | **remote** plugin `main` | every production build |
 
+## Two separate things — DATA vs DEPENDENCY (don't confuse them)
+
+The sync script only regenerates **generated data** (`src/data/*.ts` — the rule
+list, counts, changelog shown *on the site*). It does **not** touch the website's
+npm dependency on the plugin.
+
+The website also depends on `eslint-plugin-code-style` in its own `package.json`
+to **lint its own source**. That is a normal npm dependency and is **never** bumped
+by the sync pipeline or `prebuild`. After publishing a new plugin version, if you
+want the website's self-lint to use the new rules (and drop any scoped overrides
+that a plugin fix made unnecessary), bump it **manually**:
+
+```bash
+pnpm update eslint-plugin-code-style     # → newest matching the ^range, updates lockfile
+pnpm lint && pnpm tsc --noEmit           # then re-fix / drop now-redundant overrides
+# commit package.json + pnpm-lock.yaml
+```
+
+**Post-publish website checklist:**
+
+1. `git pull` first — the plugin push already fired the bot data-sync, so remote
+   `main` may have a `chore(auto-sync)` commit. Don't re-run `sync:local` over it.
+2. `pnpm update eslint-plugin-code-style` (manual — pipeline never does this).
+3. Re-add any rules / drop any overrides that were deferred until the plugin shipped.
+4. `pnpm lint && pnpm tsc --noEmit`, commit, push.
+
+`sync:local` is **optional** before pushing — the remote pipeline + `prebuild`
+regenerate the data from the remote plugin anyway, so the deployed site is always
+current. Run it only to preview new data in `pnpm dev` or to keep committed data
+matching the deploy.
+
 **How the arg switches mode** (`scripts/sync-from-plugin.js`):
 
 ```text
