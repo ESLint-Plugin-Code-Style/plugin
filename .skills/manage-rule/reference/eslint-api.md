@@ -84,4 +84,3 @@ if (hasComplexElement) return;
 // Skip specific parent contexts
 if (node.parent?.type === "CallExpression") return;
 ```
-

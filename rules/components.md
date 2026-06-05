@@ -49,6 +49,7 @@ export const Card = (props: CardPropsInterface) => (
 ### `component-props-inline-type`
 
 **What it does:** Enforces that React component props must use inline type annotation instead of referencing an interface or type alias. Also enforces:
+
 - Exactly one space before and after colon: `} : {`
 - Props in type must match exactly with destructured props (no missing or extra)
 - Each prop type on its own line when there are multiple props
@@ -217,7 +218,8 @@ export const Password = () => <input type="password" />;
 ```
 
 **Singularization examples:**
-```
+
+```text
 // Named files — folders are singularized
 discount/types/code.tsx     → CodeTypeDiscount (not CodeTypesDiscount)
 table-items/actions.tsx     → ActionsTableItem (not ActionsTableItems)
@@ -228,6 +230,7 @@ audit-logs/index.tsx        → AuditLogs (plural preserved)
 ```
 
 **Chain order examples:**
+
 ```javascript
 // Default: child-parent (file name first, then folders deepest→shallowest)
 // layouts/auth/login.tsx → LoginAuthLayout
@@ -261,12 +264,13 @@ audit-logs/index.tsx        → AuditLogs (plural preserved)
 **Why use it:** Mixing flat files and wrapped folders in the same directory creates inconsistency. This rule ensures a uniform structure — if one item needs a folder (because it has multiple files), all items should be wrapped; if none do, keep everything flat.
 
 **Configurable options:**
+
 | Option | Default | Description |
 |--------|---------|-------------|
 | `moduleFolders` | Same as `module-index-exports` (atoms, components, hooks, utils, enums, types, views, layouts, pages, etc.) | Replace the entire folder list |
 | `extraModuleFolders` | `[]` | Add extra folders on top of the defaults |
 
-```
+```text
 // Good — flat mode (all direct files)
 atoms/input.tsx
 atoms/calendar.tsx
@@ -291,7 +295,8 @@ atoms/calendar/index.tsx     -> "use direct files instead"
 ```
 
 **Single-child folder detection:**
-```
+
+```text
 // Bad — unnecessary nesting (discount/ has only one subfolder)
 discount/
   types/
@@ -322,7 +327,7 @@ discount/
 
 **Why use it:** This complements `folder-based-naming-convention` — the *file name* should stay clean while the *exported component name* carries the suffix. For example, `layouts/main.tsx` exporting `MainLayout` is better than `layouts/main-layout.tsx` exporting `MainLayout`.
 
-```
+```text
 // Good — names don't repeat the folder name
 layouts/main.tsx           -> export const MainLayout = ...
 atoms/button.tsx           -> file "button" has no redundant suffix
@@ -353,6 +358,7 @@ atoms/forms/input-atom.tsx -> redundant "-atom" from ancestor "atoms/"
 ### `svg-icon-naming-convention`
 
 **What it does:** Enforces naming conventions for SVG icon components:
+
 - Components that return only an SVG element must have a name ending with "Icon"
 - Components with "Icon" suffix must return an SVG element
 

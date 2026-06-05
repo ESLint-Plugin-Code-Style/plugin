@@ -27,7 +27,7 @@ Recommended ESLint configuration for React + TypeScript + Tailwind CSS projects 
 | `@typescript-eslint/parser` | TypeScript parser for ESLint |
 | `@typescript-eslint/eslint-plugin` | TypeScript-specific linting rules |
 | `eslint-plugin-check-file` | File and folder naming conventions |
-| `eslint-plugin-code-style` | 81 custom formatting rules |
+| `eslint-plugin-code-style` | 82 custom formatting rules |
 | `eslint-plugin-import-x` | Import/export linting rules |
 | `eslint-plugin-perfectionist` | Automatic sorting of code elements |
 | `eslint-plugin-simple-import-sort` | Import and export sorting |
@@ -60,6 +60,8 @@ npm install --save-dev eslint@^10 @eslint/js@^10 @eslint-react/eslint-plugin @st
 ```
 
 > **Tailwind CSS plugin version:**
+>
+>
 > - For **Tailwind CSS v4**: use `"eslint-plugin-tailwindcss": "^4.0.0-beta.0"`
 > - For **Tailwind CSS v3**: use `"eslint-plugin-tailwindcss": "^3.18.2"`
 

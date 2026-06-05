@@ -66,6 +66,7 @@ function isAuthenticated(): boolean {
 ### `function-naming-convention`
 
 **What it does:** Enforces naming conventions for functions:
+
 - **camelCase** required
 - **Verb prefix** required (get, set, fetch, post, put, patch, delete, is, has, can, should, click, submit, etc.)
 - **Handler suffix** required (all functions must end with `Handler`)
@@ -107,6 +108,7 @@ function FetchStatus() {}    // → fetchStatusHandler
 ### `function-object-destructure`
 
 **What it does:** Two responsibilities:
+
 1. Enforces that non-component functions should not destructure parameters in the function signature — use a typed parameter and destructure at the top of the function body. Also reports dot-notation access of object params (suggests destructuring).
 2. Enforces a configurable style for module imports — by default, module imports (e.g., `api`, `utils`, `services`) are accessed via dot notation rather than destructured, but JSX usage is exempted. Behavior is controlled by the `moduleImportStyle` option.
 

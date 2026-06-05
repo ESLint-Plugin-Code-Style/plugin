@@ -5,7 +5,7 @@ description: Understand and operate the metadata.json → docs website sync pipe
 
 # Documentation Website Sync
 
-The documentation website lives in a **separate repository**: [`ESLint-Plugin-Code-Style/website`](https://github.com/ESLint-Plugin-Code-Style/website). Built with Next.js 15, React 19, Tailwind CSS v4, and TypeScript. Deployed at **https://www.eslint-plugin-code-style.org**.
+The documentation website lives in a **separate repository**: [`ESLint-Plugin-Code-Style/website`](https://github.com/ESLint-Plugin-Code-Style/website). Built with Next.js 15, React 19, Tailwind CSS v4, and TypeScript. Deployed at **<https://www.eslint-plugin-code-style.org>g>**.
 
 > **CRITICAL invariant:** `metadata.json` in this plugin repo is the **single source of truth** for the documentation website. Every change to the plugin that affects rules, version, examples, options, descriptions, or categories MUST be reflected in `metadata.json` in the same commit. No exceptions. The website auto-syncs from this file via GitHub Actions — do not manually edit the website repo for these changes.
 
@@ -13,7 +13,7 @@ The documentation website lives in a **separate repository**: [`ESLint-Plugin-Co
 
 ## Sync Pipeline (At a Glance)
 
-```
+```text
 Plugin change → update metadata.json + CHANGELOG.md in same commit → push to main
   → Plugin GitHub Action pings the website repo (repository_dispatch)
   → Website Action runs scripts/sync-from-plugin.js
@@ -36,7 +36,7 @@ Plugin change → update metadata.json + CHANGELOG.md in same commit → push to
 
 The sync has two distinct actors. They run one after the other, not as alternatives:
 
-```
+```text
 scripts/sync-from-plugin.js              = the DELIVERY GUY
   brings plugin data into the website + WRITES committed files
   (rules.ts, config.ts, navigation.ts, versions.ts, CHANGELOG.md)
@@ -85,7 +85,7 @@ The plugin and website are two independent repos in the same GitHub org. They do
 
 **The files that power the sync:**
 
-```
+```text
 PLUGIN REPO                              WEBSITE REPO
 ────────────                             ────────────
 metadata.json ─── sources ──────────►    scripts/sync-from-plugin.js
@@ -108,7 +108,7 @@ CHANGELOG.md  ──────────────────────
 
 **Step-by-step flow (production):**
 
-```
+```text
 1. Developer changes a rule / bumps version in the plugin
    └── Updates metadata.json (+ CHANGELOG.md for releases) in the same commit (REQUIRED)
 
@@ -143,7 +143,7 @@ CHANGELOG.md  ──────────────────────
 
 In dev, **nobody auto-runs the script** — `pnpm dev` only serves. You trigger it yourself, and you must point it at the **local** plugin so unpushed changes are picked up:
 
-```
+```bash
 # from the website repo, with the plugin repo as a sibling folder
 pnpm sync:local       # = node scripts/sync-from-plugin.js ../Plugin/metadata.json
 pnpm dev
@@ -157,7 +157,7 @@ pnpm dev
 
 **How the arg switches mode** (`scripts/sync-from-plugin.js`):
 
-```
+```text
 const metadataPath = process.argv[2]
   present → readFileSync(metadataPath)        ← LOCAL (also copies sibling ../Plugin/CHANGELOG.md)
   absent  → fetch(GITHUB_RAW_URL)             ← REMOTE
@@ -165,7 +165,7 @@ const metadataPath = process.argv[2]
 
 The arg is always the path to **metadata.json**; the script finds `CHANGELOG.md` as its sibling automatically. You never pass the changelog directly.
 
-```
+```text
 LOCAL DEV                                  PRODUCTION
 ─────────                                  ──────────
 you edit plugin (unpushed)                 you push plugin to main

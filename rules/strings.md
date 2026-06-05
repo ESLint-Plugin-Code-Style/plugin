@@ -7,6 +7,7 @@
 **Why use it:** Hardcoded strings scattered throughout your codebase are hard to maintain, translate, and keep consistent. Centralizing strings in constants makes them easy to find, update, and potentially translate.
 
 **Special detection (should be imported from `@/enums` or `@/data`):**
+
 - **HTTP status codes** — 2xx, 4xx, 5xx like "200", "404", "500"
 - **HTTP methods** — "GET", "POST", "PUT", "DELETE", "PATCH", etc.
 - **Role/permission names** — "admin", "user", "moderator", "editor", etc.
@@ -30,6 +31,7 @@
 **Default ignored patterns:** Empty strings, single characters, CSS units (`px`, `em`, `%`), colors, URLs, paths, file extensions, MIME types, UUIDs, dates, camelCase/snake_case identifiers, HTTP methods, CSS keyword values (`row`, `column`, `bold`, `caption`, `flex-start`, etc.), MUI variant/severity slots (`primary`, `secondary`, `contained`, `outlined`, etc.), and other technical strings.
 
 **Built-in skips for style contexts:**
+
 - Strings inside CSS-in-JS tagged templates: `` styled.div`...` ``, `` styled(X)`...` ``, `` css`...` ``, `` keyframes`...` ``, `` tw`...` ``
 - Strings inside responsive-breakpoint objects: `flexDirection={{ sm: "row", xs: "column" }}`
 - Strings inside style-attr object values: `style={{ ... }}`, `sx={{ ... }}`, `flexDirection={{ ... }}`, etc.
@@ -89,11 +91,13 @@ if (role === "admin") { ... }
 ```
 
 **Valid import paths for strings:**
+
 - `@/data`
 - `@/strings` or `@/@strings`
 - `@/constants` or `@/@constants`
 
 **Valid import paths for enums (status codes, roles):**
+
 - `@/enums`
 - `@/data`
 

@@ -10,9 +10,13 @@ Ensure `index.d.ts` correctly defines all rules from `src/rules/`.
 ## Steps
 
 1. **Count rules in src/rules/**
+
+
    ```bash
    grep -rc "^const .* = {$" src/rules/
+
    ```
+
    Or count entries in the `rules` export objects across the category files.
 
 2. **Check index.d.ts**
@@ -30,7 +34,7 @@ Ensure `index.d.ts` correctly defines all rules from `src/rules/`.
 
 ## Report Format
 
-```
+```text
 Total rules in src/rules/: X
 Total rules in index.d.ts: X
 Types match: Yes/No

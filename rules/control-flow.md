@@ -68,6 +68,7 @@ const x = 1;
 ### `if-else-spacing`
 
 **What it does:** Enforces proper spacing between if statements and if-else chains:
+
 - Consecutive if statements with block bodies must have an empty line between them
 - Single-line if and else should NOT have empty lines between them
 
@@ -109,6 +110,7 @@ else prom.resolve(token);
 ### `if-statement-format`
 
 **What it does:** Enforces consistent if/else formatting:
+
 - Opening `{` on the same line as `if`/`else if`/`else`
 - `else` on the same line as the closing `}`
 - Proper spacing around keywords
@@ -376,6 +378,7 @@ switch (status) {
 ### `ternary-condition-multiline`
 
 **What it does:** Formats ternary expressions based on condition operand count:
+
 - <=maxOperands (default: 3): Always collapse to single line regardless of line length
 - \>maxOperands: Expand to multiline with each operand on its own line
 - Simple parenthesized nested ternaries (<=maxOperands) count as 1 operand and collapse

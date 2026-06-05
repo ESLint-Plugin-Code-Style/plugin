@@ -51,7 +51,7 @@ npm run build
 
 ## Repository Layout
 
-```
+```text
 src/
   rules/                   # Rule implementations, grouped by category
   index.js                 # Plugin entry — registers all rules
@@ -145,7 +145,7 @@ The complete release procedure (SemVer choice, CHANGELOG format, annotated tag, 
 
 This project follows [Conventional Commits](https://www.conventionalcommits.org/). Common subjects:
 
-```
+```text
 feat: add <rule-name> rule
 fix: <short description of fix> in <rule-name>
 feat: add <option-name> option to <rule-name>

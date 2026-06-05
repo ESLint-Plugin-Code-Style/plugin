@@ -5,6 +5,7 @@
 **What it does:** Enforces a consistent ordering of code blocks within React components and custom hooks. The order follows a logical dependency chain where declarations appear before their usage.
 
 **Order (top to bottom):**
+
 1. Props/params destructure (in function signature: `({ prop1, prop2 })`)
 2. Props/params destructure in body (`const { x } = propValue` where propValue is a prop)
 3. `useRef` declarations

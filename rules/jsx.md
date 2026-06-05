@@ -25,6 +25,7 @@ const buttonClasses = `flex ${className} items-center gap-4`;
 ### `classname-multiline`
 
 **What it does:** Enforces that long className strings are broken into multiple lines, with each class on its own line. Triggers when either the class count exceeds `maxClassCount` (default: 3) or the string length exceeds `maxLength` (default: 80). Also enforces:
+
 - JSX `className` with no dynamic expressions uses `"..."` string literal format
 - JSX `className` with dynamic expressions uses `` {`...`} `` template literal format
 - Variables/object properties use `` `...` `` template literal for multiline (JS requires it)
@@ -103,6 +104,7 @@ const variantClasses = {
 ### `classname-no-extra-spaces`
 
 **What it does:** Removes multiple consecutive spaces and leading/trailing spaces inside className values. Applies to:
+
 - JSX `className` attributes (string literals and template literals)
 - Variables with names containing "class" (e.g., `buttonClasses`, `variantClasses`)
 - Object properties within class-related objects
@@ -131,6 +133,7 @@ const buttonClasses = ` flex items-center ${className} `;
 **What it does:** Enforces Tailwind CSS class ordering in variables, object properties, and return statements. Uses smart detection to identify Tailwind class strings.
 
 **Why use it:** This rule complements the official `tailwindcss/classnames-order` plugin by handling areas it doesn't cover:
+
 - **`tailwindcss/classnames-order`** — Handles JSX `className` attributes directly
 - **`classname-order`** — Handles class strings in variables, object properties, and return statements
 
@@ -332,6 +335,7 @@ function Card() {
 ### `jsx-prop-naming-convention`
 
 **What it does:** Enforces camelCase naming for JSX props, with exceptions for:
+
 - `data-*` attributes (kebab-case allowed)
 - `aria-*` attributes (kebab-case allowed)
 - Props that reference components (PascalCase allowed)
@@ -426,6 +430,7 @@ function Card() {
 ### `jsx-ternary-format`
 
 **What it does:** Formats ternary expressions in JSX consistently:
+
 - Simple branches stay on one line
 - Complex/multiline branches get parentheses with proper indentation
 

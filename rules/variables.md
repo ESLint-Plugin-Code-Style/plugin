@@ -3,6 +3,7 @@
 ### `variable-naming-convention`
 
 **What it does:** Enforces naming conventions for variables:
+
 - **camelCase** for all variables and constants
 - **PascalCase** for React components and classes
 - **camelCase with `use` prefix** for hooks

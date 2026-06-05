@@ -25,7 +25,7 @@ Recommended ESLint configuration for React projects using **ESLint v10**.
 | `@eslint-react/eslint-plugin` | React rules (replaces eslint-plugin-react for v10) |
 | `@stylistic/eslint-plugin` | Code formatting rules |
 | `eslint-plugin-check-file` | File and folder naming conventions |
-| `eslint-plugin-code-style` | 72 JavaScript-compatible custom formatting rules |
+| `eslint-plugin-code-style` | 73 JavaScript-compatible custom formatting rules |
 | `eslint-plugin-import-x` | Import/export linting rules |
 | `eslint-plugin-perfectionist` | Automatic sorting of code elements |
 | `eslint-plugin-simple-import-sort` | Import and export sorting |

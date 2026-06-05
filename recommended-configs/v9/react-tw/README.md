@@ -8,7 +8,7 @@ This is the **recommended ESLint flat configuration** for React projects using T
 - **ESLint built-in rules** — Code quality and best practices
 - **Third-party plugins** — React, accessibility, import sorting, etc.
 - **[eslint-plugin-tailwindcss](https://github.com/francoismassart/eslint-plugin-tailwindcss)** — Tailwind CSS linting rules
-- **eslint-plugin-code-style** — Our 72 JavaScript-compatible custom formatting rules
+- **eslint-plugin-code-style** — Our 73 JavaScript-compatible custom formatting rules
 
 > **Why @stylistic?** ESLint [deprecated 79 formatting rules](https://eslint.org/blog/2023/10/deprecating-formatting-rules/) in v8.53.0, moving them to `@stylistic/eslint-plugin`. This config uses @stylistic as the modern replacement.
 
@@ -54,6 +54,8 @@ npm install --save-dev eslint@^9 @eslint/js@^9 @stylistic/eslint-plugin globals 
 ```
 
 > **Tailwind CSS plugin version:**
+>
+>
 > - For **Tailwind CSS v4**: use `"eslint-plugin-tailwindcss": "^4.0.0-beta.0"`
 > - For **Tailwind CSS v3**: use `"eslint-plugin-tailwindcss": "^3.18.2"`
 
@@ -178,8 +180,8 @@ These are formatting rules from `@stylistic/eslint-plugin` — the modern replac
 
 | Rule | Setting | Why This Value |
 |------|---------|----------------|
-| `@stylistic/indent` | `4` | 4-space indentation — more readable than 2, especially in deeply nested JSX |
-| `@stylistic/no-multi-spaces` | `error` | No multiple spaces — keeps alignment from `   =` style |
+| `@stylistic/indent` | `4` | 4-space indentation — more readable than 2, especially deeply nested JSX |
+| `@stylistic/no-multi-spaces` | `error` | No multiple spaces — keeps alignment from `=` style |
 | `@stylistic/no-multiple-empty-lines` | `max: 1, maxBOF: 0, maxEOF: 0` | Max 1 blank line between code; none at file start/end |
 | `@stylistic/space-in-parens` | default (`never`) | No spaces inside parens: `fn(x)` not `fn( x )` |
 | `@stylistic/space-infix-ops` | `error` | Spaces around operators: `a + b` not `a+b` |
@@ -214,8 +216,10 @@ These are formatting rules from `@stylistic/eslint-plugin` — the modern replac
 | `@stylistic/padding-line-between-statements` | (see below) | Enforces blank lines in specific situations for readability |
 
 **Padding Rules:**
+
 - Blank line before `return` statements
 - Blank line after variable declarations (`const`, `let`, `var`)
+- Blank line after control-flow blocks (`if`, `for`, `while`, `do`, `switch`, `try`)
 - Blank line between consecutive expressions
 
 ---
@@ -265,8 +269,10 @@ These are native ESLint rules for code quality and best practices.
 ### eslint-plugin-tailwindcss
 
 **Purpose:** Enforce Tailwind CSS best practices and catch common mistakes.
+>
 
 > **Version note:**
+>
 > - For **Tailwind CSS v4**: use `"eslint-plugin-tailwindcss": "^4.0.0-beta.0"`. The v4 config also requires `dirname`/`fileURLToPath` imports and the `tailwindcss: { config }` setting in the eslint config (see `eslint.config.js`).
 > - For **Tailwind CSS v3**: use `"eslint-plugin-tailwindcss": "^3.18.2"`. No extra `dirname` imports or `tailwindcss` settings are needed.
 
@@ -275,9 +281,11 @@ These are native ESLint rules for code quality and best practices.
 | `tailwindcss/classnames-order` | `error` | Auto-sorts Tailwind classes in recommended order — consistent class ordering |
 | `tailwindcss/enforces-shorthand` | `error` | Use `p-4` instead of `px-4 py-4` — cleaner and more maintainable |
 | `tailwindcss/no-custom-classname` | `error` | Disallows custom class names — ensures only Tailwind utility classes are used |
+
 | `tailwindcss/no-unnecessary-arbitrary-value` | `error` | Warns when using arbitrary values like `w-[16px]` when `w-4` exists |
 
 **Example:**
+
 ```jsx
 // ✅ Good — sorted classes, using shorthand
 <div className="flex items-center justify-between p-4 text-lg font-bold">
@@ -290,7 +298,7 @@ These are native ESLint rules for code quality and best practices.
 
 ## eslint-plugin-code-style Rules
 
-Our custom plugin provides **71 auto-fixable rules** (72 JavaScript-compatible rules out of 81 total) that fill the gaps not covered by ESLint's built-in rules or other plugins. The 9 TypeScript-only rules are excluded from this configuration.
+Our custom plugin provides **72 auto-fixable rules** (73 JavaScript-compatible rules out of 82 total) that fill the gaps not covered by ESLint's built-in rules or other plugins. The 9 TypeScript-only rules are excluded from this configuration.
 
 For complete rule descriptions, examples, and configuration options, see the [Rules Reference Documentation](../../rules/).
 
@@ -374,6 +382,7 @@ rules: {
 ### Export Padding
 
 The `index-export-style` rule handles export padding for all files:
+
 - **Index files**: no blank lines between exports, consistent style
 - **Non-index files**: require blank lines between exports
 

@@ -143,7 +143,7 @@ export const useList = () => { ... };
 
 The *chain* is built from intermediate folders between `hooks/` and the module folder (excluding grouping folders like shared, common, ui, base, general, core).
 
-```
+```text
 // Good — verb hooks include the module name (singular)
 hooks/super-admins/use-create-super-admin.ts
 hooks/super-admins/use-get-super-admin.ts

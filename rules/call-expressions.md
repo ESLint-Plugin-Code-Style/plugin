@@ -3,6 +3,7 @@
 ### `function-arguments-format`
 
 **What it does:** Enforces consistent formatting for function call arguments:
+
 - Single simple argument stays on one line
 - 2+ arguments get one per line
 - Multiline arguments trigger full expansion
@@ -201,6 +202,7 @@ items.map(
 ### `simple-call-single-line`
 
 **What it does:** Collapses simple function calls with an arrow function onto one line when the result fits within 120 characters. Handles:
+
 - Zero-param callbacks: `lazy(() => import("./Page"))`
 - Callbacks with params and simple expression bodies: `.find((f) => f.code === x)`
 - Optional chaining: `.find(...)?.symbol`

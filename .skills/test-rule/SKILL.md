@@ -23,6 +23,8 @@ Test a rule to verify valid code passes and invalid code triggers errors with co
    - Add code that should FAIL (invalid, triggers errors)
 
 4. **Run the linter**
+
+
    ```bash
    cd _tests_/<config-name>
    npm run lint        # Check for violations

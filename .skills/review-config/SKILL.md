@@ -23,6 +23,8 @@ Review a recommended config to ensure it's consistent, complete, and working.
    - Test config may have additional test-specific settings
 
 3. **Test the config**
+
+
    ```bash
    cd _tests_/<config-name>
    npm install  # if needed
@@ -36,7 +38,7 @@ Review a recommended config to ensure it's consistent, complete, and working.
 
 ## Report Format
 
-```
+```text
 Config: <config-name>
 Config valid: Yes/No
 Rules enabled: X

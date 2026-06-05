@@ -47,7 +47,7 @@ Format: `MAJOR.MINOR.PATCH` (e.g., `1.2.8`).
 
 Follow [Conventional Commits](https://www.conventionalcommits.org/) specification:
 
-```
+```text
 <type>: <subject>
 
 [optional body]
@@ -70,13 +70,13 @@ Follow [Conventional Commits](https://www.conventionalcommits.org/) specificatio
 
 **Version-bump commit subject:**
 
-```
+```text
 chore: release vX.Y.Z - brief description of changes
 ```
 
 **Good:**
 
-```
+```text
 chore: release v1.7.2 - fix double comma bug in enum/interface format
 chore: release v1.7.1 - multiple rule fixes for destructuring and ternaries
 chore: release v1.6.0 - add 3 new rules and enhance ternary formatting
@@ -84,7 +84,7 @@ chore: release v1.6.0 - add 3 new rules and enhance ternary formatting
 
 **Avoid:**
 
-```
+```text
 chore: bump version to 1.7.2
 chore: version bump
 chore: v1.7.2
@@ -102,23 +102,35 @@ chore: v1.7.2
    - Add comparison-link reference at bottom: `[X.Y.Z]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/vPREV...vX.Y.Z`
 5. **Build the plugin:** `npm run build` (regenerates `dist/index.js` with new version banner).
 6. **Commit the release bundle** with a descriptive subject:
+
+
    ```bash
    git add package.json package-lock.json dist/ CHANGELOG.md metadata.json
    git commit -m "chore: release vX.Y.Z - brief description"
+
    ```
+
+
    For releases that bundle the bug-fix commit and the release-bump together, prefer a single descriptive commit (`feat:` or `fix:` style) so the tagged commit is self-explanatory.
 7. **Create the annotated tag:**
+
    ```bash
    git tag -a vX.Y.Z -m "vX.Y.Z - Brief Title
 
+
    - Bullet summary 1
+
    - Bullet summary 2"
    ```
+
 8. **Push (requires explicit user approval per CLAUDE.md):**
+
+
    ```bash
    git push https://github.com/ESLint-Plugin-Code-Style/plugin.git main
    git push https://github.com/ESLint-Plugin-Code-Style/plugin.git vX.Y.Z
    ```
+
 9. **Create the GitHub Release** (every version — see section below).
 10. **Publish to npm** (requires explicit user approval): `npm publish`.
     - **Every GitHub Release must be shipped to npm in the same release.** A release that isn't on npm is not installable — keep the two in lockstep: tag → GitHub Release → `npm publish`, all for the same version.
@@ -241,7 +253,7 @@ npm publish
 
 ## Release lifecycle (at a glance)
 
-```
+```text
 code change
   └─ bump package.json + metadata.json version (match)
        └─ write CHANGELOG entry (PATCH = title + notes | MINOR/MAJOR = + range + stats)

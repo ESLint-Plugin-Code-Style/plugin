@@ -8,7 +8,7 @@ This is the **recommended ESLint flat configuration** for React projects using T
 - **ESLint built-in rules** — Code quality and best practices
 - **Third-party plugins** — React, accessibility, import sorting, etc.
 - **[@typescript-eslint/eslint-plugin](https://typescript-eslint.io/)** — TypeScript-specific linting rules
-- **eslint-plugin-code-style** — Our 81 custom formatting rules
+- **eslint-plugin-code-style** — Our 82 custom formatting rules
 
 > **Why @stylistic?** ESLint [deprecated 79 formatting rules](https://eslint.org/blog/2023/10/deprecating-formatting-rules/) in v8.53.0, moving them to `@stylistic/eslint-plugin`. This config uses @stylistic as the modern replacement.
 
@@ -181,7 +181,7 @@ These are formatting rules from `@stylistic/eslint-plugin` — the modern replac
 | Rule | Setting | Why This Value |
 |------|---------|----------------|
 | `@stylistic/indent` | `4` | 4-space indentation — more readable than 2, especially in deeply nested JSX |
-| `@stylistic/no-multi-spaces` | `error` | No multiple spaces — keeps alignment from `   =` style |
+| `@stylistic/no-multi-spaces` | `error` | No multiple spaces — keeps alignment from `style |
 | `@stylistic/no-multiple-empty-lines` | `max: 1, maxBOF: 0, maxEOF: 0` | Max 1 blank line between code; none at file start/end |
 | `@stylistic/space-in-parens` | default (`never`) | No spaces inside parens: `fn(x)` not `fn( x )` |
 | `@stylistic/space-infix-ops` | `error` | Spaces around operators: `a + b` not `a+b` |
@@ -216,8 +216,10 @@ These are formatting rules from `@stylistic/eslint-plugin` — the modern replac
 | `@stylistic/padding-line-between-statements` | (see below) | Enforces blank lines in specific situations for readability |
 
 **Padding Rules:**
+
 - Blank line before `return` statements
 - Blank line after variable declarations (`const`, `let`, `var`)
+- Blank line after control-flow blocks (`if`, `for`, `while`, `do`, `switch`, `try`)
 - Blank line between consecutive expressions
 
 ---
@@ -275,7 +277,9 @@ These are native ESLint rules for code quality and best practices.
 | `@typescript-eslint/no-unused-vars` | `error, argsIgnorePattern: ^_, varsIgnorePattern: ^_` | Catches unused variables but allows `_` prefix for intentionally unused params |
 
 **Disabled Base Rules:**
+
 These base ESLint rules are disabled in favor of their TypeScript equivalents:
+
 - `no-unused-vars` → `@typescript-eslint/no-unused-vars`
 - `no-use-before-define` → handled by TypeScript
 - `no-redeclare` → handled by TypeScript
@@ -294,6 +298,7 @@ These base ESLint rules are disabled in favor of their TypeScript equivalents:
 | `code-style/typescript-definition-location` | `error` | Enforces interfaces in `interfaces/`, types in `types/`, enums in `enums/` folders |
 
 **Example:**
+
 ```typescript
 // ✅ Good — proper TypeScript formatting and location
 // src/interfaces/user.ts
@@ -330,7 +335,7 @@ export enum Status {           // Missing Enum suffix
 
 ## eslint-plugin-code-style Rules
 
-Our custom plugin provides **71 auto-fixable rules** (81 total, 22 configurable, 10 report-only) that fill the gaps not covered by ESLint's built-in rules or other plugins.
+Our custom plugin provides **72 auto-fixable rules** (82 total, 22 configurable, 10 report-only) that fill the gaps not covered by ESLint's built-in rules or other plugins.
 
 For complete rule descriptions, examples, and configuration options, see the [Rules Reference Documentation](../../rules/).
 
@@ -414,6 +419,7 @@ rules: {
 ### Export Padding
 
 The `index-export-style` rule handles export padding for all files:
+
 - **Index files**: no blank lines between exports, consistent style
 - **Non-index files**: require blank lines between exports
 

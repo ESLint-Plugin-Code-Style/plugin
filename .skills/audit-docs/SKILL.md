@@ -10,6 +10,7 @@ Verify documentation is accurate and consistent across all files.
 ## Steps
 
 1. **Count actual rules**
+
    ```bash
    # Total rules
    grep -rc "^const .* = {$" src/rules/
@@ -24,8 +25,8 @@ Verify documentation is accurate and consistent across all files.
    When adding/removing rules, update counts in every location below. All counts (total rules, auto-fixable, configurable, report-only) must match everywhere.
 
    **Current Counts (update these values when changing rules):**
-   - Total rules: 81
-   - Auto-fixable: 71
+   - Total rules: 82
+   - Auto-fixable: 72
    - Configurable: 22 (rules with ⚙️ that have options)
    - Report-only: 10
 
@@ -44,13 +45,11 @@ Verify documentation is accurate and consistent across all files.
    | `AGENTS.md` | ~37 | `(72 rules in JS projects, 81 in TS projects)` |
    | `AGENTS.md` | ~675 | `all 81 rules` |
    | `AGENTS.md` | ~733 | `71 auto-fixable rules, 22 configurable rules, 10 report-only` |
-   | `recommended-configs/react/README.md` | ~286 | `**71 auto-fixable rules** (81 total, 22 configurable, 10 report-only)` |
-   | `recommended-configs/react-ts/README.md` | ~361 | same shape |
-   | `recommended-configs/react-tw/README.md` | ~321 | `**71 auto-fixable rules** (72 JavaScript-compatible rules out of 81 total)` |
-   | `recommended-configs/react-ts-tw/README.md` | ~396 | same shape as `react/` |
-   | `metadata.json` | top | `"totalRules": 81, "autoFixableRules": 71, "configurableRules": 22, "reportOnlyRules": 10` |
+   | `recommended-configs/{v9,v10}/{react,react-ts,react-tw,react-ts-tw}/README.md` | — | **8 files** (v9 + v10 × 4 variants). `Our N custom formatting rules` + `**N auto-fixable rules** (N total / N JavaScript-compatible out of N total, …)`. Counts differ per variant: full set vs JS-compatible (total − 9 TS-only). |
+   | `metadata.json` | top | `"totalRules", "fixableRules", "configurableRules", "reportOnlyRules"` |
 
-   The `metadata.json` counters drive the documentation website. See the **`website-sync`** skill for how the auto-sync pipeline propagates these values to https://www.eslint-plugin-code-style.org.
+<https://www.eslint-plugin-code-style.org>
+   The `metadata.json` counters drive the documentation website. See the **`website-sync`** skill for how the auto-sync pipeline propagates these values to <https://www.eslint-plugin-code-style.org>.
 
    **Quick Verification Commands:**
 
@@ -69,28 +68,45 @@ Verify documentation is accurate and consistent across all files.
 
    # Find all rule count mentions (excluding CHANGELOG)
    grep -rn "[0-9][0-9] rules\|[0-9][0-9] auto" --include="*.md" | grep -v CHANGELOG
+
+   # MISS-PROOF: after bumping counts, grep for the OLD numbers everywhere.
+   # This must return NOTHING (except historical CHANGELOG entries + the
+   # deprecation link). Replace OLD_TOTAL / OLD_FIXABLE with the previous values.
+   grep -rnE "\bOLD_TOTAL\b|\bOLD_FIXABLE\b" \
+     README.md AGENTS.md rules/README.md metadata.json \
+     recommended-configs/*/*/README.md \
+     | grep -viE "CHANGELOG|deprecat|v8\.53|/(issues|pull)/|http"
    ```
 
-3. **Verify version consistency**
+   > **Why counts get missed:** they appear in ~17 spots with different
+   > phrasings (full-set vs JS-compatible-vs-total, per-variant config READMEs
+   > across BOTH `v9/` and `v10/`, AGENTS' JS/TS split). The table above is a
+   > map; the **miss-proof grep is the safety net** — always run it last and
+   > confirm zero hits before considering the count change complete.
+
+1. **Verify version consistency**
+
    ```bash
    grep '"version"' package.json
+
    git tag --sort=-version:refname | head -1
    ```
+
    - `package.json` version should match latest git tag
    - No outdated version references in docs
 
-4. **Check paths exist**
+2. **Check paths exist**
    - Config paths mentioned in README
    - Test app paths
    - All internal markdown links
 
-5. **Verify rule lists**
+3. **Verify rule lists**
    - Rules in README "Rules Summary" table match actual rules
    - Rule categories in AGENTS.md are complete
 
 ## Report Format
 
-```
+```text
 Actual rule count: X
 Auto-fixable: Y (Z code + W whitespace)
 Report-only: X - Y

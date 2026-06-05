@@ -33,7 +33,7 @@ Complete workflow for adding, editing, or removing a rule from the plugin.
    - Add to `PluginRules` interface (alphabetically sorted)
 
 3. **`README.md`** — Main documentation (4 sections!)
-   - **Rule counts** (6 locations - see AGENTS.md "Rule Count Locations")
+   - **Rule counts** — counts live in ~17 spots across README, `rules/README.md`, `AGENTS.md`, `metadata.json`, and **all 8** config READMEs (v9 + v10 × 4 variants), in several phrasings (full-set, JS-compatible = total − 9 TS-only, per-variant). Follow the full table in the **`audit-docs`** skill AND run its **miss-proof grep** (grep the OLD numbers everywhere → must return zero) before considering the count change done. Do not rely on a fixed "N locations" count — it drifts.
    - **Quick Start example** (~line 184) — Add rule alphabetically
    - **Rules Summary table** — Add row with description and emoji (🔧 auto-fixable, ⚙️ configurable)
    - **Detailed documentation** — Full section with examples and options
@@ -50,20 +50,15 @@ Complete workflow for adding, editing, or removing a rule from the plugin.
    - Update rule counts in "Current Counts" table
    - Add rule to appropriate category in "Rule Categories" section
 
-7. **Config files** (alphabetically sorted)
-   - `recommended-configs/react-ts-tw/eslint.config.js`
-   - `recommended-configs/react/eslint.config.js` (skip if TypeScript-only)
-   - `_tests_/v9/react-ts-tw/eslint.config.js`
-   - `_tests_/v9/react/eslint.config.js` (skip if TypeScript-only)
+7. **Config files** (alphabetically sorted) — **16 files**: `recommended-configs/{v9,v10}/{react,react-ts,react-tw,react-ts-tw}/eslint.config.js` (8) **and** the matching `_tests_/{v9,v10}/{...}/eslint.config.js` (8). For TypeScript-only rules, add to the `-ts` / `-ts-tw` variants only. Easiest: script the insertion across all matching files, then `node --check` each. (Recommended configs aren't linted; the `_tests_` projects are — run `eslint . --fix` in each that has `node_modules` to auto-format.)
 
-8. **Config READMEs**
-   - `recommended-configs/react-ts-tw/README.md`
-   - `recommended-configs/react/README.md`
+8. **Config READMEs** — **8 files**: `recommended-configs/{v9,v10}/{react,react-ts,react-tw,react-ts-tw}/README.md` (count strings + any per-variant rule tables).
 
 9. **Version bump, CHANGELOG, tag, GitHub Release** — MINOR (`x.+1.0`)
    - See the **`release-workflow`** skill for the complete release procedure (SemVer decisions, CHANGELOG release format, annotated-tag conventions, GitHub Release creation). Every version is published as a GitHub Release.
 
 **TypeScript-only rules** (only add to `-ts-tw` configs):
+
 - `component-props-inline-type`, `enum-format`, `enum-type-enforcement`, `interface-format`
 - `no-inline-type-definitions`, `type-annotation-spacing`, `type-format`
 - `typescript-definition-location`
@@ -73,35 +68,43 @@ Complete workflow for adding, editing, or removing a rule from the plugin.
 ### Editing an Existing Rule
 
 **Bug fix (PATCH `x.x.+1`):**
+
 - Fix in `src/rules/<category>.js` → Test
 - Update `rules/<category>.md` if behavior/examples changed
 - Update `metadata.json` rule entry if description/examples/rationale changed (website auto-syncs)
 - For the version bump, CHANGELOG entry (PATCH format), comparison-link reference, commit, annotated tag, and GitHub Release — see the **`release-workflow`** skill
 
 **Behavior change (PATCH/MINOR):**
+
 - Update `src/rules/<category>.js` logic and JSDoc
 - Update `README.md` rule documentation section (examples, description)
 - Update `rules/<category>.md` per-rule docs
 - Update `metadata.json` rule entry (`description`, `rationale`, `goodExample`, `badExample` — website auto-syncs)
+
 - Test with `npm run lint` and `npm run lint:fix`
 
 **Adding options (MINOR x.+1.0):**
+
 - Add to `schema` in rule's `meta` object
 - Handle in `create()` with default value
 - Update JSDoc Options section
 - Update README.md options table + add ⚙️ emoji in Rules Summary row
+
 - Update `rules/<category>.md` per-rule docs — add options table + configuration example
 - Update `metadata.json`: set `isConfigurable: true`, add option(s) to `options[]` array with `name/type/default/description`, bump `configurableRules` counter (and rule row in count strings everywhere if rule was previously non-configurable)
 
 **Adding auto-fix (MINOR x.+1.0):**
+
 - Add `fixable: "code"` or `fixable: "whitespace"` to `meta`
 - Add `fix()` function in `context.report()`
 - Add 🔧 emoji in README Rules Summary table
+
 - Update auto-fixable counts in ALL docs (must be uniform everywhere)
 - Update `metadata.json`: set `isFixable: true`, bump `autoFixableRules` counter (website auto-syncs)
 - Update AGENTS.md "Current Counts" breakdown (code vs whitespace counts)
 
 **Changing defaults (MAJOR +1.0.0):**
+
 - This is a breaking change
 - Update default value
 - Update all documentation

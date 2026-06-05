@@ -5,6 +5,7 @@
 **What it does:** Enforces importing from folder index files using absolute paths (aliases like `@/`) instead of relative paths or deep file imports. Files within the same module folder must use relative imports (`./` or `../`) instead of absolute paths to avoid circular dependencies through the index file. Auto-fixes absolute imports to own module folder into relative paths. 🔧
 
 **Why use it:**
+
 - Absolute imports are cleaner than `../../../components`
 - Index imports create a public API for each folder
 - Refactoring file locations doesn't break imports
@@ -72,6 +73,7 @@ import { fetchUsers } from "@/apis/users/fetchUsers";
 ### `export-format`
 
 **What it does:** Formats export statements consistently:
+
 - `export {` always on the same line as `export` keyword
 - ≤3 specifiers stay on one line (collapsed)
 - 4+ specifiers get one per line (expanded)
@@ -128,6 +130,7 @@ export { Button, Input, Select, Checkbox, Radio };
 ### `import-format`
 
 **What it does:** Formats import statements consistently:
+
 - `import {` on the same line as `import` keyword
 - `} from` on the same line as closing brace
 - ≤3 specifiers stay on one line (collapsed)
@@ -210,12 +213,14 @@ import styles from " ./styles.css ";
 ### `index-export-style`
 
 **What it does:** Enforces different export formatting rules for index files vs regular files:
+
 - **Index files**: No blank lines between exports, use shorthand or import-export style
 - **Regular files**: Require blank lines between exports
 
 **Why use it:** Index files are re-export aggregators and should be compact. Regular files benefit from spacing between exports for readability.
 
 **Regular files (non-index):**
+
 ```javascript
 // Good — blank lines between exports
 export const API_URL = "/api";
@@ -231,6 +236,7 @@ export const fetchData = async () => {};
 ```
 
 **Index files — Style: "shorthand" (default):**
+
 ```javascript
 // Good — shorthand re-exports, no blank lines
 export { Button } from "./button";
@@ -240,6 +246,7 @@ export { useAuth, useUser } from "./hooks";
 ```
 
 **Index files — Style: "import-export":**
+
 ```javascript
 // Good — imports grouped, single export at bottom
 import { Button } from "./button";
@@ -308,6 +315,7 @@ export * from "./header";                             // Should contain componen
 **Why use it:** Inline exports make it immediately clear which declarations are public. Grouped exports at the bottom of a file require scrolling to discover what's exported, and they can become stale or inconsistent with the actual declarations.
 
 **Important exceptions:**
+
 - **Index files** (barrel re-exports) are skipped entirely -- they should use grouped/re-export syntax
 - **Aliased exports** (`export { a as b }`) are skipped since they cannot be expressed as inline exports
 

@@ -3,6 +3,7 @@
 ### `class-method-definition-format`
 
 **What it does:** Enforces consistent spacing in class and method definitions:
+
 - Space before opening brace `{` in class declarations
 - No space between method name and opening parenthesis `(`
 - Space before opening brace `{` in method definitions

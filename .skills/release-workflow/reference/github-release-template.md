@@ -91,4 +91,3 @@ npm install eslint-plugin-code-style@Y.Y.Y
 6. Publish
 
 ---
-

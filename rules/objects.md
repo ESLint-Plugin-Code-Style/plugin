@@ -49,6 +49,7 @@ const config = {
 ### `object-property-per-line`
 
 **What it does:** Controls object formatting based on property count:
+
 - 1 property: stays on single line `{ name: "John" }`
 - 2+ properties: expands with `{` and `}` on own lines, each property on its own line
 

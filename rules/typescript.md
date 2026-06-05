@@ -3,6 +3,7 @@
 ### `enum-format`
 
 **What it does:** Enforces consistent formatting for TypeScript enums:
+
 - Enum names must be PascalCase and end with `Enum` suffix
 - Enum members must be UPPER_CASE (for string enums) or PascalCase (for numeric enums)
 - No empty lines between enum members
@@ -76,6 +77,7 @@ if (variant === "ghost") {  // Should use ButtonVariantEnum.GHOST
 ### `interface-format`
 
 **What it does:** Enforces consistent formatting for TypeScript interfaces:
+
 - Interface names must be PascalCase and end with `Interface` suffix
 - Properties must be camelCase
 - No empty lines between properties
@@ -155,6 +157,7 @@ export const Button = ({
 ### `prop-naming-convention`
 
 **What it does:** Enforces naming conventions for boolean and callback props in TypeScript interfaces, types, and inline type definitions:
+
 - Boolean props must start with: `is`, `has`, `with`, or `without` (followed by capital letter)
 - Callback props must start with: `on` (followed by capital letter)
 - Detects React event handler types: `MouseEventHandler`, `ChangeEventHandler`, `FormEventHandler`, `KeyboardEventHandler`, etc.
@@ -321,6 +324,7 @@ interface PropsInterface {
 ### `type-format`
 
 **What it does:** Enforces consistent formatting for TypeScript type aliases:
+
 - Type names must be PascalCase and end with `Type` suffix
 - Properties must be camelCase
 - No empty lines between properties
@@ -394,6 +398,7 @@ export type ConfigType = {
 ### `type-annotation-spacing`
 
 **What it does:** Enforces consistent spacing in TypeScript type annotations:
+
 - No space before the colon in type annotations: `name: string` not `name : string`
 - One space after the colon: `name: string` not `name:string`
 - No space before generic type parameters: `Array<T>` not `Array <T>`
@@ -433,6 +438,7 @@ const items: string [] = [];
 ### `typescript-definition-location`
 
 **What it does:** Enforces that TypeScript definitions are placed in their designated folders:
+
 - Interfaces must be in files inside the `interfaces` folder
 - Types must be in files inside the `types` folder
 - Enums must be in files inside the `enums` folder

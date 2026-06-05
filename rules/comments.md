@@ -3,6 +3,7 @@
 ### `comment-format`
 
 **What it does:** Enforces proper comment formatting:
+
 - Space after `//` in line comments
 - Space after `/*` and before `*/` in block comments
 - Single-line block comments converted to line comments
