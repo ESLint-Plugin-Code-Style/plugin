@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [3.3.2] - 2026-06-05
+
+**className detection: skip JSX/HTML code-sample strings**
+
+### Fixed
+
+- **className rules** (`classname-multiline`, `classname-order`, `classname-no-extra-spaces`, `classname-dynamic-at-end`) — extend the prose guard added in 3.3.1 to also skip strings containing angle brackets (`<` / `>`). Strings that hold JSX/HTML markup (e.g. `"<div className=\"flex items-center\">…"`, common as before/after code samples in data and constants files) were detected as live class lists and flagged. A real className value never contains `<` or `>`, so this is safe; genuine class strings are unaffected. Removes the need for scoped `code-style/classname-*` overrides on data files that store such examples.
+
+---
+
 ## [3.3.1] - 2026-06-05
 
 **Add `no-empty-lines-in-arrays` to the TypeScript definitions**

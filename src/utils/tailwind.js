@@ -131,13 +131,15 @@ export const looksLikeTailwindClasses = (classString) => {
     if (!classString || typeof classString !== "string") return false;
 
     /*
-     * Prose guard. Real Tailwind class strings are lowercase, hyphenated, and
-     * never contain commas, sentence periods, capitalized words, or
-     * apostrophes — but English prose always does. Bail out early so long
-     * sentences whose words coincidentally match Tailwind patterns ("array
-     * items on one line", "uses block bodies") are not mistaken for classes.
+     * Prose / markup guard. Real Tailwind class strings are lowercase,
+     * hyphenated, and never contain commas, sentence periods, capitalized
+     * words, apostrophes, or angle brackets — but English prose and JSX/HTML
+     * code samples do. Bail out early so long sentences whose words happen to
+     * match Tailwind patterns ("array items on one line", "uses block bodies")
+     * AND code-example strings ("<div className=\"flex items-center\">", common
+     * in data/constants files) are not mistaken for live class lists.
      */
-    if (/,|\.\s|['’]|\b[A-Z][a-z]+/.test(classString)) return false;
+    if (/,|\.\s|['’]|<|>|\b[A-Z][a-z]+/.test(classString)) return false;
 
     const classes = classString.trim().split(/\s+/).filter(Boolean);
 
