@@ -7,6 +7,36 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [3.3.0] - 2026-06-04
+
+**New `no-empty-lines-in-arrays` Rule + Blank-Line/Assignment Spacing + Prose-Safe className Detection**
+
+**Version Range:** v3.2.1 → v3.3.0
+
+### Added
+
+- **New rule `no-empty-lines-in-arrays`** 🔧 — disallow blank lines inside array literals (after the opening `[`, before the closing `]`, and between elements), mirroring `no-empty-lines-in-objects` for the array container. Previously blank lines between array elements had no rule watching them. Auto-fixable. Added to all 8 recommended configs.
+
+### Changed
+
+- **Recommended configs (all 8)** — `@stylistic/padding-line-between-statements` now also requires a blank line **after control-flow blocks** (`if`, `for`, `while`, `do`, `switch`, `try`). This closes a gap where a brace-less single-line statement such as `if (cond) return;` immediately followed by another statement produced no "expected blank line" error (the previous `prev` selectors only covered `const`/`let`/`var`, `expression`, and `return`). `if`/`else` chains are unaffected — the blank line is only required after the whole chain. Auto-fixable.
+- **`assignment-value-same-line`** — Now also covers **assignment expressions** (`element.style.color =\n    "red"`), not just `const`/`let`/`var` declarations. The rule previously registered only a `VariableDeclaration` visitor, so member and identifier reassignments could break after `=` without being flagged. The operator and value are now kept on the same line as the target. Auto-fixable.
+
+### Fixed
+
+- **className rules** (`classname-multiline`, `classname-order`, `classname-no-extra-spaces`, `classname-dynamic-at-end`) — the Tailwind-content heuristic (`looksLikeTailwindClasses`) misread long English sentences as class lists when a few words coincidentally matched Tailwind patterns (e.g. "array items on one line", "uses block bodies"), firing on plain string values in data files. Added a prose guard: strings containing commas, sentence periods, capitalized words, or apostrophes are no longer treated as classes. Genuine lowercase class strings are unaffected.
+
+### Stats
+
+- Total Rules: 82 (was 81 — added `no-empty-lines-in-arrays`)
+- Auto-fixable: 72 rules 🔧 (was 71)
+- Configurable: 22 rules ⚙️ (unchanged)
+- Report-only: 10 rules (unchanged)
+
+**Full Changelog:** [v3.2.1...v3.3.0](https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v3.2.1...v3.3.0)
+
+---
+
 ## [3.2.1] - 2026-05-19
 
 **Fix `index-exports-only` Redux Subfolder Handling**
@@ -125,7 +155,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Removed all stale references to old `docs/website/` structure
 - Removed `validate-sync.js` (redundant with automated sync)
 
-**Full Changelog:** https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v3.0.6...v3.1.0
+**Full Changelog:** <https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v3.0.6...v3.1.0>0>
 
 ---
 
@@ -235,7 +265,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Production-quality documentation website (`docs/website/`) built with Next.js 15, React 19, Tailwind CSS v4, and TypeScript — deployed at https://www.eslint-plugin-code-style.org
+- Production-quality documentation website (`docs/website/`) built with Next.js 15, React 19, Tailwind CSS v4, and TypeScript — deployed at <https://www.eslint-plugin-code-style.org>g>
   - Landing page with hero section, feature highlights, stats, and quick-start guide
   - Getting Started, Configuration, Philosophy, and Contributing guide pages
   - Rules Reference with all 81 rules across 17 category pages — descriptions, rationale, options, good/bad code examples
@@ -264,7 +294,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Reorganized recommended configs into `recommended-configs/v9/` and `recommended-configs/v10/`
 - Reorganized test projects into `_tests_/v9/` and `_tests_/v10/`
-- Homepage URL changed to https://www.eslint-plugin-code-style.org
+- Homepage URL changed to <https://www.eslint-plugin-code-style.org>g>
 - Website domain added to README.md and docs/rules/README.md
 
 ### Removed
@@ -342,9 +372,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 **New Rules (1)**
+
 - `hook-function-naming-convention` - Enforce that exported hook function names match the camelCase of the file name (e.g., `use-create-super-admin.ts` must export `useCreateSuperAdmin`) 🔧
 
 **New Features**
+
 - **`folder-based-naming-convention`** — Singularize plural folder names in component chain for named files (e.g., `discount/types/code.tsx` → `CodeTypeDiscount` not `CodeTypesDiscount`); index files keep plural
 - **`folder-based-naming-convention`** — Configurable `chainOrder` option: `"child-parent"` (default) or `"parent-child"` with per-path overrides via `files` array
 - **`folder-structure-consistency`** — Detect unnecessary nesting when a folder has only one subfolder and no direct code files, suggesting flattening (e.g., `discount/types/` → `discount-types/`)
@@ -392,6 +424,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 **New Rules (1)**
+
 - `hook-file-naming-convention` - Enforce naming conventions for hook files inside `hooks/` module subfolders: verb hooks must follow `use-{verb}-{module-singular}`, list hooks must follow `use-{module-plural}-list`
 
 ### Enhanced
@@ -780,6 +813,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 **New Rules (1)**
+
 - `inline-export-declaration` - Enforce inline export declarations (`export const x = ...`) instead of grouped export statements (`export { x }`) in non-index files 🔧
   - Auto-fixable: adds `export` to each declaration and removes the grouped export statement
   - Skips index files (barrel re-exports) and aliased exports (`export { a as b }`)
@@ -818,6 +852,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 **New Rules (1)**
+
 - `folder-structure-consistency` - Enforce consistent folder structure (flat vs wrapped) in module folders
   - Applies to all module folders (same list as `module-index-exports`)
   - Detects mixed structures (some flat files, some in subfolders)
@@ -858,6 +893,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 **New Rules (1)**
+
 - `no-redundant-folder-suffix` - Disallow file names that redundantly include the parent or ancestor folder name as a suffix
   - Flags files like `layouts/main-layout.tsx` (redundant "-layout" since already in `layouts/`)
   - Checks all ancestor folders from `src/` onwards
@@ -940,6 +976,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 **New Rules (1)**
+
 - `use-state-naming-convention` - Enforce boolean useState variables to start with valid prefixes 🔧
   - Boolean state must start with: `is`, `has`, `with`, `without` (configurable)
   - Auto-fixes both state variable and setter function names, plus all usages
@@ -972,6 +1009,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 **New Rules (1)**
+
 - `prop-naming-convention` - Enforce naming conventions for boolean and callback props 🔧
   - Boolean props must start with: `is`, `has`, `with`, `without` (configurable)
   - Callback props must start with: `on` (configurable)
@@ -1018,6 +1056,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 **New Rules (1)**
+
 - `folder-component-suffix` - Enforce naming conventions based on folder location:
   - Components in `views/` folder must end with `View` suffix
   - Components in `pages/` folder must end with `Page` suffix
@@ -1390,6 +1429,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 **New Rules (1)**
+
 - **`class-method-definition-format`** - Enforce consistent spacing in class and method definitions 🔧
   - Space before opening brace `{` in class declarations
   - No space between method name and opening parenthesis `(`
@@ -1474,6 +1514,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 **New Rules (1)**
+
 - **`no-hardcoded-strings`** - Enforce importing strings from constants/strings modules instead of hardcoding them inline 🔧
   - Detects hardcoded strings in JSX text content, attributes, and component logic
   - Configurable `ignoreAttributes`, `extraIgnoreAttributes`, `ignorePatterns` options
@@ -1590,6 +1631,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 **New Rules (3)**
+
 - `empty-line-after-block` - Require empty line between closing `}` of block statement and next statement 🔧
 - `class-naming-convention` - Enforce class declarations end with "Class" suffix 🔧
 - `enum-type-enforcement` - Enforce using enum values instead of string literals for typed variables (e.g., `ButtonVariantEnum.PRIMARY` instead of `"primary"`) 🔧
@@ -1696,6 +1738,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 **New Rules (1)**
+
 - `array-callback-destructure` - Enforce multiline destructuring in array method callbacks (map, filter, find, etc.) when there are 2+ properties 🔧
 
 ### Enhanced
@@ -1742,6 +1785,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 **New Rules (1)**
+
 - `if-else-spacing` - Enforce proper spacing between if statements 🔧
 
 ### Enhanced
@@ -1788,11 +1832,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 **New Rules (3)**
+
 - `index-exports-only` - Prevent type/interface definitions in index files (move to types file)
 - `ternary-condition-multiline` - Format complex ternary conditions with each operand on its own line 🔧 ⚙️
 - `no-inline-type-definitions` - Extract inline union types to named types in type files ⚙️
 
 **Auto-Fix Labels in Documentation**
+
 - Added 🔧 label to indicate auto-fixable rules
 - Added legend explaining 🔧 (auto-fixable) and ⚙️ (customizable) labels
 
@@ -2015,10 +2061,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 **New Rules (2)**
+
 - `classname-multiline` - Enforce multiline className formatting with string/template literal format 🔧
 - `function-declaration-style` - Auto-fix function declarations to arrow expressions 🔧
 
 **Agent Skills** - Added Agent Skills open standard support
+
 - `test-rule` - Test an ESLint rule after creating or modifying it
 - `validate-types` - Verify TypeScript definitions match rules in index.js
 - `review-config` - Review recommended ESLint configurations
@@ -2026,6 +2074,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Compatible with Claude Code, Cursor, VS Code, GitHub Copilot, Gemini CLI, and more
 
 **TypeScript Support**
+
 - Added `index.d.ts` with full type definitions for IDE autocomplete
 - All 61 rule names available as TypeScript literal types
 
@@ -2180,6 +2229,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 **New Rules (5)**
+
 - `component-props-destructure` - Enforce props destructuring in React components
 - `component-props-inline-type` - Enforce inline type annotations for component props
 - `function-object-destructure` - Enforce typed params with body destructuring
@@ -2299,21 +2349,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 **New Configuration: React + TypeScript + Tailwind** (`react-ts-tw`)
+
 - TypeScript parser and TypeScript ESLint plugin support
 - Tailwind CSS plugin integration
 - Perfectionist rules for sorting interfaces, enums, and object types
 - Comprehensive test project with TypeScript components
 
 **New Rule**
+
 - `index-export-style` - Enforce consistent export formatting in index files
 
 **Configurable Options**
+
 - `array-items-per-line` - Added `maxItems` option (default: 3)
 - `hook-deps-per-line` - Added `maxDeps` option (default: 2)
 - `multiline-if-conditions` - Added `maxOperands` option (default: 3)
 - `function-arguments-format` - New rule merging multiline argument rules with customizable options
 
 **Documentation**
+
 - Added AGENTS.md for AI coding agents
 
 ### Changed
@@ -2575,6 +2629,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 **New Rule**
+
 - `index-export-style` - Enforce consistent export style in index files 🔧
 - Support two styles: 'shorthand' (default) and 'import-export'
 - Shorthand: `export { a } from './file';`
@@ -2606,15 +2661,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 **Customizable Folder Options**
+
 - `absolute-imports-only` - Add extraAllowedFolders, extraReduxSubfolders, extraDeepImportFolders options
 - `module-index-exports` - Add extraModuleFolders, extraLazyLoadFolders, extraIgnorePatterns options
 - Users can now extend default folder lists without replacing them
 
 **Recommended ESLint Configurations**
+
 - Add recommended-configs/react/ folder with model eslint.config.js
 - Include comprehensive README with installation and plugin documentation
 
 **Comprehensive Documentation**
+
 - Add comprehensive examples for all 47 rules in README
 - Enhance README with emojis, rules summary table, and introduction section
 
@@ -2698,6 +2756,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 **TypeScript Support**
+
 - Add TypeScript type definitions for IDE support (index.d.ts)
 - Export all 47 rule names as literal types for autocomplete
 - Add PluginRules interface mapping rules to Rule.RuleModule

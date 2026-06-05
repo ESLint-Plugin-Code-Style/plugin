@@ -557,4 +557,114 @@ const arrayObjectsOnNewLines = {
     },
 };
 
-export { arrayItemsPerLine, arrayCallbackDestructure, arrayObjectsOnNewLines };
+/**
+ * ───────────────────────────────────────────────────────────────
+ * Rule: No Empty Lines In Arrays
+ * ───────────────────────────────────────────────────────────────
+ *
+ * Description:
+ *   Disallow blank lines inside array literals — after the opening
+ *   bracket, before the closing bracket, and between elements.
+ *   Mirrors no-empty-lines-in-objects for array containers.
+ *
+ * ✓ Good:
+ *   const items = [
+ *       "a",
+ *       "b",
+ *   ];
+ *
+ * ✗ Bad:
+ *   const items = [
+ *       "a",
+ *
+ *       "b",
+ *   ];
+ */
+const noEmptyLinesInArrays = {
+    create(context) {
+        const sourceCode = context.sourceCode || context.getSourceCode();
+
+        const checkArrayHandler = (node) => {
+            const elements = node.elements.filter(Boolean);
+
+            if (elements.length === 0) return;
+
+            const openBracket = sourceCode.getFirstToken(node);
+            const closeBracket = sourceCode.getLastToken(node);
+            const firstEl = elements[0];
+            const lastEl = elements[elements.length - 1];
+
+            // Check for empty line after opening bracket
+            if (firstEl.loc.start.line - openBracket.loc.end.line > 1) {
+                context.report({
+                    fix: (fixer) => fixer.replaceTextRange(
+                        [openBracket.range[1], firstEl.range[0]],
+                        "\n" + " ".repeat(firstEl.loc.start.column),
+                    ),
+                    message: "No empty line after opening bracket",
+                    node: firstEl,
+                });
+            }
+
+            // Check for empty line before closing bracket
+            if (closeBracket.loc.start.line - lastEl.loc.end.line > 1) {
+                context.report({
+                    fix: (fixer) => fixer.replaceTextRange(
+                        [lastEl.range[1], closeBracket.range[0]],
+                        "\n" + " ".repeat(closeBracket.loc.start.column),
+                    ),
+                    message: "No empty line before closing bracket",
+                    node: lastEl,
+                });
+            }
+
+            // Check for empty lines between elements
+            for (let i = 0; i < elements.length - 1; i += 1) {
+                const current = elements[i];
+                const next = elements[i + 1];
+
+                if (next.loc.start.line - current.loc.end.line > 1) {
+                    let commaToken = sourceCode.getTokenAfter(current);
+
+                    while (commaToken && commaToken.value !== "," && commaToken.range[0] < next.range[0]) {
+                        commaToken = sourceCode.getTokenAfter(commaToken);
+                    }
+
+                    const commaOnDifferentLine = commaToken && commaToken.value === "," &&
+                        commaToken.loc.start.line !== current.loc.end.line;
+
+                    context.report({
+                        fix: (fixer) => {
+                            if (commaOnDifferentLine) {
+                                return fixer.replaceTextRange(
+                                    [current.range[1], next.range[0]],
+                                    ",\n" + " ".repeat(next.loc.start.column),
+                                );
+                            }
+
+                            return fixer.replaceTextRange(
+                                [commaToken && commaToken.value === "," ? commaToken.range[1] : current.range[1], next.range[0]],
+                                "\n" + " ".repeat(next.loc.start.column),
+                            );
+                        },
+                        message: "No empty line between array elements",
+                        node: next,
+                    });
+                }
+            }
+        };
+
+        return {
+            ArrayExpression: checkArrayHandler,
+            ArrayPattern: checkArrayHandler,
+        };
+    },
+    meta: {
+        docs: { description: "Disallow empty lines in arrays" },
+        fixable: "whitespace",
+        schema: [],
+        type: "layout",
+    },
+};
+
+export { arrayItemsPerLine, arrayCallbackDestructure, arrayObjectsOnNewLines, noEmptyLinesInArrays };

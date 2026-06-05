@@ -12,6 +12,7 @@
  *   const data = {
  *       key: "value",
  *   };
+ *   element.style.color = "red";
  *
  * ✗ Bad:
  *   const name =
@@ -20,6 +21,8 @@
  *       {
  *           key: "value",
  *       };
+ *   element.style.color =
+ *       "red";
  */
 const assignmentValueSameLine = {
     create(context) {
@@ -110,7 +113,47 @@ const assignmentValueSameLine = {
             });
         };
 
-        return { VariableDeclaration: checkVariableDeclarationHandler };
+        const checkAssignmentExpressionHandler = (node) => {
+            const { left, operator, right } = node;
+
+            const operatorToken = sourceCode.getTokenBefore(
+                right,
+                (t) => t.value === operator,
+            );
+
+            if (!operatorToken) return;
+
+            // Check 1: left-hand side and operator should be on same line
+            if (left.loc.end.line !== operatorToken.loc.start.line) {
+                context.report({
+                    fix: (fixer) => fixer.replaceTextRange(
+                        [left.range[1], operatorToken.range[0]],
+                        " ",
+                    ),
+                    message: "Assignment operator should be on the same line as the target",
+                    node: operatorToken,
+                });
+
+                return;
+            }
+
+            // Check 2: operator and value should be on same line
+            if (right.loc.start.line > operatorToken.loc.end.line) {
+                context.report({
+                    fix: (fixer) => fixer.replaceTextRange(
+                        [operatorToken.range[1], right.range[0]],
+                        " ",
+                    ),
+                    message: "Value should be on the same line as the assignment operator",
+                    node: right,
+                });
+            }
+        };
+
+        return {
+            AssignmentExpression: checkAssignmentExpressionHandler,
+            VariableDeclaration: checkVariableDeclarationHandler,
+        };
     },
     meta: {
         docs: { description: "Enforce assignment value on same line as equals sign" },

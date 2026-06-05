@@ -85,6 +85,18 @@ export default [ // eslint-disable-line
                 {
                     blankLine: "always",
                     next: "*",
+                    prev: [
+                        "if",
+                        "for",
+                        "while",
+                        "do",
+                        "switch",
+                        "try",
+                    ],
+                },
+                {
+                    blankLine: "always",
+                    next: "*",
                     prev: "expression",
                 },
                 {
@@ -169,6 +181,7 @@ export default [ // eslint-disable-line
             "code-style/module-index-exports": "error",
             "code-style/multiline-if-conditions": "error",
             "code-style/nested-call-closing-brackets": "error",
+            "code-style/no-empty-lines-in-arrays": "error",
             "code-style/no-empty-lines-in-function-calls": "error",
             "code-style/no-empty-lines-in-function-params": "error",
             "code-style/no-empty-lines-in-jsx": "error",
@@ -298,4 +311,25 @@ export default [ // eslint-disable-line
             },
         },
     },
+    /*
+     * Next.js App Router (opt-in). This plugin's OWN rules already auto-detect
+     * Next.js files (app/ folder, page/layout/route, bracket folders, reserved
+     * names) with no config. The two rules below belong to OTHER plugins
+     * (import-x, check-file) and conflict with Next.js conventions, so they are
+     * left off here. If your project uses the Next.js App Router, uncomment the
+     * two config objects below.
+     */
+    // {
+    //     files: [
+    //         "app/**/{page,layout,loading,error,not-found,template,default,route,sitemap,robots,manifest,opengraph-image,apple-icon,icon}.{js,jsx,ts,tsx}",
+    //         "next.config.{js,ts,mjs,cjs}",
+    //         "middleware.{js,ts}",
+    //         "instrumentation.{js,ts}",
+    //     ],
+    //     rules: { "import-x/no-default-export": "off" },
+    // },
+    // {
+    //     files: ["app/**/\\[*\\]/**/*.{js,jsx,ts,tsx}"],
+    //     rules: { "check-file/folder-naming-convention": "off" },
+    // },
 ];

@@ -130,6 +130,15 @@ export const DEFAULT_MAX_CLASS_LENGTH = 80;
 export const looksLikeTailwindClasses = (classString) => {
     if (!classString || typeof classString !== "string") return false;
 
+    /*
+     * Prose guard. Real Tailwind class strings are lowercase, hyphenated, and
+     * never contain commas, sentence periods, capitalized words, or
+     * apostrophes — but English prose always does. Bail out early so long
+     * sentences whose words coincidentally match Tailwind patterns ("array
+     * items on one line", "uses block bodies") are not mistaken for classes.
+     */
+    if (/,|\.\s|['’]|\b[A-Z][a-z]+/.test(classString)) return false;
+
     const classes = classString.trim().split(/\s+/).filter(Boolean);
 
     if (classes.length === 0) return false;

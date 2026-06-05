@@ -114,6 +114,11 @@ export default [ // eslint-disable-line
                 {
                     blankLine: "always",
                     next: "*",
+                    prev: ["if", "for", "while", "do", "switch", "try"],
+                },
+                {
+                    blankLine: "always",
+                    next: "*",
                     prev: "expression",
                 },
                 {
@@ -219,6 +224,7 @@ export default [ // eslint-disable-line
             "code-style/module-index-exports": "error",
             "code-style/multiline-if-conditions": "error",
             "code-style/nested-call-closing-brackets": "error",
+            "code-style/no-empty-lines-in-arrays": "error",
             "code-style/no-empty-lines-in-function-calls": "error",
             "code-style/no-empty-lines-in-function-params": "error",
             "code-style/no-empty-lines-in-jsx": "error",

@@ -1,4 +1,4 @@
-import { arrayCallbackDestructure, arrayItemsPerLine, arrayObjectsOnNewLines } from "./rules/arrays.js";
+import { arrayCallbackDestructure, arrayItemsPerLine, arrayObjectsOnNewLines, noEmptyLinesInArrays } from "./rules/arrays.js";
 import {
     arrowFunctionBlockBody,
     arrowFunctionSimpleJsx,
@@ -100,6 +100,7 @@ export default {
         "array-callback-destructure": arrayCallbackDestructure,
         "array-items-per-line": arrayItemsPerLine,
         "array-objects-on-new-lines": arrayObjectsOnNewLines,
+        "no-empty-lines-in-arrays": noEmptyLinesInArrays,
 
         // Arrow function rules
         "arrow-function-block-body": arrowFunctionBlockBody,

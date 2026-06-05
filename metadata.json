@@ -1,11 +1,11 @@
 {
-    "version": "3.2.1",
+    "version": "3.3.0",
     "githubUrl": "https://github.com/ESLint-Plugin-Code-Style/plugin",
     "npmUrl": "https://www.npmjs.com/package/eslint-plugin-code-style",
     "websiteUrl": "https://www.eslint-plugin-code-style.org",
     "eslintVersions": "v9 and v10",
-    "totalRules": 81,
-    "fixableRules": 71,
+    "totalRules": 82,
+    "fixableRules": 72,
     "configurableRules": 22,
     "reportOnlyRules": 10,
     "categories": [
@@ -52,6 +52,17 @@
                     "isTsOnly": false,
                     "goodExample": "const users = [\n    { id: 1, name: \"Alice\" },\n    { id: 2, name: \"Bob\" },\n];",
                     "badExample": "const users = [{ id: 1, name: \"Alice\" }, { id: 2, name: \"Bob\" }];",
+                    "options": []
+                },
+                {
+                    "name": "no-empty-lines-in-arrays",
+                    "description": "Disallow blank lines inside array literals — after the opening bracket, before the closing bracket, and between elements",
+                    "rationale": "Blank lines inside an array break the visual grouping of its items; the array container should read as one contiguous block",
+                    "isFixable": true,
+                    "isConfigurable": false,
+                    "isTsOnly": false,
+                    "goodExample": "const items = [\n    \"a\",\n    \"b\",\n];",
+                    "badExample": "const items = [\n    \"a\",\n\n    \"b\",\n];",
                     "options": []
                 }
             ]
@@ -1016,13 +1027,13 @@
             "rules": [
                 {
                     "name": "assignment-value-same-line",
-                    "description": "Assignment values start on same line as =",
+                    "description": "Assignment values start on same line as = (declarations and assignment expressions)",
                     "rationale": "Breaking after = creates awkward formatting",
                     "isFixable": true,
                     "isConfigurable": false,
                     "isTsOnly": false,
-                    "goodExample": "const name = \"John\";\nconst config = {\n    host: \"localhost\",\n};",
-                    "badExample": "const name =\n    \"John\";\nconst config =\n    {\n        host: \"localhost\",\n    };",
+                    "goodExample": "const name = \"John\";\nconst config = {\n    host: \"localhost\",\n};\nelement.style.color = \"red\";",
+                    "badExample": "const name =\n    \"John\";\nconst config =\n    {\n        host: \"localhost\",\n    };\nelement.style.color =\n    \"red\";",
                     "options": []
                 },
                 {

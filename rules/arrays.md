@@ -102,6 +102,40 @@ const items = [{ id: 1 },
 
 <br />
 
+### `no-empty-lines-in-arrays`
+
+🔧 Auto-fixable
+
+Disallow blank lines inside array literals — after the opening `[`, before the closing `]`, and between elements.
+
+**Why use it:** Blank lines inside an array break the visual grouping of its items. The array container should read as one contiguous block, the same way `no-empty-lines-in-objects` keeps object literals tight.
+
+```javascript
+// Good — no blank lines inside the array
+const items = [
+    "a",
+    "b",
+    "c",
+];
+
+// Bad — blank line between elements
+const items = [
+    "a",
+
+    "b",
+    "c",
+];
+
+// Bad — blank line after the opening bracket
+const items = [
+
+    "a",
+    "b",
+];
+```
+
+<br />
+
 ---
 
 [<- Back to Rules Index](./README.md) | [<- Back to Main README](../../README.md)

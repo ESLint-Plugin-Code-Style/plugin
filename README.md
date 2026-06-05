@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="./banner.svg" alt="eslint-plugin-code-style — 81 custom ESLint rules for React projects" width="100%" />
+<img src="./banner.svg" alt="eslint-plugin-code-style — 82 custom ESLint rules for React projects" width="100%" />
 
 <br />
 <br />
@@ -24,7 +24,7 @@
 
 **A powerful ESLint plugin for enforcing consistent code formatting and style rules in React/JSX projects.**
 
-*81 rules (71 auto-fixable, 22 configurable) to keep your codebase clean and consistent*
+*82 rules (72 auto-fixable, 22 configurable) to keep your codebase clean and consistent*
 
 </div>
 
@@ -32,16 +32,17 @@
 
 ## 🎯 Why This Plugin?
 
-This plugin provides **81 custom rules** (71 auto-fixable, 22 configurable) for code formatting. Built for **ESLint v9+ flat configs** (v9 and v10 supported).
+This plugin provides **82 custom rules** (72 auto-fixable, 22 configurable) for code formatting. Built for **ESLint v9+ flat configs** (v9 and v10 supported).
 
 > **Note:** ESLint [deprecated 79 formatting rules](https://eslint.org/blog/2023/10/deprecating-formatting-rules/) in v8.53.0. Our recommended configs use `@stylistic/eslint-plugin` as the replacement for these deprecated rules.
 
 **Key Benefits:**
+
 - **Fills the gaps** — Provides formatting rules not available in other plugins
 - **Works alongside existing tools** — Complements ESLint's built-in rules and packages like eslint-plugin-react, eslint-plugin-import, etc
 - **Self-sufficient rules** — Each rule handles complete formatting independently
 - **Consistency at scale** — Reduces code-style differences between team members by enforcing uniform formatting across your projects
-- **Highly automated** — 71 of 81 rules support auto-fix with `eslint --fix`
+- **Highly automated** — 72 of 82 rules support auto-fix with `eslint --fix`
 - **Next.js compatible** — Rules automatically detect and respect App Router conventions (dynamic routes, reserved filenames, route groups, parallel routes)
 
 When combined with ESLint's native rules and other popular plugins, this package helps create a complete code style solution that keeps your codebase clean and consistent.
@@ -65,7 +66,7 @@ When combined with ESLint's native rules and other popular plugins, this package
 
 This plugin is designed around a **type-based folder structure** — source files grouped by their role, not by feature. It works best, and many rules auto-fix correctly, when your project organizes code into folders like:
 
-```
+```text
 src/
 ├── components/     ├── hooks/         ├── services/
 ├── atoms/          ├── providers/     ├── middlewares/
@@ -88,7 +89,7 @@ We provide **ready-to-use ESLint flat configuration files** that combine `eslint
 
 ### 💡 Why Use These Configs?
 
-- **Complete Coverage** — Combines ESLint built-in rules, third-party plugins, and all 81 code-style rules
+- **Complete Coverage** — Combines ESLint built-in rules, third-party plugins, and all 82 code-style rules
 - **Ready-to-Use** — Copy the config file and start linting immediately
 - **Battle-Tested** — These configurations have been refined through real-world usage
 - **Fully Documented** — Each config includes detailed instructions and explanations
@@ -141,40 +142,48 @@ Configs are organized by ESLint version:
 <td width="50%">
 
 ### 🔧 Auto-Fixable Rules
-**71 rules** support automatic fixing with `eslint --fix`. **21 rules** have configurable options. 10 rules are report-only (require manual changes).
+
+**72 rules** support automatic fixing with `eslint --fix`. **21 rules** have configurable options. 10 rules are report-only (require manual changes).
 
 </td>
 <td width="50%">
 
 ### ⚛️ React & JSX Support
+
 Built specifically for React projects with comprehensive JSX formatting rules.
 
 </td>
 </tr>
 <tr>
+
 <td width="50%">
 
 ### ✅ ESLint v9 & v10 Ready
+
 Designed for ESLint's flat config system. Supports both ESLint v9 and v10 with dedicated recommended configurations.
 
 </td>
 <td width="50%">
 
 ### 📭 Zero Dependencies
+
 Lightweight plugin with no external dependencies. Fast and efficient.
 
 </td>
+
 </tr>
 <tr>
 <td width="50%">
 
 ### 🔄 Next.js Compatible
-Rules automatically detect and respect Next.js App Router conventions — dynamic routes, reserved filenames, and special folders.
+
+Our rules **auto-detect Next.js per file** (no config) — they respect App Router conventions: the `app/` folder, reserved filenames (`page`, `layout`, `route`, …), reserved exports (`generateMetadata`, route handlers), framework prop names, and special folders (`[slug]`, `(group)`, `@parallel`, `_private`). Two third-party rules (`import-x/no-default-export`, `check-file/folder-naming-convention`) still need an opt-in block — see the commented "Next.js App Router (opt-in)" section at the bottom of every recommended config.
 
 </td>
 <td width="50%">
 
 ### 📦 TypeScript First
+
 9 dedicated TypeScript rules for enums, interfaces, types, prop naming, and type annotation formatting.
 
 </td>
@@ -299,6 +308,7 @@ rules: {
     "code-style/module-index-exports": "error",
     "code-style/multiline-if-conditions": "error",
     "code-style/nested-call-closing-brackets": "error",
+    "code-style/no-empty-lines-in-arrays": "error",
     "code-style/no-empty-lines-in-function-calls": "error",
     "code-style/no-empty-lines-in-function-params": "error",
     "code-style/no-empty-lines-in-jsx": "error",
@@ -329,7 +339,7 @@ rules: {
 
 ## 📖 Rules Categories
 
-> **81 rules total** — 71 with auto-fix 🔧, 22 configurable ⚙️, 10 report-only
+> **82 rules total** — 72 with auto-fix 🔧, 22 configurable ⚙️, 10 report-only
 >
 > 📖 **Full documentation with examples:** [www.eslint-plugin-code-style.org](https://www.eslint-plugin-code-style.org/rules) • [Local docs](./rules/)
 >
@@ -341,6 +351,7 @@ rules: {
 | `array-callback-destructure` | Destructured params in array callbacks (map, filter, find) go multiline when ≥2 properties 🔧 |
 | `array-items-per-line` | Collapse arrays ≤ threshold to one line; expand larger arrays with each item on own line (default: ≤3) 🔧 ⚙️ |
 | `array-objects-on-new-lines` | Each object in an array starts on its own line for better visual scanning 🔧 |
+| `no-empty-lines-in-arrays` | Disallow blank lines inside array literals — after `[`, before `]`, and between elements 🔧 |
 | **Arrow Function Rules** | |
 | `arrow-function-block-body` | Wrap multiline arrow function expressions in parentheses for clear boundaries 🔧 |
 | `arrow-function-simple-jsx` | Collapse arrow functions returning simple single-element JSX to one line, remove unnecessary parens 🔧 |
@@ -470,7 +481,7 @@ For detailed documentation with examples, configuration options, and best practi
 
 ## 🔧 Auto-fixing
 
-71 of 81 rules support auto-fixing. Run ESLint with the `--fix` flag:
+72 of 82 rules support auto-fixing. Run ESLint with the `--fix` flag:
 
 ```bash
 # Fix all files in src directory
@@ -481,6 +492,7 @@ eslint src/components/MyComponent.jsx --fix
 
 # Fix with specific extensions
 eslint "src/**/*.{js,jsx,ts,tsx}" --fix
+
 ```
 
 <br />
@@ -488,17 +500,21 @@ eslint "src/**/*.{js,jsx,ts,tsx}" --fix
 ## 🚫 Disabling Rules
 
 **Disable for a specific line:**
+
 ```javascript
 // eslint-disable-next-line code-style/rule-name
 const code = "violates rule";
+
 ```
 
 **Disable for an entire file:**
+
 ```javascript
 /* eslint-disable code-style/rule-name */
 ```
 
 **Disable in configuration:**
+
 ```javascript
 rules: {
     "code-style/rule-name": "off",
@@ -521,7 +537,7 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 2. Create your feature branch (`git checkout -b feature/amazing-feature`)
 3. Build the project (`npm run build`)
 4. Test your changes in all 4 test projects (`cd _tests_/v9/react-ts-tw && npm run lint`)
-5. Commit your changes (`git commit -m 'Add some amazing feature'`)
+5. Commit your changes (`git commit -m 'Add some amazing feature')
 6. Push to the branch (`git push origin feature/amazing-feature`)
 7. Open a Pull Request
 
@@ -531,7 +547,7 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-Copyright (c) 2026 Eslint Plugin Code Style. All rights reserved. 
+Copyright (c) 2026 Eslint Plugin Code Style. All rights reserved.
 
 <br />
 
