@@ -1,0 +1,37 @@
+{
+    "version": "0.2",
+    "language": "en",
+    "ignorePaths": [
+        "node_modules/**",
+        "dist/**",
+        "pnpm-lock.yaml"
+    ],
+    "words": [
+        "browserslistrc",
+        "callability",
+        "chakra",
+        "codestyle",
+        "commitlintrc",
+        "destructures",
+        "elhawary",
+        "ftrain",
+        "glassmorphism",
+        "hawary",
+        "inprogress",
+        "kottke",
+        "loggedin",
+        "loggedout",
+        "multilines",
+        "mydb",
+        "nonblock",
+        "oklch",
+        "opengraph",
+        "prebuild",
+        "precaches",
+        "prerendered",
+        "risograph",
+        "subfolders",
+        "turbopack",
+        "wcag"
+    ]
+}
