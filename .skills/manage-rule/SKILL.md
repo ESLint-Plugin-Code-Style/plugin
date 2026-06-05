@@ -150,10 +150,10 @@ grep -rc "^const .* = {$" src/rules/
 grep -c 'code-style/' index.d.ts
 grep -c '"code-style/' recommended-configs/react-ts-tw/eslint.config.js
 
-# PRESENCE CHECK (run for the rule you added/removed). Set NEW_RULE=<rule-name>.
+# PRESENCE CHECK — set NEW_RULE to the rule you added/removed (placeholder below).
 # Every line below MUST report the rule present (or absent, for removals).
 # index.d.ts is shipped to npm and easy to forget — this catches that.
-NEW_RULE="no-empty-lines-in-arrays"
+NEW_RULE="<rule-name>"   # e.g. "no-empty-lines-in-arrays"
 for f in src/index.js index.d.ts metadata.json README.md "rules/<category>.md" \
   recommended-configs/v9/react-ts-tw/eslint.config.js \
   _tests_/v9/react-ts-tw/eslint.config.js; do
