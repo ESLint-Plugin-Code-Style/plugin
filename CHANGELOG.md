@@ -7,9 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [3.3.3] - 2026-06-05
+
+**`no-empty-lines-in-arrays` ignores comments**
+
+### Fixed
+
+- **`no-empty-lines-in-arrays`** — a comment between array elements (line `//` or block `/* */`) was counted as an empty line and flagged, and the auto-fix could delete the comment. The rule now treats comments as items: a comment between elements is allowed, and only genuine blank lines (including those around a comment) are reported and removed — the comment is preserved.
+
+---
+
 ## [3.3.2] - 2026-06-05
 
-**className detection: skip JSX/HTML code-sample strings**
+**className detection skips JSX/HTML code-sample strings**
 
 ### Fixed
 

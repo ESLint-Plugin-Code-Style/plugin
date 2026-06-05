@@ -584,74 +584,72 @@ const noEmptyLinesInArrays = {
     create(context) {
         const sourceCode = context.sourceCode || context.getSourceCode();
 
+        // Report a blank-line gap between two anchors, preserving any comma that
+        // sits after an element and never touching comment text. `afterIsElement`
+        // means the left anchor is an element, so a trailing comma may follow it.
+        const reportGapHandler = (afterNode, beforeNode, afterIsElement, message) => {
+            if (beforeNode.loc.start.line - afterNode.loc.end.line <= 1) return;
+
+            let fromPos = afterNode.range[1];
+
+            if (afterIsElement) {
+                const commaToken = sourceCode.getTokenAfter(afterNode);
+
+                if (commaToken && commaToken.value === ",") fromPos = commaToken.range[1];
+            }
+
+            context.report({
+                fix: (fixer) => fixer.replaceTextRange(
+                    [fromPos, beforeNode.range[0]],
+                    "\n" + " ".repeat(beforeNode.loc.start.column),
+                ),
+                message: message,
+                node: beforeNode,
+            });
+        };
+
         const checkArrayHandler = (node) => {
             const elements = node.elements.filter(Boolean);
 
             if (elements.length === 0) return;
 
             const openBracket = sourceCode.getFirstToken(node);
+
             const closeBracket = sourceCode.getLastToken(node);
-            const firstEl = elements[0];
-            const lastEl = elements[elements.length - 1];
 
-            // Check for empty line after opening bracket
-            if (firstEl.loc.start.line - openBracket.loc.end.line > 1) {
-                context.report({
-                    fix: (fixer) => fixer.replaceTextRange(
-                        [openBracket.range[1], firstEl.range[0]],
-                        "\n" + " ".repeat(firstEl.loc.start.column),
-                    ),
-                    message: "No empty line after opening bracket",
-                    node: firstEl,
-                });
+            // Top-level comments inside the array count as items, not empty lines.
+            // Comments nested inside an element are left to that element's own rule.
+            const topComments = sourceCode.getCommentsInside(node).filter((comment) =>
+                !elements.some((element) =>
+                    comment.range[0] >= element.range[0] && comment.range[1] <= element.range[1]));
+
+            const items = [...elements, ...topComments].sort((first, second) =>
+                first.range[0] - second.range[0]);
+
+            reportGapHandler(
+                openBracket,
+                items[0],
+                false,
+                "No empty line after opening bracket",
+            );
+
+            for (let i = 0; i < items.length - 1; i += 1) {
+                reportGapHandler(
+                    items[i],
+                    items[i + 1],
+                    elements.includes(items[i]),
+                    "No empty line between array elements",
+                );
             }
 
-            // Check for empty line before closing bracket
-            if (closeBracket.loc.start.line - lastEl.loc.end.line > 1) {
-                context.report({
-                    fix: (fixer) => fixer.replaceTextRange(
-                        [lastEl.range[1], closeBracket.range[0]],
-                        "\n" + " ".repeat(closeBracket.loc.start.column),
-                    ),
-                    message: "No empty line before closing bracket",
-                    node: lastEl,
-                });
-            }
+            const lastItem = items[items.length - 1];
 
-            // Check for empty lines between elements
-            for (let i = 0; i < elements.length - 1; i += 1) {
-                const current = elements[i];
-                const next = elements[i + 1];
-
-                if (next.loc.start.line - current.loc.end.line > 1) {
-                    let commaToken = sourceCode.getTokenAfter(current);
-
-                    while (commaToken && commaToken.value !== "," && commaToken.range[0] < next.range[0]) {
-                        commaToken = sourceCode.getTokenAfter(commaToken);
-                    }
-
-                    const commaOnDifferentLine = commaToken && commaToken.value === "," &&
-                        commaToken.loc.start.line !== current.loc.end.line;
-
-                    context.report({
-                        fix: (fixer) => {
-                            if (commaOnDifferentLine) {
-                                return fixer.replaceTextRange(
-                                    [current.range[1], next.range[0]],
-                                    ",\n" + " ".repeat(next.loc.start.column),
-                                );
-                            }
-
-                            return fixer.replaceTextRange(
-                                [commaToken && commaToken.value === "," ? commaToken.range[1] : current.range[1], next.range[0]],
-                                "\n" + " ".repeat(next.loc.start.column),
-                            );
-                        },
-                        message: "No empty line between array elements",
-                        node: next,
-                    });
-                }
-            }
+            reportGapHandler(
+                lastItem,
+                closeBracket,
+                elements.includes(lastItem),
+                "No empty line before closing bracket",
+            );
         };
 
         return {
