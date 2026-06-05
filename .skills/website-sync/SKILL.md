@@ -190,8 +190,13 @@ human step (only you know which override a plugin fix made redundant).
    `sync:local` over it.
 2. Bump the dep: merge the **Dependabot PR** (wait ≤daily or hit "Check for
    updates"), OR run `pnpm update eslint-plugin-code-style` manually for immediate.
-3. Re-add any rules / drop any overrides that were deferred until the plugin shipped.
-4. `pnpm lint && pnpm tsc --noEmit`, commit, push.
+3. **If you used the Dependabot PR**, after `git pull` run **`pnpm install`** — the
+   merged PR changes `package.json` + `pnpm-lock.yaml`, but your local
+   `node_modules` is still on the old version until you install. (Skip this with
+   the manual path: `pnpm update` already installs.) Verify:
+   `cat node_modules/eslint-plugin-code-style/package.json | grep version`.
+4. Re-add any rules / drop any overrides that were deferred until the plugin shipped.
+5. `pnpm lint && pnpm tsc --noEmit`, commit, push.
 
 `sync:local` is **optional** before pushing — the remote pipeline + `prebuild`
 regenerate the data from the remote plugin anyway, so the deployed site is always
