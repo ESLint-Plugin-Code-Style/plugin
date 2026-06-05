@@ -7,6 +7,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [3.3.4] - 2026-06-05
+
+**`opening-brackets-same-line` false positive on `??` fixed**
+
+A nullish-coalescing expression with valid operands (e.g. `map.get(line) ?? []`)
+passed the rule's operand guard, but the operator-token search only matched `||`
+and `&&`. It therefore skipped the `??` and scanned forward to the next `&&`/`||`
+token elsewhere in the file, producing a spurious "Logical operator should be on
+the same line as both operands" report on an unrelated, correctly-formatted line
+(reproduced when a `??` line precedes any single-line `&&`/`||` with no logical
+operator between them).
+
+The operator search now matches each expression's own operator (`||`, `&&`, or
+`??`), so it can no longer overshoot.
+
+---
+
 ## [3.3.3] - 2026-06-05
 
 **`no-empty-lines-in-arrays` ignores comments**

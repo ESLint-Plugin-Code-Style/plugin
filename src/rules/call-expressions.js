@@ -1936,10 +1936,13 @@ const openingBracketsSameLine = {
                 checkOperator(left);
                 checkOperator(right);
 
-                // Find the operator token
+                // Find the operator token. Match THIS expression's own operator
+                // (||, &&, or ??) — using a fixed "||/&&" filter overshoots past a
+                // nullish-coalescing operator to the next &&/|| token elsewhere in
+                // the file, producing a false report on an unrelated line.
                 const operatorToken = sourceCode.getTokenAfter(
                     left,
-                    (t) => t.value === "||" || t.value === "&&",
+                    (t) => t.value === operator,
                 );
 
                 if (!operatorToken) return;
