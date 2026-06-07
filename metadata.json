@@ -1,13 +1,13 @@
 {
-    "version": "3.3.4",
+    "version": "3.4.0",
     "githubUrl": "https://github.com/ESLint-Plugin-Code-Style/plugin",
     "npmUrl": "https://www.npmjs.com/package/eslint-plugin-code-style",
     "websiteUrl": "https://www.eslint-plugin-code-style.org",
     "eslintVersions": "v9 and v10",
-    "totalRules": 82,
+    "totalRules": 83,
     "fixableRules": 72,
-    "configurableRules": 22,
-    "reportOnlyRules": 10,
+    "configurableRules": 24,
+    "reportOnlyRules": 11,
     "categories": [
         {
             "name": "Arrays",
@@ -313,6 +313,30 @@
                     "goodExample": "layouts/main.tsx",
                     "badExample": "layouts/main-layout.tsx",
                     "options": []
+                },
+                {
+                    "name": "no-scattered-component-variants",
+                    "description": "Disallow scattered component variants that share a trailing name token — collapse them into one folder named by the shared token",
+                    "rationale": "Siblings like copy-button and icon-button repeat the same suffix on every name; collapsing them into button/{copy,icon}.tsx groups related variants and removes the redundant suffix",
+                    "isFixable": false,
+                    "isConfigurable": true,
+                    "isTsOnly": false,
+                    "goodExample": "ui/button/copy.tsx",
+                    "badExample": "ui/copy-button.tsx",
+                    "options": [
+                        {
+                            "name": "moduleFolders",
+                            "type": "string[]",
+                            "default": "(built-in list)",
+                            "description": "Module folders to check"
+                        },
+                        {
+                            "name": "extraModuleFolders",
+                            "type": "string[]",
+                            "default": "[]",
+                            "description": "Additional folders to check"
+                        }
+                    ]
                 },
                 {
                     "name": "svg-icon-naming-convention",
@@ -730,7 +754,7 @@
                 },
                 {
                     "name": "index-exports-only",
-                    "description": "Index files should only contain imports and re-exports, not code definitions. Subfolder indexes must contain component code (not barrel) — except for redux subfolders (types/, actions/, reducers/, etc.), which are each treated as their own module root.",
+                    "description": "Index files should only contain imports and re-exports, not code definitions. Subfolder indexes must contain component code (not a barrel); a component index must not re-export sibling modules it does not use — those belong in the module root barrel. Redux subfolders (types/, actions/, reducers/, etc.) are each treated as their own module root.",
                     "rationale": "Index files should be barrels that aggregate exports. Redux is an umbrella folder — each subfolder (types, actions, reducers) is conventionally its own module with its own root barrel.",
                     "isFixable": false,
                     "isConfigurable": false,
@@ -759,7 +783,7 @@
                 },
                 {
                     "name": "module-index-exports",
-                    "description": "Index files must export all folder contents",
+                    "description": "Index files must export all folder contents. A nested folder item is also considered exported when the module root barrel deep-exports it (e.g. export { CopyButton } from \"./button/copy\"), so a component index need not re-export its own siblings.",
                     "rationale": "Ensures proper module boundaries and folder-level imports",
                     "isFixable": false,
                     "isConfigurable": true,
@@ -1236,7 +1260,7 @@
                     "description": "Enforce TypeScript definitions to be in designated folders (interfaces/, types/, enums/)",
                     "rationale": "Separating definitions by category makes them easier to find and maintain",
                     "isFixable": false,
-                    "isConfigurable": true,
+                    "isConfigurable": false,
                     "isTsOnly": true,
                     "goodExample": "// src/interfaces/user.ts\nexport interface UserInterface { ... }\n\n// src/types/config.ts\nexport type ConfigType = { ... }",
                     "badExample": "// src/components/user-card.tsx\ninterface UserProps { ... } // Should be in interfaces/",

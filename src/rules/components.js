@@ -2275,6 +2275,201 @@ const noRedundantFolderSuffix = {
     },
 };
 
+/**
+ * ───────────────────────────────────────────────────────────────
+ * Rule: No Scattered Component Variants
+ * ───────────────────────────────────────────────────────────────
+ *
+ * Description:
+ *   When a module folder holds multiple sibling files or folders that
+ *   share a common trailing name token (a "variant family"), they should
+ *   be collapsed into a single folder named by that shared token, with
+ *   each member renamed to its distinguishing prefix. This keeps related
+ *   variants together and stops every name repeating the same suffix.
+ *
+ *   Detection is on the TRAILING token only — names that merely share a
+ *   leading token (code-block / code-rain, use-theme / use-auth) are not
+ *   flagged.
+ *
+ * ✓ Good (collapsed — shared token is the folder):
+ *   ui/button/index.tsx   // Button
+ *   ui/button/copy.tsx    // CopyButton
+ *   ui/button/icon.tsx    // IconButton
+ *
+ * ✗ Bad (scattered files — every name repeats "button"):
+ *   ui/copy-button.tsx
+ *   ui/icon-button.tsx
+ *   ui/lint-button.tsx
+ *
+ * ✗ Bad (scattered folders — every name repeats "vignette"):
+ *   ui/react-vignette/index.tsx
+ *   ui/typescript-vignette/index.tsx
+ *   ui/zero-deps-vignette/index.tsx
+ */
+const noScatteredComponentVariants = {
+    create(context) {
+        const filename = context.filename || context.getFilename();
+        const normalizedFilename = filename.replace(/\\/g, "/");
+
+        // Skip files inside Next.js app/ directory — own structure conventions
+        if (normalizedFilename.includes("/app/")) return {};
+
+        const options = context.options[0] || {};
+        const defaultModuleFolders = [
+            "actions",
+            "apis",
+            "atoms",
+            "components",
+            "config",
+            "configs",
+            "constants",
+            "contexts",
+            "data",
+            "enums",
+            "helpers",
+            "hooks",
+            "interfaces",
+            "layouts",
+            "lib",
+            "middlewares",
+            "molecules",
+            "organisms",
+            "providers",
+            "reducers",
+            "requests",
+            "routes",
+            "schemas",
+            "sections",
+            "services",
+            "store",
+            "strings",
+            "theme",
+            "themes",
+            "thunks",
+            "types",
+            "ui",
+            "utils",
+            "utilities",
+            "views",
+            "widgets",
+        ];
+
+        const moduleFolders = options.moduleFolders
+            || [...defaultModuleFolders, ...(options.extraModuleFolders || [])];
+
+        const codeFilePattern = /\.(tsx?|jsx?)$/;
+
+        const pathSegments = normalizedFilename.split("/");
+        const fileBaseName = pathSegments[pathSegments.length - 1].replace(codeFilePattern, "");
+        const isIndexFile = fileBaseName === "index";
+
+        // Determine the variant "item" this file represents, and the dir holding its siblings:
+        //   - index file -> item is the parent folder; siblings live in the grandparent dir
+        //   - named file -> item is the file itself; siblings live in the parent dir
+        // Reporting only via these two anchors means each scattered item is flagged exactly once.
+        let itemName;
+        let scanDirSegments;
+
+        if (isIndexFile) {
+            itemName = pathSegments[pathSegments.length - 2];
+            scanDirSegments = pathSegments.slice(0, -2);
+        } else {
+            itemName = fileBaseName;
+            scanDirSegments = pathSegments.slice(0, -1);
+        }
+
+        if (!itemName) return {};
+
+        // The dir holding the siblings must itself be (or sit inside) a module folder
+        if (!scanDirSegments.some((segment) => moduleFolders.includes(segment))) return {};
+
+        const tokenizeHandler = (name) => name
+            .replace(codeFilePattern, "")
+            .split("-")
+            .filter(Boolean);
+
+        const itemTokens = tokenizeHandler(itemName);
+
+        // Only multi-token names can form a variant family (they have a distinguishing prefix)
+        if (itemTokens.length < 2) return {};
+
+        const itemTrailing = singularizeHandler(itemTokens[itemTokens.length - 1]);
+        const scanDir = scanDirSegments.join("/");
+
+        return {
+            Program(node) {
+                let children;
+
+                try {
+                    children = fs.readdirSync(scanDir, { withFileTypes: true });
+                } catch {
+                    return;
+                }
+
+                const members = [];
+
+                for (const child of children) {
+                    const isCodeFile = child.isFile() && codeFilePattern.test(child.name);
+
+                    if (!child.isDirectory() && !isCodeFile) continue;
+
+                    const childBaseName = child.name.replace(codeFilePattern, "");
+
+                    if (childBaseName === "index" || childBaseName.startsWith(".")) continue;
+                    if (/\.(test|spec)$/.test(childBaseName)) continue;
+
+                    const childTokens = tokenizeHandler(child.name);
+
+                    if (childTokens.length < 2) continue;
+
+                    if (singularizeHandler(childTokens[childTokens.length - 1]) === itemTrailing) {
+                        members.push({
+                            leading: childTokens.slice(0, -1).join("-"),
+                            name: childBaseName,
+                        });
+                    }
+                }
+
+                const uniqueNames = [...new Set(members.map((member) => member.name))];
+
+                // Need at least two distinct siblings sharing the trailing token
+                if (uniqueNames.length < 2) return;
+
+                const exampleMembers = members
+                    .slice(0, 3)
+                    .map((member) => `${member.leading}.tsx`)
+                    .join(", ");
+
+                context.report({
+                    message: `"${itemName}" is part of a scattered "${itemTrailing}" variant family (${uniqueNames.join(", ")}). Collapse these siblings into a single "${itemTrailing}/" folder with members named by their prefix (e.g., ${itemTrailing}/{${exampleMembers}}).`,
+                    node,
+                });
+            },
+        };
+    },
+    meta: {
+        docs: { description: "Disallow scattered component variants that share a trailing name token — collapse them into a single folder named by the shared token" },
+        fixable: null,
+        schema: [
+            {
+                additionalProperties: false,
+                properties: {
+                    extraModuleFolders: {
+                        items: { type: "string" },
+                        type: "array",
+                    },
+                    moduleFolders: {
+                        items: { type: "string" },
+                        type: "array",
+                    },
+                },
+                type: "object",
+            },
+        ],
+        type: "suggestion",
+    },
+};
+
 export {
     componentPropsDestructure,
     componentPropsInlineType,
@@ -2282,4 +2477,5 @@ export {
     folderBasedNamingConvention,
     folderStructureConsistency,
     noRedundantFolderSuffix,
+    noScatteredComponentVariants,
 };

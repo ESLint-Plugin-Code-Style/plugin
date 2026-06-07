@@ -246,6 +246,7 @@ export default [ // eslint-disable-line
             "code-style/no-hardcoded-strings": "error",
             "code-style/no-inline-type-definitions": "error",
             "code-style/no-redundant-folder-suffix": "error",
+            "code-style/no-scattered-component-variants": "error",
             "code-style/object-property-per-line": "error",
             "code-style/object-property-value-brace": "error",
             "code-style/object-property-value-format": "error",

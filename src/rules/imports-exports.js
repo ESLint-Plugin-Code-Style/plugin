@@ -939,7 +939,43 @@ const moduleIndexExports = {
             return normalized;
         };
 
-        const checkIndexFileExportsHandler = (programNode, dirPath, folderName) => {
+        // Collect item names that an ancestor module barrel deep-exports for this subfolder.
+        // e.g. ui/index.ts containing `export { CopyButton } from "./button/copy"` means the
+        // "copy" item of ui/button is already exported — so ui/button/index does not need to
+        // re-export it. This lets a component index hold only its own component.
+        const getAncestorExportedItemsHandler = (subfolderDirPath, subFolderName) => {
+            const exportedItems = new Set();
+            const ancestorDir = nodePath.dirname(subfolderDirPath);
+            const indexCandidate = ["index.ts", "index.tsx", "index.js", "index.jsx"]
+                .map((name) => nodePath.join(ancestorDir, name))
+                .find((candidate) => fs.existsSync(candidate));
+
+            if (!indexCandidate) return exportedItems;
+
+            let text;
+
+            try {
+                text = fs.readFileSync(indexCandidate, "utf8");
+            } catch {
+                return exportedItems;
+            }
+
+            const escapedSubFolder = subFolderName.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+            const deepExportPattern = new RegExp(`["']\\./${escapedSubFolder}/([^"'/]+)(?:/[^"']*)?["']`, "g");
+            let match = deepExportPattern.exec(text);
+
+            while (match) {
+                const itemSegment = match[1].replace(/\.(js|jsx|ts|tsx)$/, "");
+
+                if (itemSegment && itemSegment !== "index") exportedItems.add(itemSegment);
+
+                match = deepExportPattern.exec(text);
+            }
+
+            return exportedItems;
+        };
+
+        const checkIndexFileExportsHandler = (programNode, dirPath, folderName, ancestorExportedItems = new Set()) => {
             // Get all items in the directory
             let items;
 
@@ -1004,6 +1040,8 @@ const moduleIndexExports = {
 
                     return false;
                 });
+
+                if (!isExported && ancestorExportedItems.has(itemName)) return;
 
                 if (!isExported) {
                     context.report({
@@ -1080,11 +1118,13 @@ const moduleIndexExports = {
 
                     if (moduleFolders.includes(parentFolder)) {
                         const dirPath = nodePath.dirname(filename);
+                        const ancestorExportedItems = getAncestorExportedItemsHandler(dirPath, subFolder);
 
                         checkIndexFileExportsHandler(
                             node,
                             dirPath,
                             `${parentFolder}/${subFolder}`,
+                            ancestorExportedItems,
                         );
                     }
                 }
@@ -1645,13 +1685,42 @@ const indexExportsOnly = {
                     // Must contain component code — must NOT be a barrel (re-exports only)
                     // Only one barrel per module (the root index)
                     const hasCode = programNode.body.some((node) => hasCodeDeclarationHandler(node));
+                    const subfolder = parts[indexPos - 1];
 
                     if (!hasCode) {
-                        const subfolder = parts[indexPos - 1];
-
                         context.report({
                             message: `Subfolder index file "${subfolder}/index" should contain component code, not just re-exports. Only the module root index file should be a barrel for imports and re-exports.`,
                             node: programNode,
+                        });
+
+                        return;
+                    }
+
+                    // This is a component index (it has its own code). Re-exporting a sibling
+                    // module from here is only allowed when this file also imports and uses it.
+                    // Otherwise the re-export belongs in the module root barrel, so the sibling
+                    // is reached as @/module, not @/module/subfolder.
+                    const siblingPattern = /^\.\/[^/]+$/;
+                    const stripExtensionHandler = (value) => value.replace(/\.(js|jsx|ts|tsx)$/, "");
+                    const importedSiblingSources = new Set();
+
+                    for (const statement of programNode.body) {
+                        if (statement.type === "ImportDeclaration" && statement.source && siblingPattern.test(statement.source.value)) {
+                            importedSiblingSources.add(stripExtensionHandler(statement.source.value));
+                        }
+                    }
+
+                    for (const statement of programNode.body) {
+                        const isReexport = (statement.type === "ExportNamedDeclaration" && statement.source)
+                            || statement.type === "ExportAllDeclaration";
+
+                        if (!isReexport || !siblingPattern.test(statement.source.value)) continue;
+
+                        if (importedSiblingSources.has(stripExtensionHandler(statement.source.value))) continue;
+
+                        context.report({
+                            message: `Re-export "${statement.source.value}" does not belong in the component index "${subfolder}/index". Move it to the module root barrel. Keep a re-export here only for a sibling this file imports and uses.`,
+                            node: statement,
                         });
                     }
 

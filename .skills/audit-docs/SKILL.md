@@ -25,28 +25,30 @@ Verify documentation is accurate and consistent across all files.
    When adding/removing rules, update counts in every location below. All counts (total rules, auto-fixable, configurable, report-only) must match everywhere.
 
    **Current Counts (update these values when changing rules):**
-   - Total rules: 82
+   - Total rules: 83
    - Auto-fixable: 72
-   - Configurable: 22 (rules with ⚙️ that have options)
-   - Report-only: 10
+   - Configurable: 24 (rules with ⚙️ that have options)
+   - Report-only: 11
 
    **Files & approximate line locations to update:**
 
    | File | Line(s) | What to update |
    |------|---------|----------------|
-   | `README.md` | ~22 | `*81 rules (71 auto-fixable, 22 configurable)*` |
-   | `README.md` | ~30 | `**81 custom rules** (71 auto-fixable, 22 configurable)` |
-   | `README.md` | ~39 | `71 of 81 rules support auto-fix` |
-   | `README.md` | ~100 | `**71 rules** support automatic fixing... **22 rules** have configurable options. 10 rules are report-only` |
-   | `README.md` | ~272 | `**81 rules total** — 71 with auto-fix, 22 configurable` |
-   | `README.md` | ~409 | `71 of 81 rules support auto-fixing` |
-   | `rules/README.md` | ~3 | `**81 rules total** — 71 with auto-fix, 22 configurable` |
-   | `AGENTS.md` | ~7 | `81 custom formatting rules (71 auto-fixable, 22 configurable, 10 report-only)` |
-   | `AGENTS.md` | ~37 | `(72 rules in JS projects, 81 in TS projects)` |
-   | `AGENTS.md` | ~675 | `all 81 rules` |
-   | `AGENTS.md` | ~733 | `71 auto-fixable rules, 22 configurable rules, 10 report-only` |
+   | `README.md` | ~22 | `*83 rules (72 auto-fixable, 24 configurable)*` |
+   | `README.md` | ~30 | `**83 custom rules** (72 auto-fixable, 24 configurable)` |
+   | `README.md` | ~39 | `72 of 83 rules support auto-fix` |
+   | `README.md` | ~100 | `**72 rules** support automatic fixing... **24 rules** have configurable options. 11 rules are report-only` |
+   | `README.md` | ~272 | `**83 rules total** — 72 with auto-fix, 24 configurable` |
+   | `README.md` | ~409 | `72 of 83 rules support auto-fixing` |
+   | `rules/README.md` | ~3 | `**83 rules total** — 72 with auto-fix, 24 configurable` |
+   | `AGENTS.md` | ~7 | `83 custom formatting rules (72 auto-fixable, 24 configurable, 11 report-only)` |
+   | `AGENTS.md` | ~37 | `(74 rules in JS projects, 83 in TS projects)` |
+   | `AGENTS.md` | ~675 | `all 83 rules` |
+   | `AGENTS.md` | ~733 | `72 auto-fixable rules, 24 configurable rules, 11 report-only` |
    | `recommended-configs/{v9,v10}/{react,react-ts,react-tw,react-ts-tw}/README.md` | — | **8 files** (v9 + v10 × 4 variants). `Our N custom formatting rules` + `**N auto-fixable rules** (N total / N JavaScript-compatible out of N total, …)`. Counts differ per variant: full set vs JS-compatible (total − 9 TS-only). |
    | `metadata.json` | top | `"totalRules", "fixableRules", "configurableRules", "reportOnlyRules"` |
+   | `banner.svg` | RULES stat (~line 263) | The **RULES** stat number in the README hero image (`fill="url(#accent)">N</text>` above the `RULES` label). Only the total changes here; AUTO-FIXABLE/CATEGORIES/DEPENDENCIES stats rarely move. The SVG is embedded in `README.md` (line ~3, plus its `alt` text count). |
+   | `index.d.ts` | rule-name union | Add/remove the `"code-style/<rule>"` member when adding/removing a rule (not a count, but a per-rule doc position — see `validate-types` skill). |
 
 <https://www.eslint-plugin-code-style.org>
    The `metadata.json` counters drive the documentation website. See the **`website-sync`** skill for how the auto-sync pipeline propagates these values to <https://www.eslint-plugin-code-style.org>.

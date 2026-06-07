@@ -2,7 +2,7 @@
 
 > 📖 **Online documentation with examples:** [www.eslint-plugin-code-style.org/docs/rules](https://www.eslint-plugin-code-style.org/docs/rules)
 
-> **82 rules total** — 72 with auto-fix 🔧, 22 configurable ⚙️, 10 report-only
+> **83 rules total** — 72 with auto-fix 🔧, 24 configurable ⚙️, 11 report-only
 >
 > **Legend:** 🔧 Auto-fixable with `eslint --fix` • ⚙️ Customizable options
 

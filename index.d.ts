@@ -64,6 +64,7 @@ export type RuleNames =
     | "code-style/nested-call-closing-brackets"
     | "code-style/no-inline-type-definitions"
     | "code-style/no-redundant-folder-suffix"
+    | "code-style/no-scattered-component-variants"
     | "code-style/no-empty-lines-in-arrays"
     | "code-style/no-empty-lines-in-function-calls"
     | "code-style/no-empty-lines-in-function-params"

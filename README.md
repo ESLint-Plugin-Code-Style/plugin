@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="./banner.svg" alt="eslint-plugin-code-style — 82 custom ESLint rules for React projects" width="100%" />
+<img src="./banner.svg" alt="eslint-plugin-code-style — 83 custom ESLint rules for React projects" width="100%" />
 
 <br />
 <br />
@@ -24,7 +24,7 @@
 
 **A powerful ESLint plugin for enforcing consistent code formatting and style rules in React/JSX projects.**
 
-*82 rules (72 auto-fixable, 22 configurable) to keep your codebase clean and consistent*
+*83 rules (72 auto-fixable, 24 configurable) to keep your codebase clean and consistent*
 
 </div>
 
@@ -32,7 +32,7 @@
 
 ## 🎯 Why This Plugin?
 
-This plugin provides **82 custom rules** (72 auto-fixable, 22 configurable) for code formatting. Built for **ESLint v9+ flat configs** (v9 and v10 supported).
+This plugin provides **83 custom rules** (72 auto-fixable, 24 configurable) for code formatting. Built for **ESLint v9+ flat configs** (v9 and v10 supported).
 
 > **Note:** ESLint [deprecated 79 formatting rules](https://eslint.org/blog/2023/10/deprecating-formatting-rules/) in v8.53.0. Our recommended configs use `@stylistic/eslint-plugin` as the replacement for these deprecated rules.
 
@@ -42,7 +42,7 @@ This plugin provides **82 custom rules** (72 auto-fixable, 22 configurable) for 
 - **Works alongside existing tools** — Complements ESLint's built-in rules and packages like eslint-plugin-react, eslint-plugin-import, etc
 - **Self-sufficient rules** — Each rule handles complete formatting independently
 - **Consistency at scale** — Reduces code-style differences between team members by enforcing uniform formatting across your projects
-- **Highly automated** — 72 of 82 rules support auto-fix with `eslint --fix`
+- **Highly automated** — 72 of 83 rules support auto-fix with `eslint --fix`
 - **Next.js compatible** — Rules automatically detect and respect App Router conventions (dynamic routes, reserved filenames, route groups, parallel routes)
 
 When combined with ESLint's native rules and other popular plugins, this package helps create a complete code style solution that keeps your codebase clean and consistent.
@@ -89,7 +89,7 @@ We provide **ready-to-use ESLint flat configuration files** that combine `eslint
 
 ### 💡 Why Use These Configs?
 
-- **Complete Coverage** — Combines ESLint built-in rules, third-party plugins, and all 82 code-style rules
+- **Complete Coverage** — Combines ESLint built-in rules, third-party plugins, and all 83 code-style rules
 - **Ready-to-Use** — Copy the config file and start linting immediately
 - **Battle-Tested** — These configurations have been refined through real-world usage
 - **Fully Documented** — Each config includes detailed instructions and explanations
@@ -143,7 +143,7 @@ Configs are organized by ESLint version:
 
 ### 🔧 Auto-Fixable Rules
 
-**72 rules** support automatic fixing with `eslint --fix`. **21 rules** have configurable options. 10 rules are report-only (require manual changes).
+**72 rules** support automatic fixing with `eslint --fix`. **24 rules** have configurable options. 11 rules are report-only (require manual changes).
 
 </td>
 <td width="50%">
@@ -339,7 +339,7 @@ rules: {
 
 ## 📖 Rules Categories
 
-> **82 rules total** — 72 with auto-fix 🔧, 22 configurable ⚙️, 10 report-only
+> **83 rules total** — 72 with auto-fix 🔧, 24 configurable ⚙️, 11 report-only
 >
 > 📖 **Full documentation with examples:** [www.eslint-plugin-code-style.org](https://www.eslint-plugin-code-style.org/rules) • [Local docs](./rules/)
 >
@@ -481,7 +481,7 @@ For detailed documentation with examples, configuration options, and best practi
 
 ## 🔧 Auto-fixing
 
-72 of 82 rules support auto-fixing. Run ESLint with the `--fix` flag:
+72 of 83 rules support auto-fixing. Run ESLint with the `--fix` flag:
 
 ```bash
 # Fix all files in src directory

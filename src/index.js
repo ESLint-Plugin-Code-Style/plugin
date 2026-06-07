@@ -21,6 +21,7 @@ import {
     folderBasedNamingConvention,
     folderStructureConsistency,
     noRedundantFolderSuffix,
+    noScatteredComponentVariants,
     svgIconNamingConvention,
 } from "./rules/components.js";
 import {
@@ -125,6 +126,7 @@ export default {
         "folder-based-naming-convention": folderBasedNamingConvention,
         "folder-structure-consistency": folderStructureConsistency,
         "no-redundant-folder-suffix": noRedundantFolderSuffix,
+        "no-scattered-component-variants": noScatteredComponentVariants,
         "svg-icon-naming-convention": svgIconNamingConvention,
 
         // React rules
