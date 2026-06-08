@@ -838,7 +838,6 @@ The operator search now matches each expression's own operator (`||`, `&&`, or
 - **AGENTS.md** — Updated documentation references to reflect new `docs/rules/` structure
 - **package.json** — Added `docs/` to npm `files` array
 
-
 ### Stats
 
 - Total Rules: 79 (unchanged — config/docs release, no rules added or removed)
@@ -868,7 +867,6 @@ The operator search now matches each expression's own operator (`||`, `&&`, or
 - Updated Available Configurations table in README.md — React + Tailwind now links to config instead of "Coming Soon"
 - Updated AGENTS.md — React + Tailwind marked as Available with folder paths
 
-
 ### Stats
 
 - Total Rules: 79 (unchanged — config/docs release, no rules added or removed)
@@ -897,7 +895,6 @@ The operator search now matches each expression's own operator (`||`, `&&`, or
 
 - Updated Available Configurations table in README.md — React + TypeScript now links to config instead of "Coming Soon"
 - Updated AGENTS.md — React + TypeScript marked as Available with folder paths
-
 
 ### Stats
 
