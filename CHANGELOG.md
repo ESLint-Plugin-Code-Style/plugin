@@ -2875,6 +2875,7 @@ The operator search now matches each expression's own operator (`||`, `&&`, or
 
 ---
 
+[3.4.0]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v3.3.4...v3.4.0
 [3.2.1]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v3.2.0...v3.2.1
 [3.2.0]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v3.1.1...v3.2.0
 [3.1.1]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v3.1.0...v3.1.1
