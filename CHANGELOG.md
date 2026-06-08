@@ -367,7 +367,7 @@ The operator search now matches each expression's own operator (`||`, `&&`, or
 
 ### Added
 
-- Production-quality documentation website (`docs/website/`) built with Next.js 15, React 19, Tailwind CSS v4, and TypeScript — deployed at <https://www.eslint-plugin-code-style.org>g>
+- Production-quality documentation website (`docs/website/`) built with Next.js 15, React 19, Tailwind CSS v4, and TypeScript — deployed at <https://www.eslint-plugin-code-style.org>
   - Landing page with hero section, feature highlights, stats, and quick-start guide
   - Getting Started, Configuration, Philosophy, and Contributing guide pages
   - Rules Reference with all 81 rules across 17 category pages — descriptions, rationale, options, good/bad code examples
@@ -396,7 +396,7 @@ The operator search now matches each expression's own operator (`||`, `&&`, or
 
 - Reorganized recommended configs into `recommended-configs/v9/` and `recommended-configs/v10/`
 - Reorganized test projects into `_tests_/v9/` and `_tests_/v10/`
-- Homepage URL changed to <https://www.eslint-plugin-code-style.org>g>
+- Homepage URL changed to <https://www.eslint-plugin-code-style.org>
 - Website domain added to README.md and docs/rules/README.md
 
 ### Removed
@@ -408,6 +408,13 @@ The operator search now matches each expression's own operator (`||`, `&&`, or
 - Recommended config paths changed: `recommended-configs/react/` → `recommended-configs/v9/react/` (same for all 4 variants)
 - Test project paths changed: `_tests_/react/` → `_tests_/v9/react/` (same for all 4 variants)
 - Removed `docs/frontend-guide/` directory
+
+### Stats
+
+- Total Rules: 81 (unchanged — enhancements + tooling, no rules added or removed)
+- Auto-fixable: 71 rules 🔧 (47 code + 24 whitespace)
+- Configurable: 20 rules ⚙️
+- Report-only: 10 rules
 
 **Full Changelog:** [v2.2.5...v3.0.0](https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v2.2.5...v3.0.0)
 
