@@ -131,6 +131,7 @@ interface PluginRules {
     "export-format": Rule.RuleModule;
     "folder-based-naming-convention": Rule.RuleModule;
     "folder-structure-consistency": Rule.RuleModule;
+    "no-scattered-component-variants": Rule.RuleModule;
     "function-arguments-format": Rule.RuleModule;
     "function-call-spacing": Rule.RuleModule;
     "function-declaration-style": Rule.RuleModule;

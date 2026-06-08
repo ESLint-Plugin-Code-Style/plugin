@@ -355,6 +355,38 @@ atoms/forms/input-atom.tsx -> redundant "-atom" from ancestor "atoms/"
 
 ---
 
+### `no-scattered-component-variants`
+
+**What it does:** Flags sibling files or folders inside a module folder that share a common **trailing** name token (a "variant family") and should be collapsed into a single folder named by that token, with each member renamed to its distinguishing prefix.
+
+**Why use it:** Scattered variants repeat the same suffix on every name (`copy-button.tsx`, `icon-button.tsx`, `lint-button.tsx`). Collapsing them into `button/{copy,icon,lint}.tsx` keeps related variants together and removes the redundant suffix. Detection is on the trailing token only — names that merely share a leading token (`code-block` / `code-rain`) are not flagged.
+
+```text
+// Good — collapsed: the shared token is the folder
+ui/button/index.tsx     -> Button
+ui/button/copy.tsx      -> CopyButton
+ui/button/icon.tsx      -> IconButton
+
+// Bad — scattered files (every name repeats "button")
+ui/copy-button.tsx
+ui/icon-button.tsx
+ui/lint-button.tsx
+
+// Bad — scattered folders (every name repeats "vignette")
+ui/react-vignette/index.tsx
+ui/typescript-vignette/index.tsx
+ui/zero-deps-vignette/index.tsx
+```
+
+**Options:**
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `moduleFolders` | `string[]` | built-in list | Replace the list of module folders to check |
+| `extraModuleFolders` | `string[]` | `[]` | Additional folders to check |
+
+---
+
 ### `svg-icon-naming-convention`
 
 **What it does:** Enforces naming conventions for SVG icon components:

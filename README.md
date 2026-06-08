@@ -77,7 +77,7 @@ src/
 Several rules **look at the folder a file lives in and build their expectations from it**:
 
 - **`folder-based-naming-convention`** — applies the right suffix per folder (`views/` → `*View`, `layouts/` → `*Layout`, `pages/` → `*Page`, `providers/` → `*Provider`), camelCase for `data/`/`constants/`, and so on.
-- **`folder-structure-consistency`** / **`no-redundant-folder-suffix`** — enforce consistent flat-vs-wrapped module folders and stop redundant `button/button.tsx` style naming.
+- **`folder-structure-consistency`** / **`no-redundant-folder-suffix`** / **`no-scattered-component-variants`** — enforce consistent flat-vs-wrapped module folders, stop redundant `button/button.tsx` style naming, and collapse scattered variant families (`copy-button.tsx` + `icon-button.tsx` → `button/{copy,icon}.tsx`).
 - **`hook-file-naming-convention`** / **`index-exports-only`** / **`module-index-exports`** — expect hooks and `index` barrels to follow the module folder they sit in.
 - **`function-naming-convention`** / **`variable-naming-convention`** — path-scoped naming (e.g. component casing under `components/`, verb-first handlers, hook prefixes).
 
@@ -372,6 +372,7 @@ rules: {
 | `folder-based-naming-convention` | Enforce naming based on folder: suffix for views/layouts/pages/providers/reducers/contexts/themes, camelCase suffix for data/constants/strings/services/reducers folders, chained folder names for nested files, singularizes plural folders 🔧 ⚙️ |
 | `folder-structure-consistency` | Enforce consistent folder structure (flat vs wrapped) in module folders (atoms, components, hooks, enums, views, etc.) ⚙️ |
 | `no-redundant-folder-suffix` | Disallow file and folder names that redundantly include the parent folder name as a suffix |
+| `no-scattered-component-variants` | Disallow scattered component variants that share a trailing name token — collapse them into one folder named by the shared token ⚙️ |
 | `svg-icon-naming-convention` | SVG components must end with "Icon" suffix; "Icon" suffix components must return SVG |
 | **Class Rules** | |
 | `class-method-definition-format` | Consistent spacing in class/method definitions: space before `{`, no space before `(` 🔧 |

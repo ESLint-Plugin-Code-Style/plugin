@@ -175,7 +175,7 @@ Rules are organized in these categories (alphabetically sorted in src/index.js a
 - **Comment Rules** — Comment formatting
   - `comment-format`
 - **Component Rules** — React component patterns
-  - `component-props-destructure`, `component-props-inline-type`, `folder-based-naming-convention`, `folder-structure-consistency`, `no-redundant-folder-suffix`, `svg-icon-naming-convention`
+  - `component-props-destructure`, `component-props-inline-type`, `folder-based-naming-convention`, `folder-structure-consistency`, `no-redundant-folder-suffix`, `no-scattered-component-variants`, `svg-icon-naming-convention`
 - **Control Flow Rules** — if/switch/block statements
   - `block-statement-newlines`, `if-else-spacing`, `if-statement-format`, `multiline-if-conditions`, `no-empty-lines-in-switch-cases`, `ternary-condition-multiline`
 - **Function Rules** — Function declarations and params
