@@ -838,6 +838,14 @@ The operator search now matches each expression's own operator (`||`, `&&`, or
 - **AGENTS.md** — Updated documentation references to reflect new `docs/rules/` structure
 - **package.json** — Added `docs/` to npm `files` array
 
+
+### Stats
+
+- Total Rules: 79 (unchanged — config/docs release, no rules added or removed)
+- Auto-fixable: 70 rules 🔧
+- Configurable: 19 rules ⚙️
+- Report-only: 9 rules
+
 **Full Changelog:** [v1.19.0...v1.20.0](https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.19.0...v1.20.0)
 
 ---
@@ -860,6 +868,14 @@ The operator search now matches each expression's own operator (`||`, `&&`, or
 - Updated Available Configurations table in README.md — React + Tailwind now links to config instead of "Coming Soon"
 - Updated AGENTS.md — React + Tailwind marked as Available with folder paths
 
+
+### Stats
+
+- Total Rules: 79 (unchanged — config/docs release, no rules added or removed)
+- Auto-fixable: 70 rules 🔧
+- Configurable: 19 rules ⚙️
+- Report-only: 9 rules
+
 **Full Changelog:** [v1.18.0...v1.19.0](https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.18.0...v1.19.0)
 
 ---
@@ -881,6 +897,14 @@ The operator search now matches each expression's own operator (`||`, `&&`, or
 
 - Updated Available Configurations table in README.md — React + TypeScript now links to config instead of "Coming Soon"
 - Updated AGENTS.md — React + TypeScript marked as Available with folder paths
+
+
+### Stats
+
+- Total Rules: 79 (unchanged — config/docs release, no rules added or removed)
+- Auto-fixable: 70 rules 🔧
+- Configurable: 19 rules ⚙️
+- Report-only: 9 rules
 
 **Full Changelog:** [v1.17.2...v1.18.0](https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v1.17.2...v1.18.0)
 
