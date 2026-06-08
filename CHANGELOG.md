@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [3.4.1] - 2026-06-08
+
+**Corrected published rule counts in README and banner**
+
+### Documentation
+
+- The 3.4.0 npm tarball shipped a README still showing the pre-3.4.0 counts (82 rules). Republished with the corrected counts across the README, banner image, and config READMEs: **83 total · 72 auto-fixable · 24 configurable · 11 report-only**. Also corrected the `isConfigurable` flag on `typescript-definition-location` (empty schema -> not configurable).
+
+---
+
 ## [3.4.0] - 2026-06-07
 
 **Two folder-structure rules for component-variant families**
@@ -2880,6 +2890,7 @@ The operator search now matches each expression's own operator (`||`, `&&`, or
 [3.3.2]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v3.3.1...v3.3.2
 [3.3.1]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v3.3.0...v3.3.1
 [3.3.0]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v3.2.1...v3.3.0
+[3.4.1]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v3.4.0...v3.4.1
 [3.4.0]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v3.3.4...v3.4.0
 [3.2.1]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v3.2.0...v3.2.1
 [3.2.0]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v3.1.1...v3.2.0
