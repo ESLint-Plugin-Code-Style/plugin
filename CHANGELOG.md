@@ -250,7 +250,14 @@ The operator search now matches each expression's own operator (`||`, `&&`, or
 - Removed all stale references to old `docs/website/` structure
 - Removed `validate-sync.js` (redundant with automated sync)
 
-**Full Changelog:** <https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v3.0.6...v3.1.0>0>
+### Stats
+
+- Total Rules: 81 (unchanged — infrastructure/docs release)
+- Auto-fixable: 71 rules 🔧
+- Configurable: 20 rules ⚙️
+- Report-only: 10 rules
+
+**Full Changelog:** [v3.0.6...v3.1.0](https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v3.0.6...v3.1.0)
 
 ---
 
