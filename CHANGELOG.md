@@ -33,6 +33,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 **Two folder-structure rules for component-variant families**
 
+**Version Range:** v3.3.4 → v3.4.0
+
 ### Added
 
 - **`no-scattered-component-variants`** (report-only, configurable) — flags sibling files/folders in a module folder that share a common trailing name token (a "variant family") and should be collapsed into one folder named by that token. For example `copy-button.tsx` + `icon-button.tsx` + `lint-button.tsx` should become `button/{copy,icon,lint}.tsx`; `react-vignette/` + `typescript-vignette/` should become `vignette/{react,typescript}.tsx`. Detection is on the trailing token only — names that merely share a leading token (`code-block` / `code-rain`) are not flagged. Options: `moduleFolders`, `extraModuleFolders`.
@@ -41,6 +43,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - **`index-exports-only`** — a component index (a subfolder `index` that holds its own component code) may no longer re-export sibling modules it does not import and use. Those re-exports belong in the module root barrel, so a sibling is reached as `@/module`, not `@/module/subfolder`. A re-export that the index actually imports and uses is still allowed.
 - **`module-index-exports`** — a nested folder item is now also considered exported when the module root barrel deep-exports it (e.g. `export { CopyButton } from "./button/copy"` in `ui/index.ts`). This complements the `index-exports-only` change: a component index (`ui/button/index.tsx`) no longer has to re-export its own siblings, because the root barrel already does.
+
+### Stats
+
+- Total Rules: 83 (was 82 — added `no-scattered-component-variants`)
+- Auto-fixable: 72 rules 🔧 (unchanged)
+- Configurable: 23 rules ⚙️ (was 22)
+- Report-only: 11 rules (was 10)
+
+**Full Changelog:** [v3.3.4...v3.4.0](https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v3.3.4...v3.4.0)
 
 ---
 
