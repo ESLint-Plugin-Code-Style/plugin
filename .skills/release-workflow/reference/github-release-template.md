@@ -81,6 +81,14 @@ npm install eslint-plugin-code-style@Y.Y.Y
 **Full Changelog**: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/vX.X.X...vY.Y.Y
 ```
 
+> **Required elements for MINOR / MAJOR — do NOT skip (these get missed most):**
+>
+> 1. **`## Version Range`** section — an explicit `vX.X.X → vY.Y.Y` line (not just the range mentioned inline in prose). PATCH releases omit this.
+> 2. **`**Full Changelog**:`** link at the very bottom — `https://github.com/ESLint-Plugin-Code-Style/plugin/compare/vX.X.X...vY.Y.Y`. Required for MINOR/MAJOR; optional but fine on PATCH.
+> 3. **`## Stats`** with `was → now` deltas for every count that changed (Total / Auto-fixable / Configurable / Report-only).
+>
+> After `gh release create`/`edit`, run `gh release view vX.Y.Z --json body -q .body` and confirm all three are present.
+
 **Steps to create a GitHub Release (every version):**
 
 1. Either use `gh release create vX.Y.Z --title "..." --notes "..."` OR go to repository → Releases → "Draft a new release"

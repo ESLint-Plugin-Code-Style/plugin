@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [3.4.2] - 2026-06-08
+
+**Completed rule documentation positions and synced docs**
+
+### Documentation
+
+- Added `no-scattered-component-variants` to the positions missed in 3.4.0/3.4.1: the `index.d.ts` `PluginRules` interface (shipped to npm — TS consumers using the `PluginRules` type now see the rule), the README Rules Summary table, `rules/components.md`, the AGENTS.md category list, and all 4 `_tests_/v10` configs.
+- AGENTS.md rule-category lists: added 4 rules that were absent (`no-empty-lines-in-arrays`, `empty-line-after-block`, `logical-expression-multiline`, `no-hardcoded-strings`) plus a missing **String Rules** category.
+- Sorted the CHANGELOG compare-link references into descending version order.
+
+---
+
 ## [3.4.1] - 2026-06-08
 
 **Corrected published rule counts in README and banner**
@@ -2885,13 +2897,14 @@ The operator search now matches each expression's own operator (`||`, `&&`, or
 
 ---
 
+[3.4.2]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v3.4.1...v3.4.2
+[3.4.1]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v3.4.0...v3.4.1
+[3.4.0]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v3.3.4...v3.4.0
 [3.3.4]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v3.3.3...v3.3.4
 [3.3.3]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v3.3.2...v3.3.3
 [3.3.2]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v3.3.1...v3.3.2
 [3.3.1]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v3.3.0...v3.3.1
 [3.3.0]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v3.2.1...v3.3.0
-[3.4.1]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v3.4.0...v3.4.1
-[3.4.0]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v3.3.4...v3.4.0
 [3.2.1]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v3.2.0...v3.2.1
 [3.2.0]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v3.1.1...v3.2.0
 [3.1.1]: https://github.com/ESLint-Plugin-Code-Style/plugin/compare/v3.1.0...v3.1.1

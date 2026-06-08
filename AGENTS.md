@@ -165,7 +165,7 @@ For the end-to-end add/edit/remove workflows (file lists, alphabetical sort rule
 Rules are organized in these categories (alphabetically sorted in src/index.js and README.md):
 
 - **Array Rules** — Rules for array formatting
-  - `array-callback-destructure`, `array-items-per-line`, `array-objects-on-new-lines`
+  - `array-callback-destructure`, `array-items-per-line`, `array-objects-on-new-lines`, `no-empty-lines-in-arrays`
 - **Arrow Function Rules** — Arrow function syntax and style
   - `arrow-function-block-body`, `arrow-function-simple-jsx`, `arrow-function-simplify`, `curried-arrow-same-line`
 - **Call Expression Rules** — Function call formatting
@@ -177,7 +177,7 @@ Rules are organized in these categories (alphabetically sorted in src/index.js a
 - **Component Rules** — React component patterns
   - `component-props-destructure`, `component-props-inline-type`, `folder-based-naming-convention`, `folder-structure-consistency`, `no-redundant-folder-suffix`, `no-scattered-component-variants`, `svg-icon-naming-convention`
 - **Control Flow Rules** — if/switch/block statements
-  - `block-statement-newlines`, `if-else-spacing`, `if-statement-format`, `multiline-if-conditions`, `no-empty-lines-in-switch-cases`, `ternary-condition-multiline`
+  - `block-statement-newlines`, `empty-line-after-block`, `if-else-spacing`, `if-statement-format`, `logical-expression-multiline`, `multiline-if-conditions`, `no-empty-lines-in-switch-cases`, `ternary-condition-multiline`
 - **Function Rules** — Function declarations and params
   - `function-call-spacing`, `function-declaration-style`, `function-naming-convention`, `function-object-destructure`, `function-params-per-line`, `no-empty-lines-in-function-params`
 - **Hook Rules** — React hooks formatting
@@ -192,6 +192,8 @@ Rules are organized in these categories (alphabetically sorted in src/index.js a
   - `react-code-order`
 - **Spacing Rules** — General spacing rules
   - `assignment-value-same-line`, `member-expression-bracket-spacing`
+- **String Rules** — String content and extraction
+  - `no-hardcoded-strings`
 - **TypeScript Rules** — TypeScript-specific rules (TS configs only)
   - `enum-format`, `interface-format`, `no-inline-type-definitions`, `prop-naming-convention`, `type-annotation-spacing`, `type-format`, `typescript-definition-location`
 - **Variable Rules** — Variable declarations and naming
